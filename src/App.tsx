@@ -6,7 +6,7 @@ import { MainStore } from "./stores";
 import copy from "copy-to-clipboard";
 import RootRoute from "./routes";
 import "./utils/polyfill";
-import { request } from "./utils/requestInterceptor";
+import { request } from "@/services/requestInterceptor";
 
 import "moment/dist/locale/zh-cn";
 // css

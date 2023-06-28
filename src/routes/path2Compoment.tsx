@@ -1,13 +1,12 @@
-import Dashboard from "../pages/Dashboard";
-import BasicForm from "@/pages/admin/form/Basic";
-import Advanced from "../pages/admin/form/Advanced";
-import Wizard from "../pages/admin/form/Wizard";
-import Editor from "../pages/admin/form/Editor";
-import CustomIndex from "@/pages/admin/customer";
-import Login from "../pages/admin/common/Login";
-import Register from "../pages/admin/common/Register";
-import Icon from "@/pages/admin/icon/Simple";
-import Tabs from "@/pages/admin/common/Tabs";
+import Dashboard from "@/pages/app/dashboard";
+import BasicForm from "@/pages/app/form/Basic";
+import Advanced from "../pages/app/form/Advanced";
+import Wizard from "../pages/app/form/Wizard";
+import Editor from "../pages/app/form/Editor";
+import CustomIndex from "@/pages/app/customer";
+import Login from "@/utils/Login";
+import Register from "@/utils/Register";
+import Icon from "@/pages/app/icon/Simple";
 
 const path2components = [
   {
@@ -54,10 +53,6 @@ const path2components = [
   {
     path: "/icon/simple",
     component: Icon,
-  },
-  {
-    path: "/tabs",
-    component: Tabs,
   },
 ];
 

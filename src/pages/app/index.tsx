@@ -8,15 +8,14 @@ import {
 } from "react-router-dom";
 import { Space } from "antd";
 import { Avatar, Dropdown } from "antd";
-import { HomeOutlined } from "@ant-design/icons";
+import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { Layout, Button, AsideNav } from "amis";
 import { IMainStore } from "@/stores";
 import { inject, observer } from "mobx-react";
-import { request } from "@/utils/requestInterceptor";
+import { request } from "@/services/requestInterceptor";
 import RouterGuard from "@/routes/RouterGuard";
 import { toast } from "amis";
 import appStore from "@/stores/appStore";
-import { UserOutlined } from "@ant-design/icons";
 
 type NavItem = {
   label: string;
@@ -139,12 +138,10 @@ export default class Admin extends React.Component<AdminProps, any> {
               placement="bottomLeft"
               trigger={["click", "hover"]}
             >
-              <Button>
-                <Space>
-                  <Avatar icon={<UserOutlined />} />
-                  admin
-                </Space>
-              </Button>
+              <Space>
+                <Avatar icon={<UserOutlined />} />
+                admin
+              </Space>
             </Dropdown>
           </div>
         </div>
