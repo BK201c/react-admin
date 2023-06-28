@@ -8,16 +8,15 @@ import {
 } from "react-router-dom";
 import { Space } from "antd";
 import { Avatar, Dropdown } from "antd";
+import { HomeOutlined } from "@ant-design/icons";
 import { Layout, Button, AsideNav } from "amis";
 import { IMainStore } from "@/stores";
 import { inject, observer } from "mobx-react";
 import { request } from "@/utils/requestInterceptor";
 import RouterGuard from "@/routes/RouterGuard";
 import { toast } from "amis";
-import appStore from "@/stores/appStore"
-import {
-  UserOutlined,
-} from "@ant-design/icons";
+import appStore from "@/stores/appStore";
+import { UserOutlined } from "@ant-design/icons";
 
 type NavItem = {
   label: string;
@@ -45,8 +44,6 @@ export interface AdminProps extends RouteComponentProps<any> {
 @inject("store")
 @observer
 export default class Admin extends React.Component<AdminProps, any> {
- 
-
   state = {
     pathname: "",
     hasLoadMenu: false,
@@ -76,7 +73,7 @@ export default class Admin extends React.Component<AdminProps, any> {
   refreshMenu = () => {
     let pathname = this.props.location.pathname;
     console.log("location:", pathname);
-    console.log("store.user:",  appStore.userStore.name);
+    console.log("store.user:", appStore.userStore.name);
     if (
       pathname != "login" &&
       pathname != "/" &&
@@ -116,8 +113,8 @@ export default class Admin extends React.Component<AdminProps, any> {
             <i className="fa fa-bars text-white"></i>
           </button>
           <div className={`cxd-Layout-brand`}>
-            <i className="fa fa-paw"></i>
-            <span className="hidden-folded m-l-sm">react-amis-admin</span>
+            <HomeOutlined />
+            <span className="hidden-folded m-l-sm">react-admin</span>
           </div>
         </div>
         <div className={`cxd-Layout-headerBar`}>
@@ -136,11 +133,15 @@ export default class Admin extends React.Component<AdminProps, any> {
             </Button>
           </div>
 
-          <div className="m-l-auto hidden-xs pull-right pt-2" >
-            <Dropdown menu={{ items }} placement="bottomLeft" trigger={['click', 'hover']}>
+          <div className="m-l-auto hidden-xs pull-right pt-2">
+            <Dropdown
+              menu={{ items }}
+              placement="bottomLeft"
+              trigger={["click", "hover"]}
+            >
               <Button>
                 <Space>
-                <Avatar icon={<UserOutlined />} />
+                  <Avatar icon={<UserOutlined />} />
                   admin
                 </Space>
               </Button>
