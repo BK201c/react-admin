@@ -8,7 +8,7 @@ npm start
 ### 1、首先在 pages 下新增一个 Hello.tsx 页面
 
 ```tsx
-import schema2component from "@/utils/schema2component";
+import schemaRender from "@/utils/schemaRender";
 
 const schema = {
   type: "page",
@@ -24,7 +24,7 @@ const schema = {
   },
 };
 
-export default schema2component(schema);
+export default schemaRender(schema);
 ```
 
 ### 2、增加路由配置
