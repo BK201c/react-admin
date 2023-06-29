@@ -20,7 +20,17 @@ export default function (): JSX.Element {
   const store = ((window as any).store = MainStore.create(
     {},
     {
-      fetcher: ({ url, method, data, config, headers }: any) => {
+      fetcher: ({
+        url,
+        method,
+        data,
+        config,
+      }: {
+        url: string;
+        method: "get" | "post" | "put" | "delete";
+        data: any;
+        config: any;
+      }) => {
         config = config || {};
         config.headers = config.headers || {};
         config.withCredentials = true;
@@ -29,7 +39,10 @@ export default function (): JSX.Element {
           config.cancelToken = new axios.CancelToken(config.cancelExecutor);
         }
 
-        config.headers = headers || {};
+        config.headers = {
+          Authorization: "dddddd",
+          "Accept-language": "zh-hans",
+        };
         config.method = method;
 
         if (method === "get" && data) {
@@ -44,7 +57,6 @@ export default function (): JSX.Element {
           !(data instanceof ArrayBuffer)
         ) {
           data = JSON.stringify(data);
-          // config.headers = config.headers || {};
           config.headers["Content-Type"] = "application/json";
         }
 
@@ -57,7 +69,7 @@ export default function (): JSX.Element {
         toast[type]
           ? toast[type](msg, {
               title: type === "error" ? "系统错误" : "系统消息",
-              timeout: 5000,
+              timeout: 800,
             })
           : console.warn("[Notify]", type, msg);
         console.log("[notify]", type, msg);

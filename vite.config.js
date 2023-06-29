@@ -49,5 +49,11 @@ export default defineConfig({
     host: "localhost",
     open: "/",
     hmr: true,
+    proxy: {
+      "/api": {
+        target: "http://192.168.33.108:20001",
+        changeOrigin: true,
+      },
+    },
   },
 });
