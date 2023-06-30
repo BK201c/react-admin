@@ -12,7 +12,7 @@ import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { Layout, Button, AsideNav } from "amis";
 import { IMainStore } from "@/stores";
 import { inject, observer } from "mobx-react";
-import { request } from "@/services/requestInterceptor";
+import HttpService from "@/services/HttpService";
 import RouterGuard from "@/routes/RouterGuard";
 import { toast } from "amis";
 import appStore from "@/stores/appStore";
@@ -36,6 +36,19 @@ function isActive(link: any, location: any) {
   return !!ret;
 }
 
+function traverseTree(node: any) {
+  node.label = node.permissionName;
+  node.path = node.clientRoute || "";
+  if (
+    !_.isEmpty(node.children) &&
+    node.children[0].permissionType !== "button"
+  ) {
+    node.children.forEach((child) => {
+      traverseTree(child);
+    });
+  }
+}
+
 export interface AdminProps extends RouteComponentProps<any> {
   store: IMainStore;
 }
@@ -57,7 +70,7 @@ export default class Admin extends React.Component<AdminProps, any> {
 
   componentDidMount() {
     const history = this.props.history;
-    console.log("componentDidMount, store.user:", appStore.userStore.name);
+    // console.log("componentDidMount, store.user:", appStore.userStore.name);
     if (!appStore.userStore.isAuthenticated) {
       toast["error"]("用户未登陆，请先登陆！", "消息");
       history.replace(`/login`);
@@ -72,20 +85,31 @@ export default class Admin extends React.Component<AdminProps, any> {
   refreshMenu = () => {
     let pathname = this.props.location.pathname;
     console.log("location:", pathname);
-    console.log("store.user:", appStore.userStore.name);
+    // console.log("store.user:", appStore.userStore.name);
     if (
       pathname != "login" &&
       pathname != "/" &&
       !this.state.hasLoadMenu &&
       appStore.userStore.isAuthenticated
     ) {
-      request({
-        method: "get",
-        url: "/api/menus",
+      HttpService({
+        method: "post",
+        url: "/api/BaseService/permission/queryGrantedTreeList",
+        data: {
+          serviceIdentification: "WCS",
+          whouseNo: "",
+          isMobileDevicePermission: false,
+        },
       }).then((res: any) => {
         console.log("res:", res);
+        const menuList = {
+          label: "导航",
+          permissionCode: "WCS",
+          children: res.data,
+        };
+        traverseTree(menuList);
         this.setState({
-          navigations: res.data.data,
+          navigations: [menuList],
           hasLoadMenu: true,
         });
       });
@@ -113,7 +137,7 @@ export default class Admin extends React.Component<AdminProps, any> {
           </button>
           <div className={`cxd-Layout-brand`}>
             <HomeOutlined />
-            <span className="hidden-folded m-l-sm">react-admin</span>
+            <span className="hidden-folded m-l-sm">Home</span>
           </div>
         </div>
         <div className={`cxd-Layout-headerBar`}>
@@ -158,12 +182,12 @@ export default class Admin extends React.Component<AdminProps, any> {
         key={store.asideFolded ? "folded-aside" : "aside"}
         navigations={this.state.navigations}
         renderLink={({ link, toggleExpand, classnames: cx, depth }: any) => {
-          if (link.hidden) {
+          if (link.hidden || link.permissionType === "button") {
             return null;
           }
           let children: any[] = [];
 
-          if (link.children) {
+          if (link.children && link.permissionType === "module") {
             children.push(
               <span
                 key="expand-toggle"
@@ -235,7 +259,7 @@ export default class Admin extends React.Component<AdminProps, any> {
   render() {
     const store = this.props.store;
     let pathname = this.props.location.pathname;
-    console.log("location:", pathname);
+    // console.log("location:", pathname);
     if (pathname == "login" || pathname == "/") {
       return (
         <Switch>

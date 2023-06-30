@@ -7,7 +7,7 @@ class UserStore {
 
   constructor() {
     this.name = localStorage.getItem("name") || "";
-    this.token = localStorage.getItem("token") || "";
+    this.token = sessionStorage.getItem("token") || "";
   }
 
   @computed
@@ -21,16 +21,32 @@ class UserStore {
   }
 
   @action
+  setToken(token) {
+    this.token = token;
+  }
+
+  @action
+  getToken() {
+    return this.token;
+  }
+
+  @action
   login({ name, token }) {
     this.name = name;
     this.token = token;
     localStorage.setItem("name", name);
-    localStorage.setItem("token", token);
+    sessionStorage.setItem("token", token);
+  }
+
+  @action
+  setAuthMenus(menus: any) {
+    console.log(menus);
   }
 
   @action
   logout() {
     localStorage.setItem("name", "");
+    sessionStorage.clear();
     this.name = "";
     console.log("logout finished!");
   }

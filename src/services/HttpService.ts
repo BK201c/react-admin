@@ -1,8 +1,11 @@
 import axios from "axios";
 import { toast } from "amis";
-import { getToken } from "@/utils/auth";
+import appStore from "@/stores/appStore";
+
+const baseURL = "http://192.168.33.108:20001";
 
 const HttpService = axios.create({
+  baseURL: baseURL,
   timeout: 6000,
 });
 
@@ -10,9 +13,9 @@ const HttpService = axios.create({
 HttpService.interceptors.request.use(
   (config: any) => {
     config.url = decodeURI(encodeURI(config.url).replace(/%E2%80%8B/g, ""));
-    config.headers["Authorization"] = getToken();
+    config.headers["Authorization"] = appStore.userStore.getToken();
     config.headers["Accept-Language"] =
-      localStorage.getItem("language") === "zh" ? "zh-Hans" : "en";
+      localStorage.getItem("language") || "zh-Hans";
 
     return config;
   },

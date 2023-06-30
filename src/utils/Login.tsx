@@ -18,8 +18,8 @@ interface LoginProps extends RouteComponentProps<any> {
 @observer
 export default class LoginRoute extends React.Component<LoginProps, any> {
   state = {
-    username: "admin",
-    password: "admin",
+    username: "superadmin",
+    password: "Adm@1ts2",
     grant_type: "password",
     client_id: "public-website-client",
     client_secret: "Adm@1ts2",
@@ -29,26 +29,21 @@ export default class LoginRoute extends React.Component<LoginProps, any> {
     const history = this.props.history;
     const store = this.props.store;
     console.log("username:", this.state.username);
-    // appStore.userStore.login({
-    //   name: "超级管理",
-    //   token: `Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkMxN0U0NjEyRDA2ODEwQ0U0MTJBRTU0MzMyNTREMjE3IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2ODgwMTk0ODEsImV4cCI6MTcxOTU1NTQ4MSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDoyMDAwMyIsImF1ZCI6WyIwMDEtQkFTRSIsIjAwMS1JVEYiLCIwMDEtV0NTIiwiMDAxLVdNUyIsIjU5NC1JVEYiLCI1OTQtV0NTIiwiNTk0LVdNUyIsIjU5NFdtc1NlcnZpY2UiLCJCYXNlU2VydmljZSIsIkRpc0l0ZlNlcnZpY2UiLCJEaXNwYXRjaEludGVyZmFjZSIsIkRpc3BhdGNoU2VydmljZSIsIkxlc1NlcnZpY2UiLCJMT0NBTC1XQ1MiLCJMT0NBTC1XTVMiLCJQdWJsaWNHYXRld2F5IiwiUXVhcnR6U2VydmljZSIsIldjc0Jhc2VTZXJ2aWNlIiwiV0NTRFMiLCJXQ1NJUyIsIldDU01TIiwiV21zSXRmU2VydmljZSIsIldtc1NlcnZpY2UiXSwiY2xpZW50X2lkIjoicHVibGljLXdlYnNpdGUtY2xpZW50Iiwic3ViIjoiOGNlNTMxMGQtNzFlZS0wOTI1LTgyYWMtM2EwOWNkOWJkZWEyIiwiYXV0aF90aW1lIjoxNjg4MDE5NDgxLCJpZHAiOiJsb2NhbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2dpdmVubmFtZSI6Iui2hee6p-euoeeQhuWRmCIsInBob25lX251bWJlciI6IjEyMzQ1IiwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjoiRmFsc2UiLCJlbWFpbCI6InN1cGVyYWRtaW5AeHh4LmNuIiwiZW1haWxfdmVyaWZpZWQiOiJGYWxzZSIsIm5hbWUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjg4MDE5NDgxLCJzY29wZSI6WyIwMDEtQkFTRSIsIjAwMS1JVEYiLCIwMDEtV0NTIiwiMDAxLVdNUyIsIjU5NC1JVEYiLCI1OTQtV0NTIiwiNTk0LVdNUyIsIjU5NFdtc1NlcnZpY2UiLCJCYXNlU2VydmljZSIsIkRpc0l0ZlNlcnZpY2UiLCJEaXNwYXRjaEludGVyZmFjZSIsIkRpc3BhdGNoU2VydmljZSIsIkxlc1NlcnZpY2UiLCJMT0NBTC1XQ1MiLCJMT0NBTC1XTVMiLCJQdWJsaWNHYXRld2F5IiwiUXVhcnR6U2VydmljZSIsIldjc0Jhc2VTZXJ2aWNlIiwiV0NTRFMiLCJXQ1NJUyIsIldDU01TIiwiV21zSXRmU2VydmljZSIsIldtc1NlcnZpY2UiLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.x3jcUDZuV54gcRcHH3J_ThPcAyaE3KDrjGfwVVlN40upU9G7kwqAEutX4hyR01hgYJNNQbdHbYLwUW26Wg_YXSgQPbUvmQFM6rV4zpOFdnKUSu6MO9C0ZZIpgZ4LnHDrhD3BAXLVzCEAlMpRGBkuTMn93kDsj_WLnA8AcJGYJyB0wgLWTDYZ-OMBr-6Y1Ib1eqn7Jv7vGPyyA5-2-RfmwYwPB7lfTwk6nyRI18RNUjkamHMvcYxev5iHBL8XMtQrdxksC0cG5sMMEhnK45lHZ3szc1QhbDSx1V6uormau9NchInL1pfpKK8hvHvTP43bXvFLCSY1V62y2MYG59uW5w`,
-    // });
-    // history.replace(`/dashboard`);
     axios({
       method: "post",
-      url: "/api/BaseService/identityServer/login",
+      url: "http://192.168.33.108:20001/api/BaseService/identityServer/login",
       data: {
         ...this.state,
       },
     }).then((res) => {
       console.log("login res", res);
-      if (res.data != null && res.data.status === 0) {
+      if (res.data != null && res.data.code === 200) {
+        const data = res.data.data;
         appStore.userStore.login({
-          name: res.data.name,
-          token: `${res.data.tokenType} ${res.data.accessToken}`,
+          name: data.name,
+          token: `${data.tokenType} ${data.accessToken}`,
         });
         toast.info("登陆成功", { timeout: "1400", position: "top-center" });
-        // 跳转到dashboard页面
         console.log("replace history to dashboard, value:", value);
         history.replace(`/dashboard`);
       } else {
