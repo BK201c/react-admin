@@ -1,3 +1,4 @@
+import AuthValidator from "@/utils/AuthValidator";
 export default {
   type: "page",
   title: "区域管理",
@@ -22,8 +23,8 @@ export default {
           "&": "$$",
           skipCount: "${(page - 1) * perPage}",
           maxResultCount: "${perPage}",
-          areaNo: "${areaNo}",
-          areaName: "${areaName}",
+          sdType: "${sdTypeDesc}",
+          binSplitFlag: "${binSplitFlagDesc}",
         },
       },
       columns: [
@@ -52,9 +53,16 @@ export default {
           label: "库位拆分类型",
           type: "text",
           searchable: {
-            type: "input-text",
-            name: "binSplitFlagDesc",
-            label: "库位拆分类型",
+            type: "select",
+            source: {
+              method: "get",
+              url: "/api/WCSMS/options/getBinSplitFlagOption",
+              adaptor:
+                'return {\r\n  "status": 0,\r\n  "msg": "",\r\n  "data": {\r\n    "items": response.data.data.items\r\n  }\r\n}',
+              headers: {
+                "Accept-Language": "zh-Hans",
+              },
+            },
           },
         },
         {
@@ -62,9 +70,16 @@ export default {
           label: "伸工位类型",
           type: "text",
           searchable: {
-            type: "input-text",
-            name: "sdTypeDesc ",
-            label: "伸工位类型",
+            type: "select",
+            source: {
+              method: "get",
+              url: "/api/WCSMS/options/getSdTypeOption",
+              adaptor:
+                'return {\r\n  "status": 0,\r\n  "msg": "",\r\n  "data": {\r\n    "items": response.data.data.items\r\n  }\r\n}',
+              headers: {
+                "Accept-Language": "zh-Hans",
+              },
+            },
           },
         },
         {
@@ -77,9 +92,19 @@ export default {
             "*": "${usedFlag}",
           },
           searchable: {
-            type: "input-text",
+            type: "select",
             name: "usedFlag",
             label: "启用标志",
+            options: [
+              {
+                label: "禁用",
+                value: "0",
+              },
+              {
+                label: "启用",
+                value: "1",
+              },
+            ],
           },
         },
         {
@@ -116,32 +141,80 @@ export default {
                 body: [
                   {
                     type: "form",
-                    api: "xxx/update",
+                    api: {
+                      method: "put",
+                      url: "/api/WCSMS/basArea/update",
+                      adaptor:
+                        'return {\r\n  "status": response.data.status,\r\n  "msg": response.data.msg,\r\n  "data": response.data.data,\r\n}',
+                      messages: {},
+                      replaceData: false,
+                      data: {
+                        "&": "$$",
+                        id: "${id}",
+                        binSplitFlag: "${binSplitFlag}",
+                        sdType: "${sdTypeDesc}",
+                      },
+                      requestAdaptor: "",
+                      dataType: "json",
+                    },
                     body: [
                       {
                         type: "input-text",
                         name: "areaNo",
                         label: "区域编码",
+                        required: true,
                       },
                       {
                         type: "input-text",
                         name: "areaName",
                         label: "区域名称",
+                        required: true,
                       },
                       {
-                        type: "input-text",
                         name: "binSplitFlagDesc",
                         label: "库位拆分类型",
+                        type: "select",
+                        source: {
+                          method: "get",
+                          url: "/api/WCSMS/options/getBinSplitFlagOption",
+                          adaptor:
+                            'return {\r\n  "status": 0,\r\n  "msg": "",\r\n  "data": {\r\n    "items": response.data.data.items\r\n  }\r\n}',
+                          headers: {
+                            "Accept-Language": "zh-Hans",
+                          },
+                        },
+                        required: true,
                       },
                       {
-                        type: "input-text",
-                        name: "sdTypeDesc ",
+                        type: "select",
+                        name: "sdTypeDesc",
                         label: "伸工位类型",
+                        source: {
+                          method: "get",
+                          url: "/api/WCSMS/options/getSdTypeOption",
+                          adaptor:
+                            'return {\r\n  "status": 0,\r\n  "msg": "",\r\n  "data": {\r\n    "items": response.data.data.items\r\n  }\r\n}',
+                          headers: {
+                            "Accept-Language": "zh-Hans",
+                          },
+                        },
+                        required: true,
                       },
                       {
-                        type: "input-text",
+                        type: "select",
                         name: "usedFlag",
                         label: "启用标志",
+                        options: [
+                          {
+                            label: "禁用",
+                            value: "0",
+                          },
+                          {
+                            label: "启用",
+                            value: "1",
+                          },
+                        ],
+                        required: true,
                       },
                     ],
                   },
@@ -160,6 +233,7 @@ export default {
           actionType: "ajax",
           confirmText: "确定要删除？",
           api: "/xxx/batch-delete",
+          hidden: AuthValidator.check("delete"),
         },
       ],
       features: ["filter", "update", "create", "bulkDelete"],
@@ -189,51 +263,80 @@ export default {
             body: {
               type: "form",
               api: {
-                method: "post",
-                url: "/apiTest/api/WCSMS/basArea/getList",
-                requestAdaptor: "",
+                method: "put",
+                url: "/api/WCSMS/basArea/create",
                 adaptor:
-                  'return {\r\n  "status": 0,\r\n  "msg": "",\r\n  "data": {\r\n    "items": response.data.data.items,\r\n    "total": response.data.data.total\r\n  }\r\n}',
+                  'return {\r\n  "status": response.data.status,\r\n  "msg": response.data.msg,\r\n  "data": response.data.data,\r\n}',
                 messages: {},
                 replaceData: false,
-                headers: {
-                  "Accept-Language": "zh-Hans",
-                  Authorization:
-                    "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkMxN0U0NjEyRDA2ODEwQ0U0MTJBRTU0MzMyNTREMjE3IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2ODc3NDcxMDksImV4cCI6MTcxOTI4MzEwOSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDoyMDAwMyIsImF1ZCI6WyIwMDEtQkFTRSIsIjAwMS1JVEYiLCIwMDEtV0NTIiwiMDAxLVdNUyIsIjU5NC1JVEYiLCI1OTQtV0NTIiwiNTk0LVdNUyIsIjU5NFdtc1NlcnZpY2UiLCJCYXNlU2VydmljZSIsIkRpc0l0ZlNlcnZpY2UiLCJEaXNwYXRjaEludGVyZmFjZSIsIkRpc3BhdGNoU2VydmljZSIsIkxlc1NlcnZpY2UiLCJMT0NBTC1XQ1MiLCJMT0NBTC1XTVMiLCJQdWJsaWNHYXRld2F5IiwiUXVhcnR6U2VydmljZSIsIldjc0Jhc2VTZXJ2aWNlIiwiV0NTRFMiLCJXQ1NJUyIsIldDU01TIiwiV21zSXRmU2VydmljZSIsIldtc1NlcnZpY2UiXSwiY2xpZW50X2lkIjoicHVibGljLXdlYnNpdGUtY2xpZW50Iiwic3ViIjoiOGNlNTMxMGQtNzFlZS0wOTI1LTgyYWMtM2EwOWNkOWJkZWEyIiwiYXV0aF90aW1lIjoxNjg3NzQ3MTA5LCJpZHAiOiJsb2NhbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2dpdmVubmFtZSI6Iui2hee6p-euoeeQhuWRmCIsInBob25lX251bWJlciI6IjEyMzQ1IiwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjoiRmFsc2UiLCJlbWFpbCI6InN1cGVyYWRtaW5AeHh4LmNuIiwiZW1haWxfdmVyaWZpZWQiOiJGYWxzZSIsIm5hbWUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjg3NzQ3MTA5LCJzY29wZSI6WyIwMDEtQkFTRSIsIjAwMS1JVEYiLCIwMDEtV0NTIiwiMDAxLVdNUyIsIjU5NC1JVEYiLCI1OTQtV0NTIiwiNTk0LVdNUyIsIjU5NFdtc1NlcnZpY2UiLCJCYXNlU2VydmljZSIsIkRpc0l0ZlNlcnZpY2UiLCJEaXNwYXRjaEludGVyZmFjZSIsIkRpc3BhdGNoU2VydmljZSIsIkxlc1NlcnZpY2UiLCJMT0NBTC1XQ1MiLCJMT0NBTC1XTVMiLCJQdWJsaWNHYXRld2F5IiwiUXVhcnR6U2VydmljZSIsIldjc0Jhc2VTZXJ2aWNlIiwiV0NTRFMiLCJXQ1NJUyIsIldDU01TIiwiV21zSXRmU2VydmljZSIsIldtc1NlcnZpY2UiLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.wrffqeaTbZuw2J3tyXDebLIBQFb5kcGOlBADLITrKPUWh43DR68so4XLA7gndQ5MSvqUpcLkHRhJjGdEev2x-74-MR3oi_Ig2lUUFE8C4mlgl886O-WEvKX3silsfAeP89IjsA8FrF8KTaPWoGIzdojljnjqr9V1Zi9e4eMBb8PSefIEMsGmOg-vaCT7i8U-Hc8cqa1-hc1mPfVwsdA2nSI7uImFaL1k-rLZ9DZiS0CSiX2qQYhZ8engEIpyH1dBSRUkqaiFTjdYRYUhPGOLykYtblKQqB3AMiYYKYMnC1NxhziT3QAHpDIeQAyWPEvV2w-ZS6MgZtwf69cWNurARQ",
-                },
                 data: {
                   "&": "$$",
                   skipCount: 0,
                   maxResultCount: 20,
-                  areaNo: "${areaNo}",
-                  areaName: "${areaName}",
+                  binSplitFlag: "${binSplitFlagDesc}",
+                  sdType: "${sdTypeDesc}",
                 },
+                requestAdaptor: "",
+                dataType: "json",
               },
               body: [
                 {
                   type: "input-text",
                   name: "areaNo",
                   label: "区域编码",
+                  required: true,
                 },
                 {
                   type: "input-text",
                   name: "areaName",
                   label: "区域名称",
+                  required: true,
                 },
                 {
-                  type: "input-text",
                   name: "binSplitFlagDesc",
                   label: "库位拆分类型",
+                  type: "select",
+                  source: {
+                    method: "get",
+                    url: "/api/WCSMS/options/getBinSplitFlagOption",
+                    adaptor:
+                      'return {\r\n  "status": 0,\r\n  "msg": "",\r\n  "data": {\r\n    "items": response.data.data.items\r\n  }\r\n}',
+                    headers: {
+                      "Accept-Language": "zh-Hans",
+                    },
+                  },
+                  required: true,
                 },
                 {
-                  type: "input-text",
+                  type: "select",
                   name: "sdTypeDesc ",
                   label: "伸工位类型",
+                  source: {
+                    method: "get",
+                    url: "/api/WCSMS/options/getSdTypeOption",
+                    adaptor:
+                      'return {\r\n  "status": 0,\r\n  "msg": "",\r\n  "data": {\r\n    "items": response.data.data.items\r\n  }\r\n}',
+                    headers: {
+                      "Accept-Language": "zh-Hans",
+                    },
+                  },
+                  required: true,
                 },
                 {
-                  type: "input-text",
+                  type: "select",
                   name: "usedFlag",
                   label: "启用标志",
+                  options: [
+                    {
+                      label: "禁用",
+                      value: "0",
+                    },
+                    {
+                      label: "启用",
+                      value: "1",
+                    },
+                  ],
+                  required: true,
                 },
               ],
             },

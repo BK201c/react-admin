@@ -2,7 +2,6 @@ import { types, getEnv } from "mobx-state-tree";
 const MainStore = types
   .model("MainStore", {
     theme: "cxd",
-    // user: types.optional(User, {}),
     asideFixed: true,
     asideFolded: false,
     offScreen: false,

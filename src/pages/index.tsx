@@ -167,7 +167,7 @@ export default class Admin extends React.Component<AdminProps, any> {
             >
               <Space>
                 <Avatar icon={<UserOutlined />} />
-                admin
+                {appStore.userStore.getName()}
               </Space>
             </Dropdown>
           </div>

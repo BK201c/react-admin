@@ -72,7 +72,6 @@ export default function (): JSX.Element {
               timeout: 800,
             })
           : console.warn("[Notify]", type, msg);
-        // console.log("[notify]", type, msg);
       },
       alert,
       confirm,

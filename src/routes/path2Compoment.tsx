@@ -14,7 +14,6 @@ const lazyLoad = (path: string) => {
 };
 
 const modules = import.meta.glob("../pages/app/**/index.tsx");
-
 const dynamicRoutes = [
   ...Object.keys(modules).map((key) =>
     Object.assign(

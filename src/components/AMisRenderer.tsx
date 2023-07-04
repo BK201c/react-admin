@@ -1,5 +1,5 @@
 import * as React from "react";
-import { render as renderSchema } from "amis";
+import { render as renderSchema, registerFilter } from "amis";
 import { IMainStore } from "@/stores";
 import { getEnv } from "mobx-state-tree";
 import { inject, observer } from "mobx-react";
@@ -22,6 +22,11 @@ export default class AMisRenderer extends React.Component<RendererProps, any> {
   handleAction = (e: any, action: Action) => {
     console.warn(`没有识别的动作：${JSON.stringify(action)}`);
   };
+
+  componentDidMount() {
+    const currentPath = window.location.pathname;
+    console.log("当前路径", currentPath);
+  }
 
   constructor(props: RendererProps) {
     super(props);
