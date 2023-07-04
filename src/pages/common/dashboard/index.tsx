@@ -6,7 +6,7 @@ const schema = {
   body: [
     {
       type: "tpl",
-      tpl: "则是爱的方式收费多少",
+      tpl: "这是你刚刚新增的页面。",
       wrapperComponent: "",
       inline: false,
       id: "u:1857c90fc6fa",

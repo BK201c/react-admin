@@ -4,6 +4,7 @@ class UserStore {
   @observable
   name = "";
   token = "";
+  authRoutes = [];
 
   constructor() {
     this.name = localStorage.getItem("name") || "";
@@ -16,12 +17,12 @@ class UserStore {
   }
 
   @action
-  setName(name) {
+  setName(name: any) {
     this.name = name;
   }
 
   @action
-  setToken(token) {
+  setToken(token: string) {
     this.token = token;
   }
 

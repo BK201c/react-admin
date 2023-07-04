@@ -1,9 +1,16 @@
-import Dashboard from "@/pages/app/dashboard";
-import BasicForm from "@/pages/app/form/Basic";
-import Advanced from "../pages/app/form/Advanced";
-import Wizard from "../pages/app/form/Wizard";
+import React, { lazy, Suspense } from "react";
+import Dashboard from "@/pages/common/dashboard";
 import Login from "@/utils/Login";
 import Register from "@/utils/Register";
+
+const lazyLoad = (path: string) => {
+  const Module = lazy(() => import(`../pages/${path}`));
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Module />
+    </Suspense>
+  );
+};
 
 const path2components = [
   {
@@ -23,20 +30,8 @@ const path2components = [
     component: Dashboard,
   },
   {
-    path: "/form/basic",
-    component: BasicForm,
-  },
-  {
-    path: "/form/basic/advanced",
-    component: Advanced,
-  },
-  {
-    path: "/form/advanced",
-    component: Advanced,
-  },
-  {
-    path: "/form/wizard",
-    component: Wizard,
+    path: "/app/Base/BasArea",
+    component: () => lazyLoad("/app/Base/BasArea"),
   },
 ];
 

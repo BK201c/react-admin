@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
   matchPath,
+  Route,
 } from "react-router-dom";
 import { Space } from "antd";
 import { Avatar, Dropdown } from "antd";
@@ -38,7 +39,10 @@ function isActive(link: any, location: any) {
 
 function traverseTree(node: any) {
   node.label = node.permissionName;
-  node.path = node.clientRoute || "";
+
+  if (node?.permissionType === "page") {
+    node.path = node.clientRoute || "";
+  }
   if (
     !_.isEmpty(node.children) &&
     node.children[0].permissionType !== "button"
@@ -84,7 +88,6 @@ export default class Admin extends React.Component<AdminProps, any> {
 
   refreshMenu = () => {
     let pathname = this.props.location.pathname;
-    console.log("location:", pathname);
     // console.log("store.user:", appStore.userStore.name);
     if (
       pathname != "login" &&
@@ -259,7 +262,6 @@ export default class Admin extends React.Component<AdminProps, any> {
   render() {
     const store = this.props.store;
     let pathname = this.props.location.pathname;
-    // console.log("location:", pathname);
     if (pathname == "login" || pathname == "/") {
       return (
         <Switch>
