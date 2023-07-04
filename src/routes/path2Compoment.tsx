@@ -4,13 +4,28 @@ import Login from "@/utils/Login";
 import Register from "@/utils/Register";
 
 const lazyLoad = (path: string) => {
-  const Module = lazy(() => import(`../pages/${path}`));
+  const endPoint = path.slice(0, -10);
+  const Module = lazy(() => import(endPoint));
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Module />
     </Suspense>
   );
 };
+
+const modules = import.meta.glob("../pages/app/**/index.tsx");
+
+const dynamicRoutes = [
+  ...Object.keys(modules).map((key) =>
+    Object.assign(
+      {},
+      {
+        path: key.slice(8, -10),
+        component: () => lazyLoad(key),
+      }
+    )
+  ),
+];
 
 const path2components = [
   {
@@ -29,10 +44,7 @@ const path2components = [
     path: "/dashboard",
     component: Dashboard,
   },
-  {
-    path: "/app/Base/BasArea",
-    component: () => lazyLoad("/app/Base/BasArea"),
-  },
+  ...dynamicRoutes,
 ];
 
 export default path2components;

@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import * as React from "react";
 import { Route } from "react-router-dom";
 import path2components from "@/routes/path2Compoment";
 import { NotFound, Spinner } from "amis";
@@ -23,7 +23,7 @@ export default class RouterGuard extends React.Component<any, any> {
 
   refreshRoute = () => {
     const pathname = this.props.location.pathname;
-    console.log("guard pathname is ", pathname);
+    // console.log("guard pathname is ", pathname);
     if (this.state.pathname != pathname) {
       this.setState({ pathname: pathname });
       let path2ComponentItem = path2components.find((v) => {
