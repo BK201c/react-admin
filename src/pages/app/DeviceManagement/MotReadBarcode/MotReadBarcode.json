@@ -1,0 +1,569 @@
+{
+  "type": "page",
+  "title": "读码管理",
+  "body": [
+    {
+      "type": "crud",
+      "draggable": true,
+      "api": {
+        "method": "get",
+        "url": "/api/WCSMS/motReadBarcode/getList",
+        "requestAdaptor": "",
+        "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.totalCount\r\n  }\r\n}",
+        "messages": {},
+        "replaceData": false,
+        "data": {
+          "&": "$$",
+          "skipCount": "${(page - 1) * perPage}",
+          "maxResultCount": "${perPage}",
+          "locNo": "${locNo}",
+          "bcrNo": "${bcrNo}",
+          "bcrType": "${bcrType}",
+          "wcsNo": "${wcsNo}",
+          "usedFlag": "${usedFlag}"
+        },
+        "headers": {
+          "Accept-Language": "zh-Hans"
+        }
+      },
+      "columns": [
+        {
+          "name": "id",
+          "label": "序号",
+          "type": "text"
+        },
+        {
+          "name": "wcsNo",
+          "label": "WCS编号",
+          "searchable": {
+            "type": "input-text",
+            "name": "wcsNo",
+            "label": "WCS编号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "locNo",
+          "label": "站台编号",
+          "searchable": {
+            "type": "input-text",
+            "name": "locNo",
+            "label": "站台编号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "bcrNo",
+          "label": "读码器编号",
+          "searchable": {
+            "type": "input-text",
+            "name": "bcrNo",
+            "label": "读码器编号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "bcrTypeDesc",
+          "label": "读码器类型",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getBcrTypeOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "bcrType",
+            "label": "读码器类型"
+          },
+          "type": "text"
+        },
+        {
+          "name": "plcNo",
+          "label": "设备PLC编号",
+          "type": "text"
+        },
+        {
+          "name": "barcodeStatusDesc",
+          "label": "读码状态",
+          "type": "text"
+        },
+        {
+          "name": "barcode",
+          "label": "当前条码",
+          "type": "text"
+        },
+        {
+          "name": "barcodeOld",
+          "label": "记录条码",
+          "type": "text"
+        },
+        {
+          "name": "readType",
+          "label": "数据来源",
+          "type": "text"
+        },
+        {
+          "name": "dbReadOffset",
+          "label": "读偏移量",
+          "type": "text"
+        },
+        {
+          "name": "cmdNo",
+          "label": "指令号",
+          "type": "text"
+        },
+        {
+          "name": "okCount",
+          "label": "成功次数",
+          "type": "text"
+        },
+        {
+          "name": "ngCount",
+          "label": "失败次数",
+          "type": "text"
+        },
+        {
+          "name": "createBy",
+          "label": "创建人",
+          "type": "text"
+        },
+        {
+          "name": "createTime",
+          "label": "创建时间",
+          "type": "text"
+        },
+        {
+          "name": "updateBy",
+          "label": "更新人",
+          "type": "text"
+        },
+        {
+          "name": "updateTime",
+          "label": "更新时间",
+          "type": "text"
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "buttons": [
+            {
+              "label": "编辑",
+              "type": "button",
+              "actionType": "dialog",
+              "level": "link",
+              "dialog": {
+                "type": "dialog",
+                "title": "编辑",
+                "body": [
+                  {
+                    "type": "form",
+                    "api": {
+                      "method": "put",
+                      "url": "/api/WCSMS/motReadBarcode/update",
+                      "requestAdaptor": "",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                      "messages": {},
+                      "replaceData": false,
+                      "data": {
+                        "&": "$$",
+                        "id": "${id}",
+                        "bcrNo": "${bcrNo}",
+                        "dbReadOffset": "${dbReadOffset}",
+                        "locNo": "${locNo}",
+                        "plcNo": "${plcNo}",
+                        "readType": "${readType}",
+                        "wcsNo": "${wcsNo}"
+                      },
+                      "dataType": "json",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "body": [
+                      {
+                        "name": "locNo",
+                        "label": "站台编号",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "wcsNo",
+                        "label": "WCS编号",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "bcrNo",
+                        "label": "读码器编号",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "bcrType",
+                        "label": "读码器类型",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getBcrTypeOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "type": "select",
+                        "required": true
+                      },
+                      {
+                        "name": "plcNo",
+                        "label": "设备PLC编号",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "readType",
+                        "label": "数据来源",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getReadTypeOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "type": "select",
+                        "required": true
+                      },
+                      {
+                        "name": "dbReadOffset",
+                        "label": "读偏移量",
+                        "type": "input-text",
+                        "required": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "label": "读码模拟",
+              "type": "button",
+              "actionType": "dialog",
+              "level": "link",
+              "dialog": {
+                "type": "dialog",
+                "title": "读码模拟",
+                "body": []
+              }
+            },
+            {
+              "type": "button",
+              "label": "读码测试",
+              "level": "link",
+              "onEvent": {
+                "click": {
+                  "weight": 0,
+                  "actions": [
+                    {
+                      "outputVar": "responseResult",
+                      "actionType": "ajax",
+                      "args": {
+                        "options": {},
+                        "api": {
+                          "url": "/api/WCSMS/motReadBarcode/readBarcode",
+                          "method": "post",
+                          "requestAdaptor": "",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                          "messages": {},
+                          "data": {
+                            "&": "$$",
+                            "wcsNo": "${wcsNo}",
+                            "locNo": "${locNo}",
+                            "bcrNo": "${bcrNo}",
+                            "bcrType": "${bcrType}",
+                            "plcNo": "${plcNo}",
+                            "readType": "${readType}",
+                            "dbReadOffset": "${dbReadOffset}"
+                          },
+                          "replaceData": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "button",
+              "label": "清除读码",
+              "level": "link",
+              "onEvent": {
+                "click": {
+                  "weight": 0,
+                  "actions": [
+                    {
+                      "outputVar": "responseResult",
+                      "actionType": "ajax",
+                      "args": {
+                        "options": {},
+                        "api": {
+                          "url": "/api/WCSMS/motReadBarcode/clearBarcode",
+                          "method": "post",
+                          "requestAdaptor": "",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                          "messages": {},
+                          "data": {
+                            "&": "$$",
+                            "locNo": "${locNo}",
+                            "wcsNo": "${wcsNo}",
+                            "bcrNo": "${bcrNo}",
+                            "bcrType": "${bcrType}",
+                            "plcNo": "${plcNo}",
+                            "readType": "${readType}",
+                            "dbReadOffset": "${dbReadOffset}"
+                          },
+                          "replaceData": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "button",
+              "label": "排异常口",
+              "level": "link",
+              "onEvent": {
+                "click": {
+                  "weight": 0,
+                  "actions": [
+                    {
+                      "outputVar": "responseResult",
+                      "actionType": "ajax",
+                      "args": {
+                        "options": {},
+                        "api": {
+                          "url": "/api/WCSMS/motReadBarcode/sendNgLoc",
+                          "method": "post",
+                          "requestAdaptor": "",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                          "messages": {},
+                          "data": {
+                            "&": "$$",
+                            "locNo": "${locNo}",
+                            "wcsNo": "${wcsNo}",
+                            "bcrNo": "${bcrNo}",
+                            "bcrType": "${bcrType}",
+                            "plcNo": "${plcNo}",
+                            "readType": "${readType}",
+                            "dbReadOffset": "${dbReadOffset}"
+                          },
+                          "replaceData": false
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          "placeholder": "-",
+          "className": "",
+          "fixed": "",
+          "popOver": false,
+          "quickEdit": false
+        }
+      ],
+      "bulkActions": [
+        {
+          "type": "button",
+          "level": "danger",
+          "label": "删除",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认删除",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/motReadBarcode/delete",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}"
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "wcsNo",
+                        "label": "WCS编号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "locNo",
+                        "label": "站台编号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "bcrNo",
+                        "label": "读码器编号",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        }
+      ],
+      "features": ["filter", "update", "create", "bulkDelete"],
+      "filterColumnCount": 3,
+      "autoGenerateFilter": {
+        "columnsNum": 4,
+        "showBtnToolbar": true
+      },
+      "footable": {
+        "expand": "first",
+        "accordion": true
+      },
+      "perPageAvailable": [10],
+      "messages": {
+        "fetchSuccess": "查询成功",
+        "fetchFailed": ""
+      },
+      "hidden": false,
+      "headerToolbar": [
+        {
+          "label": "新增",
+          "type": "button",
+          "actionType": "dialog",
+          "level": "primary",
+          "dialog": {
+            "title": "新增",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/motReadBarcode/create",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                  "messages": {},
+                  "replaceData": false,
+                  "data": {
+                    "&": "$$",
+                    "bcrNo": "${bcrNo}",
+                    "dbReadOffset": "${dbReadOffset}",
+                    "locNo": "${locNo}",
+                    "plcNo": "${plcNo}",
+                    "readType": "${readType}",
+                    "wcsNo": "${wcsNo}"
+                  },
+                  "dataType": "json"
+                },
+                "body": [
+                  {
+                    "name": "locNo",
+                    "label": "站台编号",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "wcsNo",
+                    "label": "WCS编号",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "bcrNo",
+                    "label": "读码器编号",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "bcrType",
+                    "label": "读码器类型",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getBcrTypeOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "type": "select",
+                    "required": true
+                  },
+                  {
+                    "name": "plcNo",
+                    "label": "设备PLC编号",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "readType",
+                    "label": "数据来源",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getReadTypeOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "type": "select",
+                    "required": true
+                  },
+                  {
+                    "name": "dbReadOffset",
+                    "label": "读偏移量",
+                    "type": "input-text",
+                    "required": true
+                  }
+                ]
+              }
+            ],
+            "type": "dialog"
+          }
+        },
+        "bulkActions"
+      ],
+      "keepItemSelectionOnPageChange": false,
+      "perPage": 10,
+      "alwaysShowPagination": true,
+      "maxKeepItemSelectionLength": 100,
+      "pageField": "page",
+      "syncResponse2Query": false
+    }
+  ],
+  "regions": ["body", "header"],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "aside": []
+}

@@ -1,0 +1,661 @@
+{
+  "type": "page",
+  "title": "部件管理",
+  "body": [
+    {
+      "type": "crud",
+      "draggable": true,
+      "api": {
+        "method": "get",
+        "url": "/api/WCSMS/devDeviceParts/getList",
+        "requestAdaptor": "",
+        "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.totalCount\r\n  }\r\n}",
+        "messages": {},
+        "replaceData": false,
+        "data": {
+          "&": "$$",
+          "skipCount": "${(page - 1) * perPage}",
+          "maxResultCount": "${perPage}",
+          "devNo": "${devNo}",
+          "devName": "${devName}",
+          "partName": "${partName}",
+          "wcsNo": "${wcsNo}",
+          "usedFlag": "${usedFlag}",
+          "partNo": "${partNo}"
+        },
+        "headers": {
+          "Accept-Language": "zh-Hans"
+        }
+      },
+      "columns": [
+        {
+          "name": "id",
+          "label": "序号",
+          "type": "text"
+        },
+        {
+          "name": "devNo",
+          "label": "设备编码",
+          "searchable": {
+            "type": "input-text",
+            "name": "devNo",
+            "label": "设备编码"
+          },
+          "type": "text",
+          "toggled": false
+        },
+        {
+          "name": "partNo",
+          "label": "设备部件编号",
+          "searchable": {
+            "type": "input-text",
+            "name": "partNo",
+            "label": "设备部件编号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "partName",
+          "label": "设备部件名称",
+          "searchable": {
+            "type": "input-text",
+            "name": "partName",
+            "label": "设备部件名称"
+          },
+          "type": "text"
+        },
+        {
+          "name": "partTypeName",
+          "label": "部件类型",
+          "type": "text"
+        },
+        {
+          "name": "devName",
+          "label": "设备",
+          "type": "text"
+        },
+        {
+          "name": "partLocNo",
+          "label": "部件站台号",
+          "type": "text"
+        },
+        {
+          "name": "partPlcNo",
+          "label": "部件PLC编号",
+          "type": "text"
+        },
+        {
+          "name": "mainpartFlagDesc",
+          "label": "主部件标记",
+          "type": "text"
+        },
+        {
+          "name": "partIdx",
+          "label": "部件序号",
+          "type": "text"
+        },
+        {
+          "name": "usedFlag",
+          "label": "启用标志",
+          "type": "mapping",
+          "map": {
+            "0": "<span class='label label-danger'>禁用</span>",
+            "1": "<span class='label label-success'>启用</span>",
+            "*": "${usedFlag}"
+          },
+          "searchable": {
+            "type": "select",
+            "name": "usedFlag",
+            "label": "启用标志",
+            "options": [
+              {
+                "label": "禁用",
+                "value": "0"
+              },
+              {
+                "label": "启用",
+                "value": "1"
+              }
+            ]
+          }
+        },
+
+        {
+          "name": "createBy",
+          "label": "创建人",
+          "type": "text"
+        },
+        {
+          "name": "createTime",
+          "label": "创建时间",
+          "type": "text"
+        },
+        {
+          "name": "updateBy",
+          "label": "更新人",
+          "type": "text"
+        },
+        {
+          "name": "updateTime",
+          "label": "更新时间",
+          "type": "text"
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "buttons": [
+            {
+              "label": "编辑",
+              "type": "button",
+              "actionType": "dialog",
+              "level": "link",
+              "dialog": {
+                "type": "dialog",
+                "title": "编辑",
+                "body": [
+                  {
+                    "type": "form",
+                    "api": {
+                      "method": "put",
+                      "url": "/api/WCSMS/devDeviceParts/update",
+                      "requestAdaptor": "",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                      "messages": {},
+                      "replaceData": false,
+                      "data": {
+                        "&": "$$",
+                        "id": "${id}",
+                        "devNo": "${devNo}",
+                        "partNo": "${partNo}",
+                        "partName": "${partName}",
+                        "partType": "${partType}",
+                        "partLocNo": "${partLocNo}",
+                        "mainpartFlag": "${mainpartFlag}",
+                        "partIdx": "${partIdx}",
+                        "partPlcNo": "${partPlcNo}",
+                        "usedFlag": "${usedFlag}"
+                      },
+                      "dataType": "json",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "body": [
+                      {
+                        "name": "devNo",
+                        "label": "设备编号",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "partNo",
+                        "label": "设备部件编号",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "partName",
+                        "label": "设备部件名称",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "partType",
+                        "label": "部件类型",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "partLocNo",
+                        "label": "部件站台号",
+                        "type": "input-text",
+                        "required": true
+                      },
+
+                      {
+                        "name": "mainpartFlag",
+                        "label": "主部件标记",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getMainPartFlagOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "type": "select",
+                        "required": true
+                      },
+                      {
+                        "name": "partIdx",
+                        "label": "部件序号",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "partPlcNo",
+                        "label": "部件PLC编号",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getUsedFlagOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "type": "select"
+                      }
+                    ]
+                  }
+                ]
+              }
+            },
+            {
+              "label": "偏移量配置",
+              "type": "button",
+              "actionType": "dialog",
+              "level": "link",
+              "dialog": {
+                "type": "dialog",
+                "title": "偏移量配置",
+                "body": [
+                  {
+                    "type": "form",
+                    "api": {
+                      "method": "post",
+                      "url": "/api/WCSMS/devDevicePartsDb/create",
+                      "requestAdaptor": "",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                      "messages": {},
+                      "replaceData": false,
+                      "data": {
+                        "&": "$$",
+                        "dbNo": "${dbNo}",
+                        "dbType": "${dbType}",
+                        "partNo": "${partNo}",
+                        "partLength": "${partLength}",
+                        "partOffset": "${partOffset}"
+                      },
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "body": [
+                      {
+                        "name": "partNo",
+                        "label": "设备部件编号",
+                        "autoFill": {
+                          "partNo": "{partNo}"
+                        },
+                        "disabled": true,
+                        "type": "input-text"
+                      },
+                      {
+                        "name": "dbNo",
+                        "label": "DB块",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "dbType",
+                        "label": "DB类型",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getDbTypeOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "type": "select",
+                        "required": true
+                      },
+                      {
+                        "name": "partOffset",
+                        "label": "偏移量",
+                        "type": "input-text",
+                        "required": true
+                      },
+
+                      {
+                        "name": "partLength",
+                        "label": "长度",
+                        "type": "input-text",
+                        "required": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "placeholder": "-",
+          "className": "",
+          "fixed": "",
+          "popOver": false,
+          "quickEdit": false
+        }
+      ],
+      "bulkActions": [
+        {
+          "type": "button",
+          "label": "启用",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认启用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/devDeviceParts/setUsedFlag",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}",
+                    "usedFlag": 1
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "partNo",
+                        "label": "设备部件编号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "partName",
+                        "label": "设备部件名称",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        },
+        {
+          "type": "button",
+          "label": "禁用",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认启用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/devDeviceParts/setUsedFlag",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}",
+                    "usedFlag": 0
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "partNo",
+                        "label": "设备部件编号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "partName",
+                        "label": "设备部件名称",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        },
+        {
+          "type": "button",
+          "level": "danger",
+          "label": "删除",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认删除",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/devDeviceParts/delete",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}"
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "devNo",
+                        "label": "设备编码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        }
+      ],
+      "features": ["filter", "update", "create", "bulkDelete"],
+      "filterColumnCount": 3,
+      "autoGenerateFilter": {
+        "columnsNum": 2,
+        "showBtnToolbar": true
+      },
+      "footable": {
+        "expand": "first",
+        "accordion": true
+      },
+      "perPageAvailable": [10],
+      "messages": {
+        "fetchSuccess": "查询成功",
+        "fetchFailed": ""
+      },
+      "hidden": false,
+      "headerToolbar": [
+        {
+          "label": "新增",
+          "type": "button",
+          "actionType": "dialog",
+          "level": "primary",
+          "dialog": {
+            "title": "新增",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/devDeviceParts/create",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                  "messages": {},
+                  "replaceData": false,
+                  "data": {
+                    "&": "$$",
+                    "devNo": "${devNo}",
+                    "partNo": "${partNo}",
+                    "partName": "${partName}",
+                    "partType": "${partType}",
+                    "partLocNo": "${partLocNo}",
+                    "mainpartFlag": "${mainpartFlag}",
+                    "partIdx": "${partIdx}",
+                    "partPlcNo": "${partPlcNo}",
+                    "usedFlag": "${usedFlag}"
+                  },
+                  "headers": {
+                    "Accept-Language": "zh-Hans"
+                  }
+                },
+                "body": [
+                  {
+                    "name": "devNo",
+                    "label": "设备编号",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "partNo",
+                    "label": "设备部件编号",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "partName",
+                    "label": "设备部件名称",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "partType",
+                    "label": "部件类型",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "partLocNo",
+                    "label": "部件站台号",
+                    "type": "input-text",
+                    "required": true
+                  },
+
+                  {
+                    "name": "mainpartFlag",
+                    "label": "主部件标记",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getMainPartFlagOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "type": "select",
+                    "required": true
+                  },
+                  {
+                    "name": "partIdx",
+                    "label": "部件序号",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "partPlcNo",
+                    "label": "部件PLC编号",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "usedFlag",
+                    "label": "启用标志",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getUsedFlagOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "type": "select"
+                  }
+                ]
+              }
+            ],
+            "type": "dialog"
+          }
+        },
+        "bulkActions"
+      ],
+      "keepItemSelectionOnPageChange": false,
+      "perPage": 10,
+      "alwaysShowPagination": true,
+      "maxKeepItemSelectionLength": 100,
+      "pageField": "page",
+      "syncResponse2Query": false
+    }
+  ],
+  "regions": ["body", "header"],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "aside": []
+}

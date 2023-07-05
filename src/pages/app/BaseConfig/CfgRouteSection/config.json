@@ -1,0 +1,1017 @@
+{
+  "type": "page",
+  "title": "路段管理",
+  "body": [
+    {
+      "type": "crud",
+      "draggable": true,
+      "api": {
+        "method": "get",
+        "url": "/api/WCSMS/cfgRouteSection/getList",
+        "requestAdaptor": "",
+        "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.totalCount\r\n  }\r\n}",
+        "messages": {},
+        "replaceData": false,
+        "headers": {
+          "Accept-Language": "zh-Hans",
+          "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkMxN0U0NjEyRDA2ODEwQ0U0MTJBRTU0MzMyNTREMjE3IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2ODc3NDcxMDksImV4cCI6MTcxOTI4MzEwOSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDoyMDAwMyIsImF1ZCI6WyIwMDEtQkFTRSIsIjAwMS1JVEYiLCIwMDEtV0NTIiwiMDAxLVdNUyIsIjU5NC1JVEYiLCI1OTQtV0NTIiwiNTk0LVdNUyIsIjU5NFdtc1NlcnZpY2UiLCJCYXNlU2VydmljZSIsIkRpc0l0ZlNlcnZpY2UiLCJEaXNwYXRjaEludGVyZmFjZSIsIkRpc3BhdGNoU2VydmljZSIsIkxlc1NlcnZpY2UiLCJMT0NBTC1XQ1MiLCJMT0NBTC1XTVMiLCJQdWJsaWNHYXRld2F5IiwiUXVhcnR6U2VydmljZSIsIldjc0Jhc2VTZXJ2aWNlIiwiV0NTRFMiLCJXQ1NJUyIsIldDU01TIiwiV21zSXRmU2VydmljZSIsIldtc1NlcnZpY2UiXSwiY2xpZW50X2lkIjoicHVibGljLXdlYnNpdGUtY2xpZW50Iiwic3ViIjoiOGNlNTMxMGQtNzFlZS0wOTI1LTgyYWMtM2EwOWNkOWJkZWEyIiwiYXV0aF90aW1lIjoxNjg3NzQ3MTA5LCJpZHAiOiJsb2NhbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2dpdmVubmFtZSI6Iui2hee6p-euoeeQhuWRmCIsInBob25lX251bWJlciI6IjEyMzQ1IiwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjoiRmFsc2UiLCJlbWFpbCI6InN1cGVyYWRtaW5AeHh4LmNuIiwiZW1haWxfdmVyaWZpZWQiOiJGYWxzZSIsIm5hbWUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjg3NzQ3MTA5LCJzY29wZSI6WyIwMDEtQkFTRSIsIjAwMS1JVEYiLCIwMDEtV0NTIiwiMDAxLVdNUyIsIjU5NC1JVEYiLCI1OTQtV0NTIiwiNTk0LVdNUyIsIjU5NFdtc1NlcnZpY2UiLCJCYXNlU2VydmljZSIsIkRpc0l0ZlNlcnZpY2UiLCJEaXNwYXRjaEludGVyZmFjZSIsIkRpc3BhdGNoU2VydmljZSIsIkxlc1NlcnZpY2UiLCJMT0NBTC1XQ1MiLCJMT0NBTC1XTVMiLCJQdWJsaWNHYXRld2F5IiwiUXVhcnR6U2VydmljZSIsIldjc0Jhc2VTZXJ2aWNlIiwiV0NTRFMiLCJXQ1NJUyIsIldDU01TIiwiV21zSXRmU2VydmljZSIsIldtc1NlcnZpY2UiLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.wrffqeaTbZuw2J3tyXDebLIBQFb5kcGOlBADLITrKPUWh43DR68so4XLA7gndQ5MSvqUpcLkHRhJjGdEev2x-74-MR3oi_Ig2lUUFE8C4mlgl886O-WEvKX3silsfAeP89IjsA8FrF8KTaPWoGIzdojljnjqr9V1Zi9e4eMBb8PSefIEMsGmOg-vaCT7i8U-Hc8cqa1-hc1mPfVwsdA2nSI7uImFaL1k-rLZ9DZiS0CSiX2qQYhZ8engEIpyH1dBSRUkqaiFTjdYRYUhPGOLykYtblKQqB3AMiYYKYMnC1NxhziT3QAHpDIeQAyWPEvV2w-ZS6MgZtwf69cWNurARQ"
+        },
+        "data": {
+          "&": "$$",
+          "skipCount": "${(page - 1) * perPage}",
+          "maxResultCount": "${perPage}",
+          "endFlag": "${endFlagDesc}",
+          "traceTypeNo": "${traceTypeDesc}",
+          "elocScheckFlag": "${elocScheckFlagDesc}",
+          "devTypeNo": "${devTypeName}",
+          "cmdTypeNo": "${cmdTypeName}"
+        }
+      },
+      "columns": [
+        {
+          "name": "sectionNo",
+          "label": "路段编号",
+          "type": "text",
+          "searchable": {
+            "type": "input-text",
+            "name": "sectionNo",
+            "label": "路段编号"
+          }
+        },
+        {
+          "name": "sectionDec",
+          "label": "路段描述",
+          "type": "text",
+          "searchable": {
+            "type": "input-text",
+            "name": "sectionDec",
+            "label": "路段描述"
+          }
+        },
+        {
+          "name": "slocName",
+          "label": "起点站台",
+          "type": "text",
+          "searchable": {
+            "type": "input-text",
+            "name": "slocName",
+            "label": "起点站台"
+          }
+        },
+        {
+          "name": "elocName",
+          "label": "目标站台",
+          "type": "text",
+          "searchable": {
+            "type": "input-text",
+            "name": "elocName",
+            "label": "目标站台"
+          }
+        },
+        {
+          "name": "endFlagDesc",
+          "label": "终点标记",
+          "type": "text",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getEndFlagOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            }
+          }
+        },
+        {
+          "name": "traceTypeDesc",
+          "label": "跟踪反馈类型",
+          "type": "text",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getTraceTypeOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            }
+          }
+        },
+        {
+          "name": "elocScheckFlagDesc",
+          "label": "终点校验标记",
+          "type": "text",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getElocSCheckFlagOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            }
+          }
+        },
+        {
+          "name": "stepSize",
+          "label": "步长",
+          "type": "text"
+        },
+        {
+          "name": "flowSize",
+          "label": "容量",
+          "type": "text"
+        },
+        {
+          "name": "sectionPriority",
+          "label": "优先级",
+          "type": "text"
+        },
+        {
+          "name": "specialFlag",
+          "label": "特殊标记",
+          "type": "mapping",
+          "map": {
+            "0": "<span class='label label-danger'>不缠膜</span>",
+            "1": "<span class='label label-success'>缠膜</span>",
+            "*": "${specialFlag}"
+          },
+          "searchable": {
+            "type": "select",
+            "name": "specialFlag",
+            "label": "特殊标记",
+            "options": [
+              {
+                "label": "不缠膜",
+                "value": "0"
+              },
+              {
+                "label": "缠膜",
+                "value": "1"
+              }
+            ]
+          }
+        },
+        {
+          "name": "devName",
+          "label": "设备名称",
+          "type": "text"
+        },
+        {
+          "name": "devTypeName",
+          "label": "设备类型",
+          "type": "text",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getDevTypeOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            }
+          }
+        },
+        {
+          "name": "cmdTypeName",
+          "label": "指令类型",
+          "type": "text",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getOtherCmdTypeOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            }
+          }
+        },
+        {
+          "name": "usedFlag",
+          "label": "启用标志",
+          "type": "mapping",
+          "map": {
+            "0": "<span class='label label-danger'>禁用</span>",
+            "1": "<span class='label label-success'>启用</span>",
+            "*": "${usedFlag}"
+          },
+          "searchable": {
+            "type": "select",
+            "name": "usedFlag",
+            "label": "启用标志",
+            "options": [
+              {
+                "label": "禁用",
+                "value": "0"
+              },
+              {
+                "label": "启用",
+                "value": "1"
+              }
+            ]
+          }
+        },
+        {
+          "name": "createBy",
+          "label": "创建人",
+          "type": "text"
+        },
+        {
+          "name": "createTime",
+          "label": "创建时间",
+          "type": "text"
+        },
+        {
+          "name": "updateBy",
+          "label": "更新人",
+          "type": "text"
+        },
+        {
+          "name": "updateTime",
+          "label": "更新时间",
+          "type": "text"
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "hiddenOn": "${!auth.button.operationBtn}",
+          "buttons": [
+            {
+              "label": "编辑",
+              "type": "button",
+              "hiddenOn": "${!auth.button.edit}",
+              "actionType": "dialog",
+              "level": "link",
+              "dialog": {
+                "title": "编辑",
+                "body": [
+                  {
+                    "type": "form",
+                    "api": {
+                      "method": "put",
+                      "url": "/api/WCSMS/cfgRouteSection/update",
+                      "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": response.data.data,\r\n}",
+                      "messages": {},
+                      "replaceData": false,
+                      "data": {
+                        "&": "$$",
+                        "id": "${id}",
+                        "areaNo": "${areaNo}",
+                        "areaName": "${areaName}"
+                      },
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      },
+                      "requestAdaptor": "",
+                      "dataType": "json"
+                    },
+                    "body": [
+                      {
+                        "type": "input-text",
+                        "name": "sectionNo",
+                        "label": "路段编号",
+                        "required": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "sectionDec",
+                        "label": "路段描述"
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "slocNo",
+                        "label": "起点站台",
+                        "required": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "elocNo",
+                        "label": "目标站台",
+                        "required": true
+                      },
+                      {
+                        "type": "select",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getEndFlagOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "name": "endFlag",
+                        "label": "终点标记",
+                        "required": true
+                      },
+                      {
+                        "type": "select",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getOtherCmdTypeOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "name": "cmdTypeNo",
+                        "label": "指令类型",
+                        "required": true
+                      },
+                      {
+                        "type": "select",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getDevTypeOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "name": "devTypeNo",
+                        "label": "设备类型",
+                        "required": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "devNo",
+                        "label": "设备编号"
+                      },
+                      {
+                        "type": "select",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getElocSCheckFlagOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "name": "elocScheckFlag",
+                        "label": "终点校验标记",
+                        "required": true
+                      },
+                      {
+                        "name": "stepSize",
+                        "label": "步长",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "flowSize",
+                        "label": "容量",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "sectionPriority",
+                        "label": "优先级",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "type": "select",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getTraceTypeOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "name": "traceTypeNo",
+                        "label": "跟踪反馈类型",
+                        "required": true
+                      },
+                      {
+                        "name": "specialFlag",
+                        "label": "特殊标记",
+                        "type": "select",
+                        "options": [
+                          {
+                            "label": "不缠膜",
+                            "value": "0"
+                          },
+                          {
+                            "label": "缠膜",
+                            "value": "1"
+                          }
+                        ],
+                        "required": true
+                      },
+                      {
+                        "type": "select",
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "options": [
+                          {
+                            "label": "禁用",
+                            "value": "0"
+                          },
+                          {
+                            "label": "启用",
+                            "value": "1"
+                          }
+                        ],
+                        "required": true
+                      }
+                    ]
+                  }
+                ],
+                "type": "dialog"
+              }
+            }
+          ]
+        }
+      ],
+      "bulkActions": [
+        {
+          "type": "button",
+          "hiddenOn": "${!auth.button.enableAndDisable}",
+          "label": "启用",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认启用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/cfgRouteSection/setUsedFlag",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "Ids": "${ids|split}",
+                    "usedFlag": 1
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "sectionNo",
+                        "label": "路段编号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sectionDec",
+                        "label": "路段描述",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocName",
+                        "label": "起点站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocName",
+                        "label": "目标站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "endFlagDesc",
+                        "label": "终点标记",
+                        "type": "text"
+                      },
+                      {
+                        "name": "traceTypeDesc",
+                        "label": "跟踪反馈类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocScheckFlagDesc",
+                        "label": "终点校验标记",
+                        "type": "text"
+                      },
+                      {
+                        "name": "stepSize",
+                        "label": "步长",
+                        "type": "text"
+                      },
+                      {
+                        "name": "flowSize",
+                        "label": "容量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sectionPriority",
+                        "label": "优先级",
+                        "type": "text"
+                      },
+                      {
+                        "name": "specialFlag",
+                        "label": "特殊标记",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>不缠膜</span>",
+                          "1": "<span class='label label-success'>缠膜</span>",
+                          "*": "${specialFlag}"
+                        }
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devTypeName",
+                        "label": "设备类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdTypeName",
+                        "label": "指令类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        },
+        {
+          "type": "button",
+          "hiddenOn": "${!auth.button.enableAndDisable}",
+          "label": "禁用",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认启用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/cfgRouteSection/setUsedFlag",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "Ids": "${ids|split}",
+                    "usedFlag": 0
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "sectionNo",
+                        "label": "路段编号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sectionDec",
+                        "label": "路段描述",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocName",
+                        "label": "起点站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocName",
+                        "label": "目标站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "endFlagDesc",
+                        "label": "终点标记",
+                        "type": "text"
+                      },
+                      {
+                        "name": "traceTypeDesc",
+                        "label": "跟踪反馈类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocScheckFlagDesc",
+                        "label": "终点校验标记",
+                        "type": "text"
+                      },
+                      {
+                        "name": "stepSize",
+                        "label": "步长",
+                        "type": "text"
+                      },
+                      {
+                        "name": "flowSize",
+                        "label": "容量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sectionPriority",
+                        "label": "优先级",
+                        "type": "text"
+                      },
+                      {
+                        "name": "specialFlag",
+                        "label": "特殊标记",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>不缠膜</span>",
+                          "1": "<span class='label label-success'>缠膜</span>",
+                          "*": "${specialFlag}"
+                        }
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devTypeName",
+                        "label": "设备类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdTypeName",
+                        "label": "指令类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        },
+        {
+          "type": "button",
+          "hiddenOn": "${!auth.button.delete}",
+          "label": "删除",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认启用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/basArea/delete",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "Ids": "${ids|split}"
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "type": "text",
+                        "label": "区域编码",
+                        "name": "areaNo"
+                      },
+                      {
+                        "type": "text",
+                        "name": "areaName",
+                        "label": "区域名称"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        }
+      ],
+      "features": [
+        "filter",
+        "update",
+        "create",
+        "bulkDelete"
+      ],
+      "filterColumnCount": 3,
+      "autoGenerateFilter": {
+        "columnsNum": 2,
+        "showBtnToolbar": false
+      },
+      "footable": {
+        "expand": "first",
+        "accordion": true
+      },
+      "perPageAvailable": [
+        10
+      ],
+      "messages": {
+        "fetchSuccess": "查询成功",
+        "fetchFailed": ""
+      },
+      "hidden": false,
+      "headerToolbar": [
+        {
+          "label": "新增",
+          "type": "button",
+          "hiddenOn": "${!auth.button.create}",
+          "actionType": "dialog",
+          "level": "primary",
+          "dialog": {
+            "title": "新增",
+            "body": {
+              "type": "form",
+              "api": {
+                "method": "post",
+                "url": "/api/WCSMS/cfgRouteSection/create",
+                "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": response.data.data,\r\n}",
+                "messages": {},
+                "replaceData": false,
+                "data": {
+                  "&": "$$",
+                  "skipCount": 0,
+                  "maxResultCount": 20,
+                  "areaNo": "${areaNo}",
+                  "areaName": "${areaName}"
+                },
+                "headers": {
+                  "Accept-Language": "zh-Hans"
+                },
+                "requestAdaptor": "",
+                "dataType": "json"
+              },
+              "body": [
+                {
+                  "type": "input-text",
+                  "name": "sectionNo",
+                  "label": "路段编号",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "sectionDec",
+                  "label": "路段描述"
+                },
+                {
+                  "type": "input-text",
+                  "name": "slocNo",
+                  "label": "起点站台",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "elocNo",
+                  "label": "目标站台",
+                  "required": true
+                },
+                {
+                  "type": "select",
+                  "source": {
+                    "method": "get",
+                    "url": "/api/WCSMS/options/getEndFlagOption",
+                    "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                    "headers": {
+                      "Accept-Language": "zh-Hans"
+                    }
+                  },
+                  "name": "endFlag",
+                  "label": "终点标记",
+                  "required": true
+                },
+                {
+                  "type": "select",
+                  "source": {
+                    "method": "get",
+                    "url": "/api/WCSMS/options/getOtherCmdTypeOption",
+                    "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                    "headers": {
+                      "Accept-Language": "zh-Hans"
+                    }
+                  },
+                  "name": "cmdTypeNo",
+                  "label": "指令类型",
+                  "required": true
+                },
+                {
+                  "type": "select",
+                  "source": {
+                    "method": "get",
+                    "url": "/api/WCSMS/options/getDevTypeOption",
+                    "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                    "headers": {
+                      "Accept-Language": "zh-Hans"
+                    }
+                  },
+                  "name": "devTypeNo",
+                  "label": "设备类型",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "devNo",
+                  "label": "设备编号"
+                },
+                {
+                  "type": "select",
+                  "source": {
+                    "method": "get",
+                    "url": "/api/WCSMS/options/getElocSCheckFlagOption",
+                    "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                    "headers": {
+                      "Accept-Language": "zh-Hans"
+                    }
+                  },
+                  "name": "elocScheckFlag",
+                  "label": "终点校验标记",
+                  "required": true
+                },
+                {
+                  "name": "stepSize",
+                  "label": "步长",
+                  "type": "input-text",
+                  "required": true
+                },
+                {
+                  "name": "flowSize",
+                  "label": "容量",
+                  "type": "input-text",
+                  "required": true
+                },
+                {
+                  "name": "sectionPriority",
+                  "label": "优先级",
+                  "type": "input-text",
+                  "required": true
+                },
+                {
+                  "type": "select",
+                  "source": {
+                    "method": "get",
+                    "url": "/api/WCSMS/options/getTraceTypeOption",
+                    "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                    "headers": {
+                      "Accept-Language": "zh-Hans"
+                    }
+                  },
+                  "name": "traceTypeNo",
+                  "label": "跟踪反馈类型",
+                  "required": true
+                },
+                {
+                  "name": "specialFlag",
+                  "label": "特殊标记",
+                  "type": "select",
+                  "options": [
+                    {
+                      "label": "不缠膜",
+                      "value": "0"
+                    },
+                    {
+                      "label": "缠膜",
+                      "value": "1"
+                    }
+                  ],
+                  "required": true
+                },
+                {
+                  "type": "select",
+                  "name": "usedFlag",
+                  "label": "启用标志",
+                  "options": [
+                    {
+                      "label": "禁用",
+                      "value": "0"
+                    },
+                    {
+                      "label": "启用",
+                      "value": "1"
+                    }
+                  ],
+                  "required": true
+                }
+              ]
+            }
+          }
+        },
+        "bulkActions"
+      ]
+    }
+  ],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": [
+    "body",
+    "header"
+  ],
+  "aside": []
+}

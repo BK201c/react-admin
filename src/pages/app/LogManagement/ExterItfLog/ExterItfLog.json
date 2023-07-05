@@ -1,0 +1,150 @@
+{
+  "type": "page",
+  "title": "外部接口日志",
+  "body": [
+    {
+      "type": "crud",
+      "draggable": true,
+      "api": {
+        "method": "get",
+        "url": "/api/DispatchInterface/logExternalItf/getList",
+        "requestAdaptor": "",
+        "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.totalCount\r\n  }\r\n}",
+        "messages": {},
+        "replaceData": false,
+        "data": {
+          "&": "$$",
+          "skipCount": "${(page - 1) * perPage}",
+          "maxResultCount": "${perPage}",
+          "externalSystem": "${externalSystem}",
+          "dataFlow": "${dataFlow}",
+          "itfName": "${itfName}",
+          "inParam": "${inParam}",
+          "operationResult": "${operationResult}",
+          "operationResultType": "${operationResultType}",
+          "OperationTimeBegin": "${operationTimeBegin}",
+          "OperationTimeEnd": "${operationTimeEnd}"
+        }
+      },
+      "columns": [
+        {
+          "name": "ExternalSystem",
+          "label": "外部系统编号",
+          "searchable": {
+            "type": "input-text",
+            "name": "ExternalSystem",
+            "label": "外部系统编号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "DataFlow",
+          "label": "数据流向",
+          "searchable": {
+            "type": "input-text",
+            "name": "palletBarcode",
+            "label": "数据流向"
+          },
+          "type": "text"
+        },
+        {
+          "name": "ItfName",
+          "label": "接口名称",
+          "searchable": {
+            "type": "input-text",
+            "name": "ItfName",
+            "label": "接口名称"
+          },
+          "type": "text"
+        },
+        {
+          "name": "InParam",
+          "label": "请求报文",
+          "searchable": {
+            "type": "input-text",
+            "name": "InParam",
+            "label": "请求报文"
+          },
+          "type": "text"
+        },
+        {
+          "name": "OperationResultType",
+          "label": "调用结果",
+          "searchable": {
+            "type": "input-text",
+            "name": "OperationResultType",
+            "label": "调用结果"
+          },
+          "type": "text"
+        },
+        {
+          "name": "OperationResult",
+          "label": "返回报文",
+          "searchable": {
+            "type": "input-text",
+            "name": "OperationResult",
+            "label": "返回报文"
+          },
+          "type": "text"
+        },
+        {
+          "name": "OperationTime",
+          "label": "调用时间",
+          "type": "text",
+          "searchable": {
+            "type": "input-datetime",
+            "name": "OperationTimeBegin",
+            "label": "开始调用时间",
+            "format": "YYYY-MM-DD HH:mm:ss"
+          }
+        },
+        {
+          "name": "OperationTimeEnd",
+          "label": "结束调用时间",
+          "type": "text",
+          "toggled": false,
+          "searchable": {
+            "type": "input-datetime",
+            "name": "OperationTimeEnd",
+            "label": "结束调用时间",
+            "format": "YYYY-MM-DD HH:mm:ss"
+          }
+        }
+      ],
+      "bulkActions": [],
+      "features": ["filter", "update", "create", "bulkDelete"],
+      "filterColumnCount": 3,
+      "autoGenerateFilter": {
+        "columnsNum": 4,
+        "showBtnToolbar": true
+      },
+      "footable": {
+        "expand": "first",
+        "accordion": true
+      },
+      "perPageAvailable": [10],
+      "messages": {
+        "fetchSuccess": "查询成功",
+        "fetchFailed": ""
+      },
+      "hidden": false,
+      "headerToolbar": [
+        {
+          "type": "bulk-actions"
+        }
+      ],
+      "keepItemSelectionOnPageChange": false,
+      "perPage": 10,
+      "alwaysShowPagination": true,
+      "maxKeepItemSelectionLength": 100,
+      "pageField": "page",
+      "syncResponse2Query": false
+    }
+  ],
+  "regions": ["body", "header"],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "aside": []
+}

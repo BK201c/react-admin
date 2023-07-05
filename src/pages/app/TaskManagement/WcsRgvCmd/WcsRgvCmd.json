@@ -1,0 +1,1466 @@
+{
+  "type": "page",
+  "title": "RGV指令",
+  "body": [
+    {
+      "type": "crud",
+      "draggable": true,
+      "api": {
+        "method": "get",
+        "url": "/api/WCSMS/wcsRgvCmd/getList",
+        "requestAdaptor": "",
+        "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.totalCount\r\n  }\r\n}",
+        "messages": {},
+        "replaceData": false,
+        "data": {
+          "&": "$$",
+          "skipCount": "${(page - 1) * perPage}",
+          "maxResultCount": "${perPage}",
+          "taskNo": "${taskNo}",
+          "cmdNo": "${cmdNo}",
+          "cmdTypeNo": "${cmdTypeNo}",
+          "cmdStatus": "${cmdStatus}",
+          "palletBarcode": "${palletBarcode}",
+          "palletTypeCode": "${palletTypeCode}",
+          "slocNo": "${slocNo}",
+          "realElocNo": "${realElocNo}",
+          "elocNo": "${elocNo}",
+          "sbinNo": "${sbinNo}",
+          "ebinNo": "${ebinNo}",
+          "errCode": "${errCode}",
+          "devNo": "${devNo}",
+          "createTimeStart": "${createTimeStart}",
+          "createTimeEnd": "${createTimeEnd}"
+        }
+      },
+      "columns": [
+        {
+          "name": "id",
+          "label": "序号",
+          "type": "text"
+        },
+        {
+          "name": "palletBarcode",
+          "label": "托盘条码",
+          "searchable": {
+            "type": "input-text",
+            "name": "palletBarcode",
+            "label": "托盘条码"
+          },
+          "type": "text"
+        },
+        {
+          "name": "cmdNo",
+          "label": "指令号",
+          "searchable": {
+            "type": "input-text",
+            "name": "cmdNo",
+            "label": "指令号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "taskNo",
+          "label": "任务号",
+          "searchable": {
+            "type": "input-text",
+            "name": "taskNo",
+            "label": "任务号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "cmdTypeName",
+          "label": "指令类型",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getCmdTypeOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "cmdTypeName",
+            "label": "指令类型"
+          },
+          "type": "text"
+        },
+        {
+          "name": "cmdStatusDesc",
+          "label": "指令状态",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getCmdStatusOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "cmdStatus",
+            "label": "指令状态"
+          },
+          "type": "text"
+        },
+        {
+          "name": "taskPriority",
+          "label": "任务优先级",
+          "type": "text"
+        },
+        {
+          "name": "palletTypeName",
+          "label": "托盘类型",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getPalletTypeFlagOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "palletTypeName",
+            "label": "托盘类型"
+          },
+          "type": "text"
+        },
+        {
+          "name": "slocTypeName",
+          "label": "起点站台类型",
+          "type": "text"
+        },
+        {
+          "name": "slocName",
+          "label": "起点站台",
+          "searchable": {
+            "type": "input-text",
+            "name": "slocName",
+            "label": "起点站台"
+          },
+          "type": "text"
+        },
+        {
+          "name": "elocTypeName",
+          "label": "目标站台类型",
+          "type": "text"
+        },
+        {
+          "name": "elocName",
+          "label": "目标站台",
+          "searchable": {
+            "type": "input-text",
+            "name": "elocName",
+            "label": "目标站台"
+          },
+          "type": "text"
+        },
+        {
+          "name": "feedbackStatusDesc",
+          "label": "反馈状态",
+          "type": "text"
+        },
+        {
+          "name": "feedbackCount",
+          "label": "反馈次数",
+          "type": "text"
+        },
+        {
+          "name": "feedbackpalletBarcode",
+          "label": "反馈托盘条码",
+          "type": "text"
+        },
+        {
+          "name": "feedbackDesc",
+          "label": "反馈描述",
+          "type": "text"
+        },
+        {
+          "name": "areaName",
+          "label": "区域",
+          "type": "text"
+        },
+        {
+          "name": "devName",
+          "label": "设备名称",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getSrmDevNoOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "devNo",
+            "label": "设备名称"
+          },
+          "type": "text"
+        },
+        {
+          "name": "covExecStep",
+          "label": "执行步骤",
+          "type": "text"
+        },
+        {
+          "name": "activeTypeDesc",
+          "label": "动作类型",
+          "type": "text"
+        },
+        {
+          "name": "matLength",
+          "label": "长",
+          "type": "text"
+        },
+        {
+          "name": "matWidht",
+          "label": "宽",
+          "type": "text"
+        },
+        {
+          "name": "matHeight",
+          "label": "高",
+          "type": "text"
+        },
+        {
+          "name": "matWeight",
+          "label": "重量",
+          "type": "text"
+        },
+        {
+          "name": "matQty",
+          "label": "数量",
+          "type": "text"
+        },
+        {
+          "name": "sourceByDesc",
+          "label": "任务来源",
+          "type": "text"
+        },
+        {
+          "name": "errCodeDesc",
+          "label": "异常代码",
+          "type": "text"
+        },
+        {
+          "name": "errMsg",
+          "label": "异常信息",
+          "type": "text"
+        },
+        {
+          "name": "taskLog",
+          "label": "日志信息",
+          "type": "text"
+        },
+        {
+          "name": "taskDesc",
+          "label": "描述信息",
+          "type": "text"
+        },
+        {
+          "name": "specialFlagDesc",
+          "label": "是否缠膜",
+          "type": "text"
+        },
+        {
+          "name": "elocScheckFlagDesc",
+          "label": "终点校验标记",
+          "type": "text"
+        },
+        {
+          "name": "sectionNo",
+          "label": "当前路段号",
+          "type": "text"
+        },
+        {
+          "name": "createBy",
+          "label": "创建人",
+          "type": "text"
+        },
+        {
+          "name": "createTime",
+          "label": "创建时间",
+          "type": "text",
+          "searchable": {
+            "type": "input-datetime",
+            "name": "createTimeStart",
+            "label": "开始创建时间",
+            "format": "YYYY-MM-DD HH:mm:ss"
+          }
+        },
+        {
+          "name": "createTimeEnd",
+          "label": "结束创建时间",
+          "type": "text",
+          "toggled": false,
+          "searchable": {
+            "type": "input-datetime",
+            "name": "createTimeEnd",
+            "label": "结束创建时间",
+            "format": "YYYY-MM-DD HH:mm:ss"
+          }
+        },
+        {
+          "name": "updateBy",
+          "label": "更新人",
+          "type": "text"
+        },
+        {
+          "name": "updateTime",
+          "label": "更新时间",
+          "type": "text"
+        },
+        {
+          "name": "executeTime",
+          "label": "执行时间",
+          "type": "text"
+        },
+        {
+          "name": "finishTime",
+          "label": "完成时间",
+          "type": "text"
+        }
+      ],
+      "bulkActions": [
+        {
+          "type": "button",
+          "level": "danger",
+          "label": "删除",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认删除",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/WcsRgvTask/delete",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}"
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "id",
+                        "label": "序号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "palletBarcode",
+                        "label": "托盘条码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdNo",
+                        "label": "指令号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskNo",
+                        "label": "任务号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdTypeName",
+                        "label": "指令类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdStatusDesc",
+                        "label": "指令状态",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskPriority",
+                        "label": "任务优先级",
+                        "type": "text"
+                      },
+                      {
+                        "name": "palletTypeName",
+                        "label": "托盘类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocTypeName",
+                        "label": "起点站台类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocName",
+                        "label": "起点站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocTypeName",
+                        "label": "目标站台类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocName",
+                        "label": "目标站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackStatusDesc",
+                        "label": "反馈状态",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackCount",
+                        "label": "反馈次数",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackpalletBarcode",
+                        "label": "反馈托盘条码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackDesc",
+                        "label": "反馈描述",
+                        "type": "text"
+                      },
+                      {
+                        "name": "areaName",
+                        "label": "区域",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "covExecStep",
+                        "label": "执行步骤",
+                        "type": "text"
+                      },
+                      {
+                        "name": "activeTypeDesc",
+                        "label": "动作类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matLength",
+                        "label": "长",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWidht",
+                        "label": "宽",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matHeight",
+                        "label": "高",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWeight",
+                        "label": "重量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matQty",
+                        "label": "数量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sourceByDesc",
+                        "label": "任务来源",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errCodeDesc",
+                        "label": "异常代码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errMsg",
+                        "label": "异常信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskLog",
+                        "label": "日志信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskDesc",
+                        "label": "描述信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "specialFlagDesc",
+                        "label": "是否缠膜",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocScheckFlagDesc",
+                        "label": "终点校验标记",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sectionNo",
+                        "label": "当前路段号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "executeTime",
+                        "label": "执行时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "finishTime",
+                        "label": "完成时间",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        },
+        {
+          "label": "指令重发",
+          "type": "button",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认指令重发",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/WcsRgvTask/cmdReload",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}"
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "id",
+                        "label": "序号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "palletBarcode",
+                        "label": "托盘条码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdNo",
+                        "label": "指令号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskNo",
+                        "label": "任务号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdTypeName",
+                        "label": "指令类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdStatusDesc",
+                        "label": "指令状态",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskPriority",
+                        "label": "任务优先级",
+                        "type": "text"
+                      },
+                      {
+                        "name": "palletTypeName",
+                        "label": "托盘类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocTypeName",
+                        "label": "起点站台类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocName",
+                        "label": "起点站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocTypeName",
+                        "label": "目标站台类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocName",
+                        "label": "目标站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackStatusDesc",
+                        "label": "反馈状态",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackCount",
+                        "label": "反馈次数",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackpalletBarcode",
+                        "label": "反馈托盘条码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackDesc",
+                        "label": "反馈描述",
+                        "type": "text"
+                      },
+                      {
+                        "name": "areaName",
+                        "label": "区域",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "covExecStep",
+                        "label": "执行步骤",
+                        "type": "text"
+                      },
+                      {
+                        "name": "activeTypeDesc",
+                        "label": "动作类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matLength",
+                        "label": "长",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWidht",
+                        "label": "宽",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matHeight",
+                        "label": "高",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWeight",
+                        "label": "重量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matQty",
+                        "label": "数量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sourceByDesc",
+                        "label": "任务来源",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errCodeDesc",
+                        "label": "异常代码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errMsg",
+                        "label": "异常信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskLog",
+                        "label": "日志信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskDesc",
+                        "label": "描述信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "specialFlagDesc",
+                        "label": "是否缠膜",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocScheckFlagDesc",
+                        "label": "终点校验标记",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sectionNo",
+                        "label": "当前路段号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "executeTime",
+                        "label": "执行时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "finishTime",
+                        "label": "完成时间",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        },
+        {
+          "label": "强制完成",
+          "type": "button",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认强制完成",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/WcsRgvTask/cmdForceFinish",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}"
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "id",
+                        "label": "序号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "palletBarcode",
+                        "label": "托盘条码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdNo",
+                        "label": "指令号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskNo",
+                        "label": "任务号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdTypeName",
+                        "label": "指令类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdStatusDesc",
+                        "label": "指令状态",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskPriority",
+                        "label": "任务优先级",
+                        "type": "text"
+                      },
+                      {
+                        "name": "palletTypeName",
+                        "label": "托盘类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocTypeName",
+                        "label": "起点站台类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocName",
+                        "label": "起点站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocTypeName",
+                        "label": "目标站台类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocName",
+                        "label": "目标站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackStatusDesc",
+                        "label": "反馈状态",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackCount",
+                        "label": "反馈次数",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackpalletBarcode",
+                        "label": "反馈托盘条码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackDesc",
+                        "label": "反馈描述",
+                        "type": "text"
+                      },
+                      {
+                        "name": "areaName",
+                        "label": "区域",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "covExecStep",
+                        "label": "执行步骤",
+                        "type": "text"
+                      },
+                      {
+                        "name": "activeTypeDesc",
+                        "label": "动作类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matLength",
+                        "label": "长",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWidht",
+                        "label": "宽",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matHeight",
+                        "label": "高",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWeight",
+                        "label": "重量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matQty",
+                        "label": "数量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sourceByDesc",
+                        "label": "任务来源",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errCodeDesc",
+                        "label": "异常代码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errMsg",
+                        "label": "异常信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskLog",
+                        "label": "日志信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskDesc",
+                        "label": "描述信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "specialFlagDesc",
+                        "label": "是否缠膜",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocScheckFlagDesc",
+                        "label": "终点校验标记",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sectionNo",
+                        "label": "当前路段号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "executeTime",
+                        "label": "执行时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "finishTime",
+                        "label": "完成时间",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        },
+        {
+          "label": "正常完成",
+          "type": "button",
+
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认正常完成",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/WcsRgvTask/cmdNormalFinish",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}"
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "id",
+                        "label": "序号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "palletBarcode",
+                        "label": "托盘条码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdNo",
+                        "label": "指令号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskNo",
+                        "label": "任务号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdTypeName",
+                        "label": "指令类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdStatusDesc",
+                        "label": "指令状态",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskPriority",
+                        "label": "任务优先级",
+                        "type": "text"
+                      },
+                      {
+                        "name": "palletTypeName",
+                        "label": "托盘类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocTypeName",
+                        "label": "起点站台类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocName",
+                        "label": "起点站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocTypeName",
+                        "label": "目标站台类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocName",
+                        "label": "目标站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackStatusDesc",
+                        "label": "反馈状态",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackCount",
+                        "label": "反馈次数",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackpalletBarcode",
+                        "label": "反馈托盘条码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "feedbackDesc",
+                        "label": "反馈描述",
+                        "type": "text"
+                      },
+                      {
+                        "name": "areaName",
+                        "label": "区域",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "covExecStep",
+                        "label": "执行步骤",
+                        "type": "text"
+                      },
+                      {
+                        "name": "activeTypeDesc",
+                        "label": "动作类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matLength",
+                        "label": "长",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWidht",
+                        "label": "宽",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matHeight",
+                        "label": "高",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWeight",
+                        "label": "重量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matQty",
+                        "label": "数量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sourceByDesc",
+                        "label": "任务来源",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errCodeDesc",
+                        "label": "异常代码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errMsg",
+                        "label": "异常信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskLog",
+                        "label": "日志信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskDesc",
+                        "label": "描述信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "specialFlagDesc",
+                        "label": "是否缠膜",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocScheckFlagDesc",
+                        "label": "终点校验标记",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sectionNo",
+                        "label": "当前路段号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "executeTime",
+                        "label": "执行时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "finishTime",
+                        "label": "完成时间",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        }
+      ],
+      "features": ["filter", "update", "create", "bulkDelete"],
+      "filterColumnCount": 3,
+      "autoGenerateFilter": {
+        "columnsNum": 4,
+        "showBtnToolbar": true
+      },
+      "footable": {
+        "expand": "first",
+        "accordion": true
+      },
+      "perPageAvailable": [10],
+      "messages": {
+        "fetchSuccess": "查询成功",
+        "fetchFailed": ""
+      },
+      "hidden": false,
+      "headerToolbar": [
+        {
+          "label": "新增",
+          "type": "button",
+          "actionType": "dialog",
+          "level": "primary",
+          "dialog": {
+            "title": "新增",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/wcsRgvCmd/create",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                  "messages": {},
+                  "replaceData": false,
+                  "data": {
+                    "&": "$$",
+                    "areaNo": "${areaNo}",
+                    "taskNo": "${taskNo}",
+                    "palletBarcode": "${palletBarcode}",
+                    "cmdTypeNo": "${cmdTypeNo}",
+                    "cmdStatus": 10,
+                    "palletTypeCode": "${palletTypeCode}",
+                    "slocNo": "${slocNo}",
+                    "elocNo": "${elocNo}",
+                    "realElocNo": "${realElocNo}",
+                    "sbinNo": "${sbinNo}",
+                    "ebinNo": "${ebinNo}",
+                    "errCode": "${errCode}",
+                    "devNo": "${devNo}",
+                    "traceType": "${traceType}",
+                    "taskPriority": "${taskPriority}"
+                  }
+                },
+                "body": [
+                  {
+                    "name": "areaName",
+                    "label": "区域",
+                    "type": "select",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getAreaOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "required": true
+                  },
+                  {
+                    "name": "taskNo",
+                    "label": "任务号",
+                    "type": "input-text"
+                  },
+                  {
+                    "name": "palletBarcode",
+                    "label": "托盘条码",
+                    "type": "input-text"
+                  },
+                  {
+                    "name": "taskPriority",
+                    "label": "任务优先级",
+                    "type": "input-text"
+                  },
+
+                  {
+                    "name": "cmdTypeName",
+                    "label": "指令类型",
+                    "type": "select",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getOtherCmdTypeOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "required": true
+                  },
+                  {
+                    "name": "devNo",
+                    "label": "设备",
+                    "type": "select",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getSrmDevNoOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "required": true
+                  },
+                  {
+                    "name": "slocName",
+                    "label": "起点站台",
+                    "type": "input-text"
+                  },
+                  {
+                    "name": "elocName",
+                    "label": "目标站台",
+                    "type": "input-text"
+                  },
+                  {
+                    "name": "traceType",
+                    "label": "跟踪反馈类型",
+                    "type": "select",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getTraceTypeOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "required": true
+                  },
+                  {
+                    "name": "taskLog",
+                    "label": "日志信息",
+                    "type": "input-text"
+                  }
+                ]
+              }
+            ],
+            "type": "dialog"
+          }
+        },
+
+        {
+          "type": "bulk-actions"
+        }
+      ],
+      "keepItemSelectionOnPageChange": false,
+      "perPage": 10,
+      "alwaysShowPagination": true,
+      "maxKeepItemSelectionLength": 100,
+      "pageField": "page",
+      "syncResponse2Query": false
+    }
+  ],
+  "regions": ["body", "header"],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "aside": []
+}

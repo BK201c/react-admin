@@ -1,0 +1,306 @@
+{
+  "type": "page",
+  "title": "设备监控",
+  "body": [
+    {
+      "type": "crud",
+      "draggable": true,
+      "api": {
+        "method": "get",
+        "url": "/api/WCSMS/motDevParts/getList",
+        "requestAdaptor": "",
+        "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.totalCount\r\n  }\r\n}",
+        "messages": {},
+        "replaceData": false,
+        "data": {
+          "&": "$$",
+          "skipCount": "${(page - 1) * perPage}",
+          "maxResultCount": "${perPage}",
+          "devNo": "${devNo}",
+          "partNo": "${partNo}",
+          "partLocNo": "${partLocNo}",
+          "palletBarcode": "${palletBarcode}",
+          "oldpalletBarcode": "${oldPalletBarcode}",
+          "readpalletBarcode": "${readPalletBarcode}",
+          "cmdNo": "${cmdNo}",
+          "devRunMode": "${devRunMode}",
+          "isFree": "${isFree}",
+          "isHasGoods": "${isHasGoods}",
+          "isAlarming": "${isAlarming}",
+          "isInSitu": "${isInSitu}",
+          "usedFlag": "${usedFlag}"
+        },
+        "headers": {
+          "Accept-Language": "zh-Hans"
+        }
+      },
+      "columns": [
+        {
+          "name": "id",
+          "label": "序号",
+          "type": "text"
+        },
+        {
+          "name": "devNo",
+          "label": "设备编码",
+          "searchable": {
+            "type": "input-text",
+            "name": "devNo",
+            "label": "设备编码"
+          },
+          "type": "text"
+        },
+        {
+          "name": "partNo",
+          "label": "部件编号",
+          "searchable": {
+            "type": "input-text",
+            "name": "partNo",
+            "label": "部件编号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "partLocNo",
+          "label": "站台编号",
+          "searchable": {
+            "type": "input-text",
+            "name": "partLocNo",
+            "label": "站台编号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "devRunModeDesc",
+          "label": "运行模式",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getDevRunModeOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "devRunMode",
+            "label": "运行模式"
+          },
+          "type": "text"
+        },
+        {
+          "name": "isFreeDesc",
+          "label": "是否空闲",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getIsFreeOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "isFree",
+            "label": "是否空闲"
+          },
+          "type": "text"
+        },
+        {
+          "name": "isHasGoodsDesc",
+          "label": "是否有载",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getIsHasGoodsOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "isHasGoods",
+            "label": "是否有载"
+          },
+          "type": "text"
+        },
+        {
+          "name": "isInSituDesc",
+          "label": "是否原位",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getIsInSituOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "isInSituDesc",
+            "label": "是否原位"
+          },
+          "type": "text"
+        },
+        {
+          "name": "isAlarmingDesc",
+          "label": "是否报警",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getIsAlarmingOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "isAlarming",
+            "label": "是否报警"
+          },
+          "type": "text"
+        },
+        {
+          "name": "alarmCode",
+          "label": "报警代码",
+          "type": "text"
+        },
+        {
+          "name": "alarmDesc",
+          "label": "报警信息",
+          "type": "text"
+        },
+        {
+          "name": "palletBarcode",
+          "label": "托盘号",
+          "searchable": {
+            "type": "input-text",
+            "name": "palletBarcode",
+            "label": "托盘号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "oldpalletBarcode",
+          "label": "上一个托盘号",
+          "searchable": {
+            "type": "input-text",
+            "name": "oldpalletBarcode",
+            "label": "上一个托盘号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "readpalletBarcode",
+          "label": "读取托盘号",
+          "searchable": {
+            "type": "input-text",
+            "name": "readpalletBarcode",
+            "label": "读取托盘号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "cmdNo",
+          "label": "指令号",
+          "searchable": {
+            "type": "input-text",
+            "name": "cmdNo",
+            "label": "指令号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "currentX",
+          "label": "当前X坐标",
+          "type": "text"
+        },
+        {
+          "name": "currentY",
+          "label": "当前Y坐标",
+          "type": "text"
+        },
+        {
+          "name": "currentZ",
+          "label": "当前Z坐标",
+          "type": "text"
+        },
+        {
+          "name": "usedFlag",
+          "label": "启用标志",
+          "type": "mapping",
+          "map": {
+            "0": "<span class='label label-danger'>禁用</span>",
+            "1": "<span class='label label-success'>启用</span>",
+            "*": "${usedFlag}"
+          },
+          "searchable": {
+            "type": "select",
+            "name": "usedFlag",
+            "label": "启用标志",
+            "options": [
+              {
+                "label": "禁用",
+                "value": "0"
+              },
+              {
+                "label": "启用",
+                "value": "1"
+              }
+            ]
+          }
+        },
+        {
+          "name": "createBy",
+          "label": "创建人",
+          "type": "text"
+        },
+        {
+          "name": "createTime",
+          "label": "创建时间",
+          "type": "text"
+        },
+        {
+          "name": "updateBy",
+          "label": "更新人",
+          "type": "text"
+        },
+        {
+          "name": "updateTime",
+          "label": "更新时间",
+          "type": "text"
+        }
+      ],
+      "bulkActions": [],
+      "features": [],
+      "filterColumnCount": 3,
+      "autoGenerateFilter": {
+        "columnsNum": 4,
+        "showBtnToolbar": true
+      },
+      "footable": {
+        "expand": "first",
+        "accordion": true
+      },
+      "perPageAvailable": [10],
+      "messages": {
+        "fetchSuccess": "查询成功",
+        "fetchFailed": ""
+      },
+      "hidden": false,
+      "headerToolbar": ["bulkActions"],
+      "keepItemSelectionOnPageChange": false,
+      "perPage": 10,
+      "alwaysShowPagination": true,
+      "maxKeepItemSelectionLength": 100,
+      "pageField": "page",
+      "syncResponse2Query": false
+    }
+  ],
+  "regions": ["body", "header"],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "aside": []
+}

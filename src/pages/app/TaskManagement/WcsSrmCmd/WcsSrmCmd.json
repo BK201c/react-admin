@@ -1,0 +1,639 @@
+{
+  "type": "page",
+  "title": "堆垛机指令",
+  "body": [
+    {
+      "type": "crud",
+      "draggable": true,
+      "api": {
+        "method": "get",
+        "url": "/api/WCSMS/wcsSrmCmd/getList",
+        "requestAdaptor": "",
+        "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.totalCount\r\n  }\r\n}",
+        "messages": {},
+        "replaceData": false,
+        "data": {
+          "&": "$$",
+          "skipCount": "${(page - 1) * perPage}",
+          "maxResultCount": "${perPage}",
+          "cmdNo": "${cmdNo}",
+          "taskNo": "${taskNo}",
+          "palletBarcode": "${palletBarcode}",
+          "cmdTypeNo": "${cmdTypeNo}",
+          "cmdStatus": "${cmdStatus}",
+          "palletTypeCode": "${palletTypeCode}",
+          "slocNo": "${slocNo}",
+          "elocNo": "${elocNo}",
+          "realElocNo": "${realElocNo}",
+          "sbinNo": "${sbinNo}",
+          "ebinNo": "${ebinNo}",
+          "errCode": "${errCode}",
+          "devNo": "${devNo}",
+          "createTimeStart": "${createTimeStart}",
+          "createTimeEnd": "${createTimeEnd}"
+        }
+      },
+      "columns": [
+        {
+          "name": "id",
+          "label": "序号",
+          "type": "text"
+        },
+        {
+          "name": "palletBarcode",
+          "label": "托盘条码",
+          "searchable": {
+            "type": "input-text",
+            "name": "palletBarcode",
+            "label": "托盘条码"
+          },
+          "type": "text"
+        },
+        {
+          "name": "cmdNo",
+          "label": "指令号",
+          "searchable": {
+            "type": "input-text",
+            "name": "cmdNo",
+            "label": "指令号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "taskNo",
+          "label": "任务号",
+          "searchable": {
+            "type": "input-text",
+            "name": "taskNo",
+            "label": "任务号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "cmdTypeName",
+          "label": "指令类型",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getCmdTypeOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "cmdType",
+            "label": "指令类型"
+          },
+          "type": "text"
+        },
+        {
+          "name": "cmdStatusDesc",
+          "label": "指令状态",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getCmdStatusOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "cmdStatus",
+            "label": "指令状态"
+          },
+          "type": "text"
+        },
+        {
+          "name": "taskPriority",
+          "label": "任务优先级",
+          "type": "text"
+        },
+        {
+          "name": "palletTypeName",
+          "label": "托盘类型",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getPalletTypeFlagOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "palletTypeCode",
+            "label": "托盘类型"
+          },
+          "type": "text"
+        },
+        {
+          "name": "slocTypeName",
+          "label": "起点站台类型",
+          "type": "text"
+        },
+        {
+          "name": "slocName",
+          "label": "起点站台",
+          "searchable": {
+            "type": "input-text",
+            "name": "slocName",
+            "label": "起点站台"
+          },
+          "type": "text"
+        },
+        {
+          "name": "elocTypeName",
+          "label": "目标站台类型",
+          "type": "text"
+        },
+        {
+          "name": "elocName",
+          "label": "目标站台",
+          "searchable": {
+            "type": "input-text",
+            "name": "elocName",
+            "label": "目标站台"
+          },
+          "type": "text"
+        },
+        {
+          "name": "sbinDesc",
+          "label": "起始库位",
+          "type": "text"
+        },
+        {
+          "name": "ebinDesc",
+          "label": "目标库位",
+          "type": "text"
+        },
+        {
+          "name": "isGroupDesc",
+          "label": "是否是双工位任务",
+          "type": "text"
+        },
+        {
+          "name": "locGroupNo",
+          "label": "站台组",
+          "type": "text"
+        },
+        {
+          "name": "binGroupNo",
+          "label": "库位组",
+          "type": "text"
+        },
+        {
+          "name": "executeNowDesc",
+          "label": "立即超时标记",
+          "type": "text"
+        },
+        {
+          "name": "feedbackStatusDesc",
+          "label": "反馈状态",
+          "type": "text"
+        },
+        {
+          "name": "feedbackCount",
+          "label": "反馈次数",
+          "type": "text"
+        },
+        {
+          "name": "feedbackpalletBarcode",
+          "label": "反馈托盘条码",
+          "type": "text"
+        },
+        {
+          "name": "feedbackDesc",
+          "label": "反馈描述",
+          "type": "text"
+        },
+        {
+          "name": "areaName",
+          "label": "所在区域",
+          "type": "text"
+        },
+        {
+          "name": "devName",
+          "label": "设备名称",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getSrmDevNoOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "devNo",
+            "label": "设备"
+          },
+          "type": "text"
+        },
+        {
+          "name": "covExecStep",
+          "label": "执行步骤",
+          "type": "text"
+        },
+        {
+          "name": "activeTypeDesc",
+          "label": "动作类型",
+          "type": "text"
+        },
+        {
+          "name": "sbinRow",
+          "label": "起始库位排",
+          "type": "text"
+        },
+        {
+          "name": "sbinCol",
+          "label": "起始库位列",
+          "type": "text"
+        },
+        {
+          "name": "sbinLayer",
+          "label": "起始库位层",
+          "type": "text"
+        },
+        {
+          "name": "sbinMode",
+          "label": "起始库位模式",
+          "type": "text"
+        },
+        {
+          "name": "sbinPosition",
+          "label": "起始库位位置",
+          "type": "text"
+        },
+        {
+          "name": "ebinRow",
+          "label": "目标库位排",
+          "type": "text"
+        },
+        {
+          "name": "ebinCol",
+          "label": "目标库位列",
+          "type": "text"
+        },
+        {
+          "name": "ebinLayer",
+          "label": "目标库位层",
+          "type": "text"
+        },
+        {
+          "name": "ebinMode",
+          "label": "目标库位模式",
+          "type": "text"
+        },
+        {
+          "name": "ebinPosition",
+          "label": "目标库位位置",
+          "type": "text"
+        },
+
+        {
+          "name": "matLength",
+          "label": "长",
+          "type": "text"
+        },
+        {
+          "name": "matWidht",
+          "label": "宽",
+          "type": "text"
+        },
+        {
+          "name": "matHeight",
+          "label": "高",
+          "type": "text"
+        },
+        {
+          "name": "matWeight",
+          "label": "重量",
+          "type": "text"
+        },
+        {
+          "name": "matQty",
+          "label": "数量",
+          "type": "text"
+        },
+        {
+          "name": "sourceByDesc",
+          "label": "任务来源",
+          "type": "text"
+        },
+        {
+          "name": "errCodeDesc",
+          "label": "异常代码",
+          "type": "text"
+        },
+        {
+          "name": "errMsg",
+          "label": "异常信息",
+          "type": "text"
+        },
+        {
+          "name": "taskLog",
+          "label": "日志信息",
+          "type": "text"
+        },
+        {
+          "name": "taskDesc",
+          "label": "描述信息",
+          "type": "text"
+        },
+        {
+          "name": "specialFlagDesc",
+          "label": "是否缠膜",
+          "type": "text"
+        },
+        {
+          "name": "elocScheckFlagDesc",
+          "label": "终点校验标记",
+          "type": "text"
+        },
+        {
+          "name": "sectionNo",
+          "label": "当前路段号",
+          "type": "text"
+        },
+        {
+          "name": "createBy",
+          "label": "创建人",
+          "type": "text"
+        },
+        {
+          "name": "createTime",
+          "label": "创建时间",
+          "type": "text",
+          "searchable": {
+            "type": "input-datetime",
+            "name": "createTimeStart",
+            "label": "开始创建时间",
+            "format": "YYYY-MM-DD HH:mm:ss"
+          }
+        },
+        {
+          "name": "createTimeEnd",
+          "label": "结束创建时间",
+          "type": "text",
+          "toggled": false,
+          "searchable": {
+            "type": "input-datetime",
+            "name": "createTimeEnd",
+            "label": "结束创建时间",
+            "format": "YYYY-MM-DD HH:mm:ss"
+          }
+        },
+        {
+          "name": "updateBy",
+          "label": "更新人",
+          "type": "text"
+        },
+        {
+          "name": "updateTime",
+          "label": "更新时间",
+          "type": "text"
+        },
+        {
+          "name": "executeTime",
+          "label": "执行时间",
+          "type": "text"
+        },
+        {
+          "name": "finishTime",
+          "label": "完成时间",
+          "type": "text"
+        }
+      ],
+      "bulkActions": [
+        {
+          "type": "button",
+          "level": "danger",
+          "label": "删除",
+          "actionType": "ajax",
+          "confirmText": "确定要删除？",
+          "api": "/xxx/batch-delete"
+        },
+        {
+          "label": "指令重发",
+          "type": "button",
+          "actionType": "ajax",
+          "confirmText": "确定要指令重发？",
+          "api": "/api/WCSMS/wcsSrmCmd/cmdReload"
+        },
+        {
+          "label": "取货重发",
+          "type": "button",
+          "actionType": "ajax",
+          "confirmText": "确定要取货重发？",
+          "api": "/api/WCSMS/wcsSrmCmd/cmdPickReload"
+        },
+        {
+          "label": "放货重发",
+          "type": "button",
+          "actionType": "ajax",
+          "confirmText": "确定要放货重发？",
+          "api": "/api/WCSMS/wcsSrmCmd/cmdPutReload"
+        },
+        {
+          "label": "强制完成",
+          "type": "button",
+          "actionType": "ajax",
+          "confirmText": "确定要强制完成？",
+          "api": "/api/WCSMS/wcsSrmCmd/cmdForceFinish"
+        },
+        {
+          "label": "正常完成",
+          "type": "button",
+          "actionType": "ajax",
+          "api": "/api/WCSMS/wcsSrmCmd/cmdNormalFinish"
+        },
+        {
+          "label": "立即超时",
+          "type": "button",
+          "actionType": "ajax",
+          "confirmText": "确定要立即超时？",
+          "api": "/api/WCSMS/wcsSrmCmd/cmdInTimeOut"
+        }
+      ],
+      "features": ["filter", "update", "create", "bulkDelete"],
+      "filterColumnCount": 3,
+      "autoGenerateFilter": {
+        "columnsNum": 4,
+        "showBtnToolbar": true
+      },
+      "footable": {
+        "expand": "first",
+        "accordion": true
+      },
+      "perPageAvailable": [10],
+      "messages": {
+        "fetchSuccess": "查询成功",
+        "fetchFailed": ""
+      },
+      "hidden": false,
+      "headerToolbar": [
+        {
+          "label": "新增",
+          "type": "button",
+          "actionType": "dialog",
+          "level": "primary",
+          "dialog": {
+            "title": "新增",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/wcsSrmCmd/create",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                  "messages": {},
+                  "replaceData": false,
+                  "data": {
+                    "&": "$$",
+                    "areaNo": "${areaNo}",
+                    "taskNo": "${taskNo}",
+                    "palletBarcode": "${palletBarcode}",
+                    "cmdTypeNo": "${cmdTypeNo}",
+                    "cmdStatus": 10,
+                    "palletTypeCode": "${palletTypeCode}",
+                    "slocNo": "${slocNo}",
+                    "elocNo": "${elocNo}",
+                    "realElocNo": "${realElocNo}",
+                    "sbinNo": "${sbinNo}",
+                    "ebinNo": "${ebinNo}",
+                    "errCode": "${errCode}",
+                    "devNo": "${devNo}",
+                    "traceType": "${traceType}",
+                    "taskPriority": "${taskPriority}"
+                  },
+                  "dataType": "json"
+                },
+                "body": [
+                  {
+                    "name": "areaNo",
+                    "label": "所在区域",
+                    "type": "select",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getAreaOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "required": true
+                  },
+                  {
+                    "name": "taskNo",
+                    "label": "任务号",
+                    "type": "input-text"
+                  },
+                  {
+                    "name": "palletBarcode",
+                    "label": "托盘条码",
+                    "type": "input-text"
+                  },
+                  {
+                    "name": "taskPriority",
+                    "label": "任务优先级",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "cmdTypeNo",
+                    "label": "指令类型",
+                    "type": "select",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getOtherCmdTypeOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "required": true
+                  },
+                  {
+                    "name": "devNo",
+                    "label": "设备",
+                    "type": "select",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getSrmDevNoOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "required": true
+                  },
+                  {
+                    "name": "slocNo",
+                    "label": "起点站台",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "elocNo",
+                    "label": "目标站台",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "sbinNo",
+                    "label": "起始库位",
+                    "type": "input-text"
+                  },
+                  {
+                    "name": "ebinNo",
+                    "label": "目标库位",
+                    "type": "input-text"
+                  },
+                  {
+                    "name": "traceType",
+                    "label": "跟踪反馈类型",
+                    "type": "select",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getTraceTypeOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "required": true
+                  },
+                  {
+                    "name": "taskLog",
+                    "label": "日志信息",
+                    "type": "input-text"
+                  }
+                ]
+              }
+            ],
+            "type": "dialog"
+          }
+        },
+
+        {
+          "type": "bulk-actions"
+        }
+      ],
+      "keepItemSelectionOnPageChange": false,
+      "perPage": 10,
+      "alwaysShowPagination": true,
+      "maxKeepItemSelectionLength": 100,
+      "pageField": "page",
+      "syncResponse2Query": false
+    }
+  ],
+  "regions": ["body", "header"],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "aside": []
+}

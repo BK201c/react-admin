@@ -1,0 +1,143 @@
+{
+  "type": "page",
+  "title": "操作日志",
+  "body": [
+    {
+      "type": "crud",
+      "draggable": true,
+      "api": {
+        "method": "get",
+        "url": "/api/BaseService/auditLog/getList",
+        "requestAdaptor": "",
+        "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.totalCount\r\n  }\r\n}",
+        "messages": {},
+        "replaceData": false,
+        "data": {
+          "&": "$$",
+          "skipCount": "${(page - 1) * perPage}",
+          "maxResultCount": "${perPage}",
+
+          "applicationName": "WCSMS",
+          "comments": "${comments}",
+          "parameters": "${parameters}",
+          "extraProperties": "${extraProperties}",
+          "httpStatusCode": "${httpStatusCode}",
+          "exceptions": "${exceptions}",
+          "url": "${url}",
+          "userName": "${userName}"
+        }
+      },
+      "columns": [
+        {
+          "name": "applicationName",
+          "label": "服务名称",
+          "type": "text"
+        },
+        {
+          "name": "comments",
+          "label": "操作说明",
+          "searchable": {
+            "type": "input-text",
+            "name": "comments",
+            "label": "操作说明"
+          },
+          "type": "text"
+        },
+        {
+          "name": "httpStatusCode",
+          "label": "状态码",
+          "type": "text"
+        },
+        {
+          "name": "parameters",
+          "label": "参数",
+          "searchable": {
+            "type": "input-text",
+            "name": "parameters",
+            "label": "参数"
+          },
+          "type": "text"
+        },
+        {
+          "name": "extraProperties",
+          "label": "扩展参数",
+          "type": "text"
+        },
+        {
+          "name": "exceptions",
+          "label": "异常信息",
+          "searchable": {
+            "type": "input-text",
+            "name": "exceptions",
+            "label": "异常信息"
+          },
+          "type": "text"
+        },
+        {
+          "name": "url",
+          "label": "请求地址",
+          "searchable": {
+            "type": "input-text",
+            "name": "url",
+            "label": "请求地址"
+          },
+          "type": "text"
+        },
+        {
+          "name": "userName",
+          "label": "操作人",
+          "searchable": {
+            "type": "input-text",
+            "name": "userName",
+            "label": "操作人"
+          },
+          "type": "text"
+        },
+        {
+          "name": "executionDuration",
+          "label": "执行耗时(ms)",
+          "type": "text"
+        },
+        {
+          "name": "executionTime",
+          "label": "执行时间",
+          "type": "text"
+        }
+      ],
+      "bulkActions": [],
+      "features": ["filter", "update", "create", "bulkDelete"],
+      "filterColumnCount": 3,
+      "autoGenerateFilter": {
+        "columnsNum": 4,
+        "showBtnToolbar": true
+      },
+      "footable": {
+        "expand": "first",
+        "accordion": true
+      },
+      "perPageAvailable": [10],
+      "messages": {
+        "fetchSuccess": "查询成功",
+        "fetchFailed": ""
+      },
+      "hidden": false,
+      "headerToolbar": [
+        {
+          "type": "bulk-actions"
+        }
+      ],
+      "keepItemSelectionOnPageChange": false,
+      "perPage": 10,
+      "alwaysShowPagination": true,
+      "maxKeepItemSelectionLength": 100,
+      "pageField": "page",
+      "syncResponse2Query": false
+    }
+  ],
+  "regions": ["body", "header"],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "aside": []
+}

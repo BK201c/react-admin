@@ -27,7 +27,7 @@ export const getAuthNav = () => {
 export const getAuthDataByPath = (path: string) => {
   const r = getAuthNav();
   const button = {};
-  r[path].split(",").forEach((b) => (button[b] = true));
+  r[path]?.split(",").forEach((b) => (button[b] = true));
   return {
     auth: {
       button,

@@ -1,0 +1,139 @@
+{
+  "type": "page",
+  "title": "调度日志",
+  "body": [
+    {
+      "type": "crud",
+      "draggable": true,
+      "api": {
+        "method": "get",
+        "url": "/api/WCSMS/logDispatch/getList",
+        "requestAdaptor": "",
+        "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.totalCount\r\n  }\r\n}",
+        "messages": {},
+        "replaceData": false,
+        "data": {
+          "&": "$$",
+          "skipCount": "${(page - 1) * perPage}",
+          "maxResultCount": "${perPage}",
+          "systemNo": "${systemNo}",
+          "locNo": "${locNo}",
+          "palletBarcode": "${palletBarcode}",
+          "spDesc": "${spDesc}",
+          "logMsg": "${logMsg}",
+          "createTimeStart": "${createTimeStart}",
+          "createTimeEnd": "${createTimeEnd}"
+        }
+      },
+      "columns": [
+        {
+          "name": "systemNo",
+          "label": "客户端编号",
+          "searchable": {
+            "type": "input-text",
+            "name": "systemNo",
+            "label": "客户端编号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "locName",
+          "label": "当前站台",
+          "searchable": {
+            "type": "input-text",
+            "name": "locNo",
+            "label": "当前站台编号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "palletBarcode",
+          "label": "托盘条码",
+          "searchable": {
+            "type": "input-text",
+            "name": "palletBarcode",
+            "label": "托盘条码"
+          },
+          "type": "text"
+        },
+        {
+          "name": "spDesc",
+          "label": "执行过程",
+          "searchable": {
+            "type": "input-text",
+            "name": "spDesc",
+            "label": "执行过程"
+          },
+          "type": "text"
+        },
+        {
+          "name": "logMsg",
+          "label": "日志信息",
+          "searchable": {
+            "type": "input-text",
+            "name": "logMsg",
+            "label": "日志信息"
+          },
+          "type": "text"
+        },
+        {
+          "name": "createTime",
+          "label": "创建时间",
+          "type": "text",
+          "searchable": {
+            "type": "input-datetime",
+            "name": "createTimeStart",
+            "label": "开始创建时间",
+            "format": "YYYY-MM-DD HH:mm:ss"
+          }
+        },
+        {
+          "name": "createTimeEnd",
+          "label": "结束创建时间",
+          "type": "text",
+          "toggled": false,
+          "searchable": {
+            "type": "input-datetime",
+            "name": "createTimeEnd",
+            "label": "结束创建时间",
+            "format": "YYYY-MM-DD HH:mm:ss"
+          }
+        }
+      ],
+      "bulkActions": [],
+      "features": ["filter", "update", "create", "bulkDelete"],
+      "filterColumnCount": 3,
+      "autoGenerateFilter": {
+        "columnsNum": 4,
+        "showBtnToolbar": true
+      },
+      "footable": {
+        "expand": "first",
+        "accordion": true
+      },
+      "perPageAvailable": [10],
+      "messages": {
+        "fetchSuccess": "查询成功",
+        "fetchFailed": ""
+      },
+      "hidden": false,
+      "headerToolbar": [
+        {
+          "type": "bulk-actions"
+        }
+      ],
+      "keepItemSelectionOnPageChange": false,
+      "perPage": 10,
+      "alwaysShowPagination": true,
+      "maxKeepItemSelectionLength": 100,
+      "pageField": "page",
+      "syncResponse2Query": false
+    }
+  ],
+  "regions": ["body", "header"],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "aside": []
+}

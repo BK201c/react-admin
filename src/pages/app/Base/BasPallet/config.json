@@ -1,0 +1,925 @@
+{
+  "type": "page",
+  "title": "托盘管理",
+  "body": [
+    {
+      "type": "crud",
+      "draggable": true,
+      "api": {
+        "method": "get",
+        "url": "/api/WCSMS/basPalletType/getList",
+        "requestAdaptor": "",
+        "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.totalCount\r\n  }\r\n}",
+        "messages": {},
+        "replaceData": false,
+        "headers": {
+          "Accept-Language": "zh-Hans",
+          "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IkMxN0U0NjEyRDA2ODEwQ0U0MTJBRTU0MzMyNTREMjE3IiwidHlwIjoiYXQrand0In0.eyJuYmYiOjE2ODc3NDcxMDksImV4cCI6MTcxOTI4MzEwOSwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDoyMDAwMyIsImF1ZCI6WyIwMDEtQkFTRSIsIjAwMS1JVEYiLCIwMDEtV0NTIiwiMDAxLVdNUyIsIjU5NC1JVEYiLCI1OTQtV0NTIiwiNTk0LVdNUyIsIjU5NFdtc1NlcnZpY2UiLCJCYXNlU2VydmljZSIsIkRpc0l0ZlNlcnZpY2UiLCJEaXNwYXRjaEludGVyZmFjZSIsIkRpc3BhdGNoU2VydmljZSIsIkxlc1NlcnZpY2UiLCJMT0NBTC1XQ1MiLCJMT0NBTC1XTVMiLCJQdWJsaWNHYXRld2F5IiwiUXVhcnR6U2VydmljZSIsIldjc0Jhc2VTZXJ2aWNlIiwiV0NTRFMiLCJXQ1NJUyIsIldDU01TIiwiV21zSXRmU2VydmljZSIsIldtc1NlcnZpY2UiXSwiY2xpZW50X2lkIjoicHVibGljLXdlYnNpdGUtY2xpZW50Iiwic3ViIjoiOGNlNTMxMGQtNzFlZS0wOTI1LTgyYWMtM2EwOWNkOWJkZWEyIiwiYXV0aF90aW1lIjoxNjg3NzQ3MTA5LCJpZHAiOiJsb2NhbCIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2dpdmVubmFtZSI6Iui2hee6p-euoeeQhuWRmCIsInBob25lX251bWJlciI6IjEyMzQ1IiwicGhvbmVfbnVtYmVyX3ZlcmlmaWVkIjoiRmFsc2UiLCJlbWFpbCI6InN1cGVyYWRtaW5AeHh4LmNuIiwiZW1haWxfdmVyaWZpZWQiOiJGYWxzZSIsIm5hbWUiOiJzdXBlcmFkbWluIiwiaWF0IjoxNjg3NzQ3MTA5LCJzY29wZSI6WyIwMDEtQkFTRSIsIjAwMS1JVEYiLCIwMDEtV0NTIiwiMDAxLVdNUyIsIjU5NC1JVEYiLCI1OTQtV0NTIiwiNTk0LVdNUyIsIjU5NFdtc1NlcnZpY2UiLCJCYXNlU2VydmljZSIsIkRpc0l0ZlNlcnZpY2UiLCJEaXNwYXRjaEludGVyZmFjZSIsIkRpc3BhdGNoU2VydmljZSIsIkxlc1NlcnZpY2UiLCJMT0NBTC1XQ1MiLCJMT0NBTC1XTVMiLCJQdWJsaWNHYXRld2F5IiwiUXVhcnR6U2VydmljZSIsIldjc0Jhc2VTZXJ2aWNlIiwiV0NTRFMiLCJXQ1NJUyIsIldDU01TIiwiV21zSXRmU2VydmljZSIsIldtc1NlcnZpY2UiLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.wrffqeaTbZuw2J3tyXDebLIBQFb5kcGOlBADLITrKPUWh43DR68so4XLA7gndQ5MSvqUpcLkHRhJjGdEev2x-74-MR3oi_Ig2lUUFE8C4mlgl886O-WEvKX3silsfAeP89IjsA8FrF8KTaPWoGIzdojljnjqr9V1Zi9e4eMBb8PSefIEMsGmOg-vaCT7i8U-Hc8cqa1-hc1mPfVwsdA2nSI7uImFaL1k-rLZ9DZiS0CSiX2qQYhZ8engEIpyH1dBSRUkqaiFTjdYRYUhPGOLykYtblKQqB3AMiYYKYMnC1NxhziT3QAHpDIeQAyWPEvV2w-ZS6MgZtwf69cWNurARQ"
+        },
+        "data": {
+          "&": "$$",
+          "skipCount": "${(page - 1) * perPage}",
+          "maxResultCount": "${perPage}",
+          "areaNo": "${areaNo}",
+          "areaName": "${areaName}"
+        }
+      },
+      "columns": [
+        {
+          "type": "text",
+          "name": "palletTypeCode",
+          "label": "托盘类型编码",
+          "searchable": {
+            "type": "input-text",
+            "name": "palletTypeCode",
+            "label": "托盘类型编码"
+          }
+        },
+        {
+          "type": "text",
+          "name": "palletTypeName",
+          "label": "托盘类型名称",
+          "searchable": {
+            "type": "input-text",
+            "name": "palletTypeName",
+            "label": "托盘类型名称"
+          }
+        },
+        {
+          "type": "text",
+          "name": "palletTypeFlagDesc",
+          "label": "托盘类型标识"
+        },
+        {
+          "type": "text",
+          "name": "emptyTrayLimit",
+          "label": "空托叠盘上限"
+        },
+        {
+          "type": "text",
+          "name": "checkPalletFlag",
+          "label": "是否校验公式"
+        },
+        {
+          "type": "text",
+          "name": "checkFormula",
+          "label": "校验公式"
+        },
+        {
+          "type": "text",
+          "name": "chekDesc",
+          "label": "校验描述"
+        },
+        {
+          "type": "text",
+          "name": "palletLength",
+          "label": "长度（mm）"
+        },
+        {
+          "type": "text",
+          "name": "palletWidth",
+          "label": "宽度（mm）"
+        },
+        {
+          "type": "text",
+          "name": "palletHeight",
+          "label": "高度（mm）"
+        },
+        {
+          "type": "text",
+          "name": "selfWeight",
+          "label": "容器自重"
+        },
+        {
+          "type": "text",
+          "name": "maxWeight",
+          "label": "最大承重"
+        },
+        {
+          "name": "usedFlag",
+          "label": "启用标志",
+          "type": "mapping",
+          "map": {
+            "0": "<span class='label label-danger'>禁用</span>",
+            "1": "<span class='label label-success'>启用</span>",
+            "*": "${usedFlag}"
+          },
+          "searchable": {
+            "type": "select",
+            "name": "usedFlag",
+            "label": "启用标志",
+            "options": [
+              {
+                "label": "禁用",
+                "value": "0"
+              },
+              {
+                "label": "启用",
+                "value": "1"
+              }
+            ]
+          }
+        },
+        {
+          "type": "text",
+          "name": "developFlagDesc",
+          "label": "开发标记"
+        },
+        {
+          "name": "createBy",
+          "label": "创建人",
+          "type": "text"
+        },
+        {
+          "name": "createTime",
+          "label": "创建时间",
+          "type": "text"
+        },
+        {
+          "name": "updateBy",
+          "label": "更新人",
+          "type": "text"
+        },
+        {
+          "name": "updateTime",
+          "label": "更新时间",
+          "type": "text"
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "hiddenOn": "${!auth.button.operationBtn}",
+          "buttons": [
+            {
+              "label": "编辑",
+              "type": "button",
+              "hiddenOn": "${!auth.button.edit}",
+              "actionType": "dialog",
+              "level": "link",
+              "dialog": {
+                "title": "编辑",
+                "body": [
+                  {
+                    "type": "form",
+                    "api": {
+                      "method": "put",
+                      "url": "/api/WCSMS/basPalletType/update",
+                      "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": response.data.data,\r\n}",
+                      "messages": {},
+                      "replaceData": false,
+                      "data": {
+                        "&": "$$",
+                        "id": "${id}",
+                        "areaNo": "${areaNo}",
+                        "areaName": "${areaName}"
+                      },
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      },
+                      "requestAdaptor": "",
+                      "dataType": "json"
+                    },
+                    "body": [
+                      {
+                        "type": "input-text",
+                        "name": "palletTypeCode",
+                        "label": "托盘类型编码",
+                        "required": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "palletTypeName",
+                        "label": "托盘类型名称",
+                        "required": true
+                      },
+                      {
+                        "type": "select",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getPalletTypeFlagOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "name": "palletTypeFlag",
+                        "label": "托盘类型标识",
+                        "required": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "emptyTrayLimit",
+                        "label": "空托叠盘上限",
+                        "required": true
+                      },
+                      {
+                        "type": "select",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getCheckPalletOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "name": "checkPalletFlag",
+                        "label": "是否校验公式",
+                        "required": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "checkFormula",
+                        "label": "校验公式"
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "chekDesc",
+                        "label": "校验描述"
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "palletLength",
+                        "label": "长度（mm）",
+                        "required": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "palletWidth",
+                        "label": "宽度（mm）",
+                        "required": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "palletHeight",
+                        "label": "高度（mm）",
+                        "required": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "selfWeight",
+                        "label": "容器自重",
+                        "required": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "maxWeight",
+                        "label": "最大承重",
+                        "required": true
+                      },
+                      {
+                        "type": "select",
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "options": [
+                          {
+                            "label": "禁用",
+                            "value": "0"
+                          },
+                          {
+                            "label": "启用",
+                            "value": "1"
+                          }
+                        ],
+                        "required": true
+                      },
+                      {
+                        "name": "developFlag",
+                        "label": "开发标志",
+                        "type": "select",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getDevelopFlagOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "required": true
+                      }
+                    ]
+                  }
+                ],
+                "type": "dialog"
+              }
+            }
+          ]
+        }
+      ],
+      "bulkActions": [
+        {
+          "type": "button",
+          "hiddenOn": "${!auth.button.enableAndDisable}",
+          "label": "启用",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认启用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/basPalletType/setUsedFlag",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "Ids": "${ids|split}",
+                    "usedFlag": 1
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "type": "text",
+                        "name": "palletTypeCode",
+                        "label": "托盘类型编码"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletTypeName",
+                        "label": "托盘类型名称"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletTypeFlagDesc",
+                        "label": "托盘类型标识"
+                      },
+                      {
+                        "type": "text",
+                        "name": "emptyTrayLimit",
+                        "label": "空托叠盘上限"
+                      },
+                      {
+                        "type": "text",
+                        "name": "checkPalletFlag",
+                        "label": "是否校验公式"
+                      },
+                      {
+                        "type": "text",
+                        "name": "checkFormula",
+                        "label": "校验公式"
+                      },
+                      {
+                        "type": "text",
+                        "name": "chekDesc",
+                        "label": "校验描述"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletLength",
+                        "label": "长度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletWidth",
+                        "label": "宽度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletHeight",
+                        "label": "高度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "selfWeight",
+                        "label": "容器自重"
+                      },
+                      {
+                        "type": "text",
+                        "name": "maxWeight",
+                        "label": "最大承重"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "name": "developFlagDesc",
+                        "label": "开发标记"
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        },
+        {
+          "type": "button",
+          "hiddenOn": "${!auth.button.enableAndDisable}",
+          "label": "禁用",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认启用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/basPalletType/setUsedFlag",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "Ids": "${ids|split}",
+                    "usedFlag": 0
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "type": "text",
+                        "name": "palletTypeCode",
+                        "label": "托盘类型编码"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletTypeName",
+                        "label": "托盘类型名称"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletTypeFlagDesc",
+                        "label": "托盘类型标识"
+                      },
+                      {
+                        "type": "text",
+                        "name": "emptyTrayLimit",
+                        "label": "空托叠盘上限"
+                      },
+                      {
+                        "type": "text",
+                        "name": "checkPalletFlag",
+                        "label": "是否校验公式"
+                      },
+                      {
+                        "type": "text",
+                        "name": "checkFormula",
+                        "label": "校验公式"
+                      },
+                      {
+                        "type": "text",
+                        "name": "chekDesc",
+                        "label": "校验描述"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletLength",
+                        "label": "长度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletWidth",
+                        "label": "宽度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletHeight",
+                        "label": "高度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "selfWeight",
+                        "label": "容器自重"
+                      },
+                      {
+                        "type": "text",
+                        "name": "maxWeight",
+                        "label": "最大承重"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "name": "developFlagDesc",
+                        "label": "开发标记"
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        },
+        {
+          "type": "button",
+          "hiddenOn": "${!auth.button.delete}",
+          "label": "删除",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认启用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/basPalletType/delete",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "Ids": "${ids|split}"
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "type": "text",
+                        "name": "palletTypeCode",
+                        "label": "托盘类型编码"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletTypeName",
+                        "label": "托盘类型名称"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletTypeFlagDesc",
+                        "label": "托盘类型标识"
+                      },
+                      {
+                        "type": "text",
+                        "name": "emptyTrayLimit",
+                        "label": "空托叠盘上限"
+                      },
+                      {
+                        "type": "text",
+                        "name": "checkPalletFlag",
+                        "label": "是否校验公式"
+                      },
+                      {
+                        "type": "text",
+                        "name": "checkFormula",
+                        "label": "校验公式"
+                      },
+                      {
+                        "type": "text",
+                        "name": "chekDesc",
+                        "label": "校验描述"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletLength",
+                        "label": "长度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletWidth",
+                        "label": "宽度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletHeight",
+                        "label": "高度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "selfWeight",
+                        "label": "容器自重"
+                      },
+                      {
+                        "type": "text",
+                        "name": "maxWeight",
+                        "label": "最大承重"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "name": "developFlagDesc",
+                        "label": "开发标记"
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        }
+      ],
+      "features": [
+        "filter",
+        "update",
+        "create",
+        "bulkDelete"
+      ],
+      "filterColumnCount": 3,
+      "autoGenerateFilter": {
+        "columnsNum": 2,
+        "showBtnToolbar": false
+      },
+      "footable": {
+        "expand": "first",
+        "accordion": true
+      },
+      "perPageAvailable": [
+        10
+      ],
+      "messages": {
+        "fetchSuccess": "查询成功",
+        "fetchFailed": ""
+      },
+      "hidden": false,
+      "headerToolbar": [
+        {
+          "label": "新增",
+          "type": "button",
+          "hiddenOn": "${!auth.button.create}",
+          "actionType": "dialog",
+          "level": "primary",
+          "dialog": {
+            "title": "新增",
+            "body": {
+              "type": "form",
+              "api": {
+                "method": "post",
+                "url": "/api/WCSMS/basPalletType/create",
+                "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": response.data.data,\r\n}",
+                "messages": {},
+                "replaceData": false,
+                "data": {
+                  "&": "$$",
+                  "skipCount": 0,
+                  "maxResultCount": 20,
+                  "areaNo": "${areaNo}",
+                  "areaName": "${areaName}"
+                },
+                "headers": {
+                  "Accept-Language": "zh-Hans"
+                },
+                "requestAdaptor": "",
+                "dataType": "json"
+              },
+              "body": [
+                {
+                  "type": "input-text",
+                  "name": "palletTypeCode",
+                  "label": "托盘类型编码",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "palletTypeName",
+                  "label": "托盘类型名称",
+                  "required": true
+                },
+                {
+                  "type": "select",
+                  "source": {
+                    "method": "get",
+                    "url": "/api/WCSMS/options/getPalletTypeFlagOption",
+                    "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                    "headers": {
+                      "Accept-Language": "zh-Hans"
+                    }
+                  },
+                  "name": "palletTypeFlag",
+                  "label": "托盘类型标识",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "emptyTrayLimit",
+                  "label": "空托叠盘上限",
+                  "required": true
+                },
+                {
+                  "type": "select",
+                  "source": {
+                    "method": "get",
+                    "url": "/api/WCSMS/options/getCheckPalletOption",
+                    "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                    "headers": {
+                      "Accept-Language": "zh-Hans"
+                    }
+                  },
+                  "name": "checkPalletFlag",
+                  "label": "是否校验公式",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "checkFormula",
+                  "label": "校验公式"
+                },
+                {
+                  "type": "input-text",
+                  "name": "chekDesc",
+                  "label": "校验描述"
+                },
+                {
+                  "type": "input-text",
+                  "name": "palletLength",
+                  "label": "长度（mm）",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "palletWidth",
+                  "label": "宽度（mm）",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "palletHeight",
+                  "label": "高度（mm）",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "selfWeight",
+                  "label": "容器自重",
+                  "required": true
+                },
+                {
+                  "type": "input-text",
+                  "name": "maxWeight",
+                  "label": "最大承重",
+                  "required": true
+                },
+                {
+                  "type": "select",
+                  "name": "usedFlag",
+                  "label": "启用标志",
+                  "options": [
+                    {
+                      "label": "禁用",
+                      "value": "0"
+                    },
+                    {
+                      "label": "启用",
+                      "value": "1"
+                    }
+                  ],
+                  "required": true
+                },
+                {
+                  "name": "developFlag",
+                  "label": "开发标志",
+                  "type": "select",
+                  "source": {
+                    "method": "get",
+                    "url": "/api/WCSMS/options/getDevelopFlagOption",
+                    "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                    "headers": {
+                      "Accept-Language": "zh-Hans"
+                    }
+                  },
+                  "required": true
+                }
+              ]
+            }
+          }
+        },
+        "bulkActions"
+      ]
+    }
+  ],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": [
+    "body",
+    "header"
+  ],
+  "aside": []
+}
