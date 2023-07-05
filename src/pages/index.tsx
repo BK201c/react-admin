@@ -17,6 +17,7 @@ import HttpService from "@/services/HttpService";
 import RouterGuard from "@/routes/RouterGuard";
 import { toast } from "amis";
 import appStore from "@/stores/appStore";
+import { setAuthNav } from "@/utils/permission";
 
 type NavItem = {
   label: string;
@@ -104,17 +105,18 @@ export default class Admin extends React.Component<AdminProps, any> {
           isMobileDevicePermission: false,
         },
       }).then((res: any) => {
-        console.log("res:", res);
         const menuList = {
           label: "导航",
           permissionCode: "WCS",
           children: res.data,
         };
         traverseTree(menuList);
+        setAuthNav(res.data);
         this.setState({
           navigations: [menuList],
           hasLoadMenu: true,
         });
+        // console.log("路由列表:", menuList);
       });
     }
   };

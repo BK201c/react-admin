@@ -1,4 +1,3 @@
-import AuthValidator from "@/utils/AuthValidator";
 export default {
   type: "page",
   title: "区域管理",
@@ -233,7 +232,6 @@ export default {
           actionType: "ajax",
           confirmText: "确定要删除？",
           api: "/xxx/batch-delete",
-          hidden: AuthValidator.check("delete"),
         },
       ],
       features: ["filter", "update", "create", "bulkDelete"],
@@ -258,6 +256,7 @@ export default {
           type: "button",
           actionType: "dialog",
           level: "primary",
+          hiddenOn: "${!auth.button.edit}",
           dialog: {
             title: "新增",
             body: {

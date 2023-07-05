@@ -4,10 +4,30 @@ class UserStore {
   @observable
   name = "";
   token = "";
+  authList: any = {};
 
   constructor() {
     this.name = localStorage.getItem("name") || "";
     this.token = sessionStorage.getItem("token") || "";
+  }
+
+  private findNodeByPath(nodes, path) {
+    for (let i = 0; i < nodes.length; i++) {
+      const node = nodes[i];
+
+      if (node.path === path) {
+        return node.children;
+      }
+
+      if (node.children) {
+        const result = this.findNodeByPath(node.children, path);
+        if (result) {
+          return result;
+        }
+      }
+    }
+
+    return null;
   }
 
   @computed
@@ -33,6 +53,16 @@ class UserStore {
   @action
   getToken() {
     return this.token;
+  }
+
+  @action
+  setAuthList(list) {
+    this.authList = list;
+  }
+
+  @action
+  getButtonAuthList(path: string) {
+    return this.findNodeByPath(this.authList.children, path);
   }
 
   @action

@@ -1,12 +1,12 @@
 import * as React from "react";
-import { render as renderSchema, registerFilter } from "amis";
+import { render as renderSchema } from "amis";
 import { IMainStore } from "@/stores";
 import { getEnv } from "mobx-state-tree";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import * as qs from "qs";
 import { Action } from "amis/lib/types";
-
+import { getAuthDataByPath } from "@/utils/permission";
 interface RendererProps {
   schema?: any;
   [propName: string]: any;
@@ -18,14 +18,15 @@ interface RendererProps {
 @observer
 export default class AMisRenderer extends React.Component<RendererProps, any> {
   env: any = null;
+  authData: any = null;
 
   handleAction = (e: any, action: Action) => {
     console.warn(`没有识别的动作：${JSON.stringify(action)}`);
   };
 
   componentDidMount() {
-    const currentPath = window.location.pathname;
-    console.log("当前路径", currentPath);
+    // const currentPath = window.location.pathname;
+    // console.log("当前路径", currentPath, this.authData);
   }
 
   constructor(props: RendererProps) {
@@ -39,6 +40,10 @@ export default class AMisRenderer extends React.Component<RendererProps, any> {
     const apiHost = getEnv(store).apiHost;
     const getModalContainer = getEnv(store).getModalContainer;
     const history = props.history;
+
+    const currentPath = window.location.pathname;
+    this.authData = getAuthDataByPath(currentPath);
+    console.log("当前路径", currentPath);
 
     const normalizeLink = (to: string) => {
       if (/^\/api\//.test(to)) {
@@ -78,7 +83,6 @@ export default class AMisRenderer extends React.Component<RendererProps, any> {
       return pathname + search + hash;
     };
 
-    //如果不是线上环境，则开启调试
     this.env = {
       enableAMISDebug: false,
       session: "global",
@@ -145,8 +149,10 @@ export default class AMisRenderer extends React.Component<RendererProps, any> {
 
   render() {
     const { schema, store, onAction, ...rest } = this.props;
+    const schemaData = Object.assign({}, schema, { data: this.authData });
+    console.log(schemaData);
     return renderSchema(
-      schema,
+      schemaData,
       {
         onAction: onAction || this.handleAction,
         theme: store && store.theme,
