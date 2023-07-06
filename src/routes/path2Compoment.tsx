@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import Dashboard from "@/pages/common/dashboard";
-import Login from "@/utils/Login";
+import Login from "@/components/Login";
 import Register from "@/utils/Register";
 const lazyLoad = (path: string) => {
   const endPoint = path.slice(0, -10);

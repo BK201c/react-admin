@@ -1,4 +1,4 @@
-import schemaRender from "@/utils/schemaRender";
+import schemaRender from "@/components/SchemaRender";
 
 const schema = {
   type: "page",
