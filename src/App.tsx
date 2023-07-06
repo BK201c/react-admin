@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import { Provider } from "mobx-react";
 import { toast, alert, confirm } from "amis";
 import axios from "axios";
@@ -9,6 +10,7 @@ import "./utils/polyfill";
 import { request } from "@/services/requestInterceptor";
 
 import "moment/dist/locale/zh-cn";
+
 // css
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "amis/sdk/iconfont.css";
