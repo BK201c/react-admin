@@ -12,8 +12,8 @@ interface RendererProps {
   [propName: string]: any;
 }
 
-@inject("store")
 // @ts-ignore
+@inject("store")
 @withRouter
 @observer
 export default class AMisRenderer extends React.Component<RendererProps, any> {
@@ -43,7 +43,6 @@ export default class AMisRenderer extends React.Component<RendererProps, any> {
 
     const currentPath = window.location.pathname;
     this.authData = getAuthDataByPath(currentPath);
-    console.log("当前路径", currentPath);
 
     const normalizeLink = (to: string) => {
       if (/^\/api\//.test(to)) {
@@ -150,7 +149,6 @@ export default class AMisRenderer extends React.Component<RendererProps, any> {
   render() {
     const { schema, store, onAction, ...rest } = this.props;
     const schemaData = Object.assign({}, schema, { data: this.authData });
-    console.log(schemaData);
     return renderSchema(
       schemaData,
       {

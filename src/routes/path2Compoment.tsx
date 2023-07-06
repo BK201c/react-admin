@@ -2,12 +2,11 @@ import React, { lazy, Suspense } from "react";
 import Dashboard from "@/pages/common/dashboard";
 import Login from "@/utils/Login";
 import Register from "@/utils/Register";
-
 const lazyLoad = (path: string) => {
   const endPoint = path.slice(0, -10);
   const Module = lazy(() => import(endPoint));
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div></div>}>
       <Module />
     </Suspense>
   );

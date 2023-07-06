@@ -1,14 +1,21 @@
-export const setAuthNav = (nav: any) => {
+interface NavNode {
+  path: string;
+  permissionCode: string;
+  children: Array<NavNode>;
+}
+
+export const setAuthNav = (nav: Array<NavNode>) => {
   let r = {};
   for (let i = 0; i < nav.length; i++) {
     const m = nav[i];
     for (let j = 0; j < m.children.length; j++) {
-      const p = m.children[j];
+      const p: NavNode = m.children[j];
       if (p.children.length > 0) {
         Object.assign(r, {
           [p.path]: p.children
             .reduce(
-              (pre, b) => pre + "," + b.permissionCode.split(".").slice(-1)[0],
+              (pre: string, b: NavNode) =>
+                pre + "," + b.permissionCode.split(".").slice(-1)[0],
               ""
             )
             .slice(1),
@@ -27,7 +34,7 @@ export const getAuthNav = () => {
 export const getAuthDataByPath = (path: string) => {
   const r = getAuthNav();
   const button = {};
-  r[path]?.split(",").forEach((b) => (button[b] = true));
+  r[path]?.split(",").forEach((b: string) => (button[b] = true));
   return {
     auth: {
       button,

@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import { Space } from "antd";
 import { Avatar, Dropdown } from "antd";
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import { Layout, Button, AsideNav } from "amis";
 import { IMainStore } from "@/stores";
 import { inject, observer } from "mobx-react";
@@ -18,6 +18,9 @@ import RouterGuard from "@/routes/RouterGuard";
 import { toast } from "amis";
 import appStore from "@/stores/appStore";
 import { setAuthNav } from "@/utils/permission";
+import Dashboard from "@/pages/common/dashboard";
+import logo from "@/assets/logo/logo.png";
+import RIcon from "@/components/RIcon";
 
 type NavItem = {
   label: string;
@@ -39,7 +42,8 @@ function isActive(link: any, location: any) {
 }
 
 function traverseTree(node: any) {
-  node.label = node.permissionName;
+  node.label = node.permissionName || node.label;
+  node.icon = node.permissionIcon || "gengduochanpin";
 
   if (node?.permissionType === "page") {
     node.path = node.clientRoute || "";
@@ -52,6 +56,8 @@ function traverseTree(node: any) {
       traverseTree(child);
     });
   }
+
+  return node;
 }
 
 export interface AdminProps extends RouteComponentProps<any> {
@@ -89,7 +95,6 @@ export default class Admin extends React.Component<AdminProps, any> {
 
   refreshMenu = () => {
     let pathname = this.props.location.pathname;
-    // console.log("store.user:", appStore.userStore.name);
     if (
       pathname != "login" &&
       pathname != "/" &&
@@ -108,15 +113,21 @@ export default class Admin extends React.Component<AdminProps, any> {
         const menuList = {
           label: "导航",
           permissionCode: "WCS",
-          children: res.data,
+          children: [
+            {
+              label: "首页",
+              path: "/dashboard",
+              component: Dashboard,
+            },
+            ...res.data,
+          ],
         };
-        traverseTree(menuList);
+        const menu = traverseTree(menuList);
         setAuthNav(res.data);
         this.setState({
-          navigations: [menuList],
+          navigations: [menu],
           hasLoadMenu: true,
         });
-        // console.log("路由列表:", menuList);
       });
     }
   };
@@ -141,8 +152,9 @@ export default class Admin extends React.Component<AdminProps, any> {
             <i className="fa fa-bars text-white"></i>
           </button>
           <div className={`cxd-Layout-brand`}>
-            <HomeOutlined />
-            <span className="hidden-folded m-l-sm">Home</span>
+            <img src={logo} alt="home" />
+            {/* <span className="hidden-folded m-l-sm"></span>
+            <span>WCS</span> */}
           </div>
         </div>
         <div className={`cxd-Layout-headerBar`}>
@@ -168,7 +180,7 @@ export default class Admin extends React.Component<AdminProps, any> {
               trigger={["click", "hover"]}
             >
               <Space>
-                <Avatar icon={<UserOutlined />} />
+                <Avatar icon={<RIcon name={"user"}></RIcon>} />
                 {appStore.userStore.getName()}
               </Space>
             </Dropdown>
@@ -216,9 +228,7 @@ export default class Admin extends React.Component<AdminProps, any> {
             );
 
           if (link.icon) {
-            children.push(
-              <i key="icon" className={cx(`AsideNav-itemIcon`, link.icon)} />
-            );
+            children.push(<RIcon name={link.icon}></RIcon>);
           } else if (store.asideFolded && depth === 1) {
             children.push(
               <i

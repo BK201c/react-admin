@@ -1,0 +1,95 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\qs.wei\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js set version stable
+
+PATH: 
+  C:\Program Files\PowerShell\7;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Python311\Scripts\;C:\Python311\;C:\Python310\Scripts\;C:\Python310\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files\TortoiseSVN\bin;C:\Program Files\dotnet\;C:\Program Files\PowerShell\7\;C:\Users\qs.wei\AppData\Roaming\nvm;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Users\qs.wei\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Users\qs.wei\AppData\Local\Android\Sdk\cmdline-tools\latest\bin;C:\Users\qs.wei\AppData\Local\Android\Sdk\emulator;C:\Users\qs.wei\AppData\Local\Android\Sdk\platform-tools;C:\Users\qs.wei\AppData\Local\Android\Sdk\build-tools;C:\Users\qs.wei\AppData\Local\Android\gradle\gradle-6.7.1\bin;C:\Program Files\Java\jdk1.8.0_202\bin;C:\Program Files\Java\jdk1.8.0_202\jre\bin;C:\Program Files\TortoiseGit\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\130\Tools\Binn\;C:\Program Files\Azure Data Studio\bin;C:\Program Files\Cloudflare\Cloudflare WARP\;C:\Users\qs.wei\AppData\Local\Microsoft\WindowsApps;C:\Users\qs.wei\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\qs.wei\.dotnet\tools;C:\Users\qs.wei\AppData\Roaming\npm;C:\Users\qs.wei\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Azure Data Studio\bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.18.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: getaddrinfo ENOENT raw.githubusercontent.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:109:26)
+
+npm manifest: 
+  {
+    "name": "react-admin",
+    "version": "1.3.0",
+    "description": "react admin template",
+    "main": "./src/index.tsx",
+    "scripts": {
+      "start": "npm run dev",
+      "dev": "npm run vite",
+      "vite": "vite",
+      "vite-build": "vite build",
+      "build": "cross-env NODE_ENV=production vite build",
+      "postinstall": "patch-package"
+    },
+    "license": "Apache License 2.0",
+    "dependencies": {
+      "@ant-design/icons": "^5.1.4",
+      "@fortawesome/fontawesome-free": "^6.2.1",
+      "amis": "3.1.1",
+      "amis-core": "3.1.1",
+      "amis-formula": "3.1.1",
+      "amis-ui": "3.1.1",
+      "antd": "^5.6.1",
+      "axios": "^0.24.0",
+      "copy-to-clipboard": "3.3.2",
+      "core-js": "^2.5.7",
+      "lodash": "^4.17.11",
+      "mobx": "^4.5.0",
+      "mobx-react": "^6.3.1",
+      "mobx-state-tree": "^3.17.3",
+      "nprogress": "^0.2.0",
+      "promise": "^8.1.0",
+      "react": "16.14.0",
+      "react-dom": "16.14.0",
+      "react-router": "5.1.2",
+      "react-router-dom": "5.1.2"
+    },
+    "devDependencies": {
+      "@babel/plugin-proposal-class-properties": "^7.16.7",
+      "@babel/plugin-proposal-decorators": "^7.17.2",
+      "@types/lodash": "^4.14.123",
+      "@types/node": "^14.18.33",
+      "@types/react": "^16.13.0",
+      "@types/react-dom": "^16.8.0",
+      "@types/react-router-dom": "^5.3.3",
+      "@vitejs/plugin-react": "^4.0.0",
+      "autoprefixer": "^10.4.13",
+      "axios-mock-adapter": "1.16.0",
+      "bce-sdk-js": "^0.2.9",
+      "cross-env": "^7.0.3",
+      "css-loader": "^3.4.2",
+      "file-loader": "^5.0.2",
+      "fs-walk": "0.0.2",
+      "html-minifier": "^4.0.0",
+      "html-webpack-plugin": "^4.0.1",
+      "monaco-editor": "^0.36.1",
+      "patch-package": "^6.4.7",
+      "qs": "^6.11.1",
+      "react-monaco-editor": "^0.52.0",
+      "rollup-plugin-visualizer": "^5.8.3",
+      "sass": "^1.45.2",
+      "sass-loader": "^8.0.2",
+      "style-loader": "^1.1.3",
+      "ts-loader": "^9.3.1",
+      "typescript": "^4.7.4",
+      "vite": "^4.2.1",
+      "vite-easy-mock": "^1.0.9",
+      "vite-plugin-svgr": "^3.2.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

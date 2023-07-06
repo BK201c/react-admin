@@ -15,6 +15,7 @@ import "amis/sdk/iconfont.css";
 import "amis-ui/lib/themes/cxd.css";
 import "amis/lib/helper.css";
 import "./scss/style.scss";
+import "@/assets/icons/iconfont";
 
 export default function (): JSX.Element {
   const store = ((window as any).store = MainStore.create(
