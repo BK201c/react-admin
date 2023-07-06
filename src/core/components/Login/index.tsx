@@ -12,8 +12,8 @@ interface LoginProps extends RouteComponentProps<any> {
   store: IMainStore;
 }
 
-@inject("store")
 // @ts-ignore
+@inject("store")
 @withRouter
 @observer
 export default class LoginRoute extends React.Component<LoginProps, any> {
