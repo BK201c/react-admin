@@ -1,12 +1,12 @@
 import * as React from "react";
 import { render as renderSchema } from "amis";
-import { IMainStore } from "@/stores";
+import { IMainStore } from "@/core/stores";
 import { getEnv } from "mobx-state-tree";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import * as qs from "qs";
 import { Action } from "amis/lib/types";
-import { getAuthDataByPath } from "@/utils/permission";
+import { getAuthDataByPath } from "@/core/utils/permission";
 interface RendererProps {
   schema?: any;
   [propName: string]: any;

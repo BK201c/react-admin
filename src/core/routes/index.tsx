@@ -3,8 +3,8 @@ import { ToastComponent, AlertComponent } from "amis";
 import { Route, Switch, BrowserRouter } from "react-router-dom";
 import { observer } from "mobx-react";
 import { IMainStore } from "../stores";
-import Login from "../components/Login";
-import AdminRoute from "../pages";
+import Login from "../../components/Login";
+import AdminRoute from "../Layout";
 
 export default observer(function ({ store }: { store: IMainStore }) {
   return (

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "amis";
-import appStore from "@/stores/appStore";
+import appStore from "@/core/stores/appStore";
 
 const baseURL = "http://192.168.33.108:20001";
 

@@ -1,23 +1,19 @@
 import * as React from "react";
-
 import { Provider } from "mobx-react";
-import { toast, alert, confirm } from "amis";
 import axios from "axios";
-import { MainStore } from "./stores";
 import copy from "copy-to-clipboard";
+import { toast, alert, confirm } from "amis";
 import RootRoute from "./routes";
+
+import { MainStore } from "./stores";
+import { request } from "@/core/services/requestInterceptor";
 import "./utils/polyfill";
-import { request } from "@/services/requestInterceptor";
-
+import "./scss/style.scss";
+import "./assets/icons/iconfont";
 import "moment/dist/locale/zh-cn";
-
-// css
-import "@fortawesome/fontawesome-free/css/all.min.css";
 import "amis/sdk/iconfont.css";
 import "amis-ui/lib/themes/cxd.css";
 import "amis/lib/helper.css";
-import "./scss/style.scss";
-import "@/assets/icons/iconfont";
 
 export default function (): JSX.Element {
   const store = ((window as any).store = MainStore.create(

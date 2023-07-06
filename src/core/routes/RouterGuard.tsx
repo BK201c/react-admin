@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Route } from "react-router-dom";
-import path2components from "@/routes/path2Compoment";
+import path2components from "@/core/routes/path2Compoment";
 import { NotFound, Spinner } from "amis";
 
 export default class RouterGuard extends React.Component<any, any> {

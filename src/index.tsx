@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render } from "react-dom";
-import App from "./App";
+import App from "./core/App";
 import _ from "lodash";
 window._ = _;
 

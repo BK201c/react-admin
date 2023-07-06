@@ -2,12 +2,12 @@ import * as React from "react";
 import axios from "axios";
 import { toast } from "amis";
 import { RouteComponentProps } from "react-router-dom";
-import { IMainStore } from "@/stores";
+import { IMainStore } from "@/core/stores";
 import { inject, observer } from "mobx-react";
 import { withRouter } from "react-router";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 import { Input, Button, Card } from "antd";
-import appStore from "@/stores/appStore";
+import appStore from "@/core/stores/appStore";
 interface LoginProps extends RouteComponentProps<any> {
   store: IMainStore;
 }
