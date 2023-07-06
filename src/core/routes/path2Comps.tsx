@@ -1,7 +1,9 @@
 import React, { lazy, Suspense } from "react";
 import Dashboard from "@/pages/common/dashboard";
-import Login from "@/components/Login";
-import Register from "@/core/utils/Register";
+import Register from "../utils/Register";
+import Login from "../components/Login";
+import p404 from "../components/404";
+
 const lazyLoad = (path: string) => {
   const endPoint = path.slice(0, -10);
   const Module = lazy(() => import(endPoint));
@@ -11,7 +13,6 @@ const lazyLoad = (path: string) => {
     </Suspense>
   );
 };
-
 const modules = import.meta.glob("../pages/app/**/index.tsx");
 const dynamicRoutes = [
   ...Object.keys(modules).map((key) =>
@@ -25,7 +26,7 @@ const dynamicRoutes = [
   ),
 ];
 
-const path2components = [
+const path2Comps = [
   {
     path: "/",
     component: Login,
@@ -43,6 +44,10 @@ const path2components = [
     component: Dashboard,
   },
   ...dynamicRoutes,
+  {
+    path: "/404",
+    component: p404,
+  },
 ];
 
-export default path2components;
+export default path2Comps;

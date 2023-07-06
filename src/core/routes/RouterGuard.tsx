@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Route } from "react-router-dom";
-import path2components from "@/core/routes/path2Compoment";
+import path2Comps from "@/core/routes/path2Comps";
 import { NotFound, Spinner } from "amis";
 
 export default class RouterGuard extends React.Component<any, any> {
@@ -26,7 +26,7 @@ export default class RouterGuard extends React.Component<any, any> {
     // console.log("guard pathname is ", pathname);
     if (this.state.pathname != pathname) {
       this.setState({ pathname: pathname });
-      let path2ComponentItem = path2components.find((v) => {
+      let path2ComponentItem = path2Comps.find((v) => {
         let path = v.path;
         if (path != null && !path.startsWith("/")) {
           path = "/" + path;

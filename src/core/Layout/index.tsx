@@ -7,20 +7,18 @@ import {
   matchPath,
   Route,
 } from "react-router-dom";
-import { Space } from "antd";
-import { Avatar, Dropdown } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { Avatar, Dropdown, Space } from "antd";
 import { Layout, Button, AsideNav } from "amis";
-import { IMainStore } from "@/core/stores";
-import { inject, observer } from "mobx-react";
-import HttpService from "@/core/services/HttpService";
-import RouterGuard from "@/core/routes/RouterGuard";
 import { toast } from "amis";
-import appStore from "@/core/stores/appStore";
-import { setAuthNav } from "@/core/utils/permission";
+import { inject, observer } from "mobx-react";
+import { IMainStore } from "../stores";
+import HttpService from "../services/HttpService";
+import RouterGuard from "../routes/RouterGuard";
+import appStore from "../stores/appStore";
+import { setAuthNav } from "../utils/permission";
 import Dashboard from "@/pages/common/dashboard";
-import logo from "@/assets/logo/logo.png";
-import RIcon from "@/components/RIcon";
+import logo from "../assets/logo/logo.png";
+import RIcon from "../components/RIcon";
 
 type NavItem = {
   label: string;
