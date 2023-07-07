@@ -4,7 +4,7 @@ import { Route, Switch, BrowserRouter } from "react-router-dom";
 import { observer } from "mobx-react";
 import { IMainStore } from "../stores";
 import Login from "../components/Login";
-import AdminRoute from "../Layout";
+import AdminRoute from "../layout";
 
 export default observer(function ({ store }: { store: IMainStore }) {
   return (
