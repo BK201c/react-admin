@@ -41,11 +41,12 @@ function isActive(link: any, location: any) {
 
 function traverseTree(node: any) {
   node.label = node.permissionName || node.label;
-  node.icon = node.permissionIcon || "gengduochanpin";
+  if (!node.icon) node.icon = node?.permissionIcon || "icon-gengduochanpin";
 
   if (node?.permissionType === "page") {
     node.path = node.clientRoute || "";
   }
+
   if (
     !_.isEmpty(node.children) &&
     node.children[0].permissionType !== "button"
@@ -115,6 +116,7 @@ export default class Admin extends React.Component<AdminProps, any> {
             {
               label: "首页",
               path: "/dashboard",
+              icon: "icon-home",
               component: Dashboard,
             },
             ...res.data,
@@ -151,8 +153,6 @@ export default class Admin extends React.Component<AdminProps, any> {
           </button>
           <div className={`cxd-Layout-brand`}>
             <img src={logo} alt="home" />
-            {/* <span className="hidden-folded m-l-sm"></span>
-            <span>WCS</span> */}
           </div>
         </div>
         <div className={`cxd-Layout-headerBar`}>
@@ -165,8 +165,8 @@ export default class Admin extends React.Component<AdminProps, any> {
               placement="bottom"
               iconOnly
             >
-              <i
-                className={store.asideFolded ? "fa fa-indent" : "fa fa-outdent"}
+              <RIcon
+                name={store.asideFolded ? "icon-indent" : "icon-outdent"}
               />
             </Button>
           </div>
