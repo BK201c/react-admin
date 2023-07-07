@@ -19,6 +19,7 @@ import { setAuthNav } from "../utils/permission";
 import Dashboard from "@/pages/common/dashboard";
 import logo from "../assets/logo/logo.png";
 import RIcon from "../components/RIcon";
+import { uuidv4 } from "amis";
 
 type NavItem = {
   label: string;
@@ -137,7 +138,7 @@ export default class Admin extends React.Component<AdminProps, any> {
 
     const items = [
       {
-        key: "1",
+        key: uuidv4(),
         label: <span onClick={this.logout}>退出登录</span>,
       },
     ];
@@ -226,7 +227,7 @@ export default class Admin extends React.Component<AdminProps, any> {
             );
 
           if (link.icon) {
-            children.push(<RIcon name={link.icon}></RIcon>);
+            children.push(<RIcon key="icon" name={link.icon}></RIcon>);
           } else if (store.asideFolded && depth === 1) {
             children.push(
               <i
@@ -246,12 +247,15 @@ export default class Admin extends React.Component<AdminProps, any> {
 
           return link.path ? (
             link.active ? (
-              <a>{children}</a>
+              <a key={link.label}>{children}</a>
             ) : (
-              <Link to={link.path}>{children}</Link>
+              <Link key={link.label} to={link.path}>
+                {children}
+              </Link>
             )
           ) : (
             <a
+              key={link.label}
               onClick={
                 link.onClick
                   ? link.onClick

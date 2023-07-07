@@ -3,6 +3,8 @@ import Register from "../utils/Register";
 import Login from "../components/Login";
 import Dashboard from "@/pages/common/dashboard";
 
+const modules = import.meta.glob("../../pages/app/**/index.tsx");
+
 const lazyLoad = (path: string) => {
   const endPoint = path.slice(0, -10);
   const Module = lazy(() => import(endPoint));
@@ -12,8 +14,6 @@ const lazyLoad = (path: string) => {
     </Suspense>
   );
 };
-const modules = import.meta.glob("../../pages/app/**/index.tsx");
-console.log(modules);
 
 const dynamicRoutes = [
   ...Object.keys(modules).map((key) =>
