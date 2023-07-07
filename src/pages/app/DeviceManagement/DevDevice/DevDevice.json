@@ -331,7 +331,8 @@
                     ]
                   }
                 ]
-              }
+              },
+              "hiddenOn": "${!auth.button.edit}"
             },
             {
               "label": "PLC配置",
@@ -548,12 +549,12 @@
                                   "api": {
                                     "method": "post",
                                     "url": "/api/WCSMS/devDeviceDb/delete",
-                                    "requestAdaptor": "",
+                                    "requestAdaptor": "api.data = api.body.id\r\nreturn api",
                                     "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                                     "messages": {},
                                     "data": {
                                       "&": "$$",
-                                      "id": "${id}"
+                                      "id": "${id|asArray}"
                                     },
                                     "replaceData": true
                                   },
@@ -698,7 +699,8 @@
                   }
                 ],
                 "actions": []
-              }
+              },
+              "hiddenOn": "${!auth.button.plcSetting}"
             }
           ],
           "placeholder": "-",
@@ -764,7 +766,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.enableAndDisable}"
         },
         {
           "type": "button",
@@ -821,7 +824,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.enableAndDisable}"
         },
         {
           "type": "button",
@@ -838,12 +842,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/devDevice/delete",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -1068,7 +1072,8 @@
               }
             ],
             "type": "dialog"
-          }
+          },
+          "hiddenOn": "${!auth.button.create}"
         },
         "bulkActions"
       ],

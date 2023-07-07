@@ -351,12 +351,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsAgvTask/delete",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -586,7 +586,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.delete}"
         },
         {
           "label": "指令重发",
@@ -602,12 +603,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsAgvTask/cmdReload",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -837,7 +838,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.reload}"
         },
         {
           "label": "强制完成",
@@ -853,12 +855,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsAgvTask/cmdForceFinish",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -1088,7 +1090,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.cmdForceFinish}"
         },
         {
           "label": "正常完成",
@@ -1104,12 +1107,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsAgvTask/cmdNormalFinish",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -1339,7 +1342,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.cmdNormalFinish}"
         }
       ],
       "features": ["filter", "update", "create", "bulkDelete"],
@@ -1492,7 +1496,8 @@
               }
             ],
             "type": "dialog"
-          }
+          },
+          "hiddenOn": "${!auth.button.create}"
         },
         {
           "type": "bulk-actions"

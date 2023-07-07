@@ -492,7 +492,8 @@
                     ]
                   }
                 ]
-              }
+              },
+              "hiddenOn": "${!auth.button.edit}"
             }
           ],
           "placeholder": "-",
@@ -503,6 +504,744 @@
         }
       ],
       "bulkActions": [
+        {
+          "type": "button",
+          "label": "启用",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认启用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/wcsTask/setUsedFlag",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}",
+                    "usedFlag": 1
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "id",
+                        "label": "序号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "palletBarcode",
+                        "label": "托盘条码",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "palletBarcode",
+                          "label": "托盘条码"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskNo",
+                        "label": "WCS任务号",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "taskNo",
+                          "label": "WCS任务号"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "wmsTaskNo",
+                        "label": "WMS任务号",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "wmsTaskNo",
+                          "label": "WMS任务号"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskTypeName",
+                        "label": "任务类型",
+                        "searchable": {
+                          "type": "select",
+                          "source": {
+                            "method": "get",
+                            "url": "/api/WCSMS/options/getTaskTypeOption",
+                            "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                            "headers": {
+                              "Accept-Language": "zh-Hans"
+                            }
+                          },
+                          "name": "taskTypeNo",
+                          "label": "任务类型编码"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskStatusDesc",
+                        "label": "任务状态",
+                        "searchable": {
+                          "type": "select",
+                          "source": {
+                            "method": "get",
+                            "url": "/api/WCSMS/options/getTaskStatusOption",
+                            "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                            "headers": {
+                              "Accept-Language": "zh-Hans"
+                            }
+                          },
+                          "name": "taskStatus",
+                          "label": "任务状态"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskPriority",
+                        "label": "任务优先级",
+                        "type": "text"
+                      },
+                      {
+                        "name": "loadedTypeName",
+                        "label": "装载状态",
+                        "searchable": {
+                          "type": "select",
+                          "source": {
+                            "method": "get",
+                            "url": "/api/WCSMS/options/getLoadTypeOption",
+                            "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                            "headers": {
+                              "Accept-Language": "zh-Hans"
+                            }
+                          },
+                          "name": "loadedTypeNo",
+                          "label": "装载状态"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "specialFlagDesc",
+                        "label": "是否缠膜",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocName",
+                        "label": "起点站台",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "slocName",
+                          "label": "起点站台"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "extSLocNo",
+                        "label": "外部起点站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "areaName",
+                        "label": "区域",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocName",
+                        "label": "目标站台",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "elocName",
+                          "label": "目标站台"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "extELocNo",
+                        "label": "外部目标站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "clocName",
+                        "label": "当前站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "mlocName",
+                        "label": "必过站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "realElocName",
+                        "label": "实际目标站台",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "realElocName",
+                          "label": "实际目标站台"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "areaName",
+                        "label": "所在区域",
+                        "type": "text"
+                      },
+                      {
+                        "name": "roadwayName",
+                        "label": "所在巷道",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sbinDesc",
+                        "label": "起始库位",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "sbinDesc",
+                          "label": "起始库位"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "cbinDesc",
+                        "label": "当前库位",
+                        "type": "text"
+                      },
+                      {
+                        "name": "ebinDesc",
+                        "label": "目标库位",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "ebinDesc",
+                          "label": "目标库位"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "matLength",
+                        "label": "长",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWidht",
+                        "label": "宽",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matHeight",
+                        "label": "高",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWeight",
+                        "label": "重量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matQty",
+                        "label": "数量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskFlagDesc",
+                        "label": "任务标识",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sourceByDesc",
+                        "label": "任务来源",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errCodeDesc",
+                        "label": "异常代码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errMsg",
+                        "label": "异常信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskMsg",
+                        "label": "任务信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdNo",
+                        "label": "当前指令号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sectionNo",
+                        "label": "当前路段号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "returnFlagDesc",
+                        "label": "回传标记",
+                        "searchable": {
+                          "type": "select",
+                          "source": {
+                            "method": "get",
+                            "url": "/api/WCSMS/options/getReturnFlagOption",
+                            "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                            "headers": {
+                              "Accept-Language": "zh-Hans"
+                            }
+                          },
+                          "name": "returnFlag",
+                          "label": "回传标记"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "returnCount",
+                        "label": "回传次数",
+                        "type": "text"
+                      },
+                      {
+                        "name": "returnTime",
+                        "label": "回传时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "returnMsg",
+                        "label": "回传信息",
+                        "type": "text"
+                      },
+
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text",
+                        "searchable": {
+                          "type": "input-datetime",
+                          "name": "createTimeStart",
+                          "label": "开始创建时间",
+                          "format": "YYYY-MM-DD HH:mm:ss"
+                        }
+                      },
+                      {
+                        "name": "createTimeEnd",
+                        "label": "结束创建时间",
+                        "type": "text",
+                        "toggled": false,
+                        "searchable": {
+                          "type": "input-datetime",
+                          "name": "createTimeEnd",
+                          "label": "结束创建时间",
+                          "format": "YYYY-MM-DD HH:mm:ss"
+                        }
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          },
+          "hiddenOn": "${!auth.button.enableAndDisable}"
+        },
+        {
+          "type": "button",
+          "label": "禁用",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认禁用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/wcsTask/setUsedFlag",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}",
+                    "usedFlag": 0
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "id",
+                        "label": "序号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "palletBarcode",
+                        "label": "托盘条码",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "palletBarcode",
+                          "label": "托盘条码"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskNo",
+                        "label": "WCS任务号",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "taskNo",
+                          "label": "WCS任务号"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "wmsTaskNo",
+                        "label": "WMS任务号",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "wmsTaskNo",
+                          "label": "WMS任务号"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskTypeName",
+                        "label": "任务类型",
+                        "searchable": {
+                          "type": "select",
+                          "source": {
+                            "method": "get",
+                            "url": "/api/WCSMS/options/getTaskTypeOption",
+                            "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                            "headers": {
+                              "Accept-Language": "zh-Hans"
+                            }
+                          },
+                          "name": "taskTypeNo",
+                          "label": "任务类型编码"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskStatusDesc",
+                        "label": "任务状态",
+                        "searchable": {
+                          "type": "select",
+                          "source": {
+                            "method": "get",
+                            "url": "/api/WCSMS/options/getTaskStatusOption",
+                            "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                            "headers": {
+                              "Accept-Language": "zh-Hans"
+                            }
+                          },
+                          "name": "taskStatus",
+                          "label": "任务状态"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskPriority",
+                        "label": "任务优先级",
+                        "type": "text"
+                      },
+                      {
+                        "name": "loadedTypeName",
+                        "label": "装载状态",
+                        "searchable": {
+                          "type": "select",
+                          "source": {
+                            "method": "get",
+                            "url": "/api/WCSMS/options/getLoadTypeOption",
+                            "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                            "headers": {
+                              "Accept-Language": "zh-Hans"
+                            }
+                          },
+                          "name": "loadedTypeNo",
+                          "label": "装载状态"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "specialFlagDesc",
+                        "label": "是否缠膜",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocName",
+                        "label": "起点站台",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "slocName",
+                          "label": "起点站台"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "extSLocNo",
+                        "label": "外部起点站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "areaName",
+                        "label": "区域",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocName",
+                        "label": "目标站台",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "elocName",
+                          "label": "目标站台"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "extELocNo",
+                        "label": "外部目标站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "clocName",
+                        "label": "当前站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "mlocName",
+                        "label": "必过站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "realElocName",
+                        "label": "实际目标站台",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "realElocName",
+                          "label": "实际目标站台"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "areaName",
+                        "label": "所在区域",
+                        "type": "text"
+                      },
+                      {
+                        "name": "roadwayName",
+                        "label": "所在巷道",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sbinDesc",
+                        "label": "起始库位",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "sbinDesc",
+                          "label": "起始库位"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "cbinDesc",
+                        "label": "当前库位",
+                        "type": "text"
+                      },
+                      {
+                        "name": "ebinDesc",
+                        "label": "目标库位",
+                        "searchable": {
+                          "type": "input-text",
+                          "name": "ebinDesc",
+                          "label": "目标库位"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "matLength",
+                        "label": "长",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWidht",
+                        "label": "宽",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matHeight",
+                        "label": "高",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matWeight",
+                        "label": "重量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "matQty",
+                        "label": "数量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskFlagDesc",
+                        "label": "任务标识",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sourceByDesc",
+                        "label": "任务来源",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errCodeDesc",
+                        "label": "异常代码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "errMsg",
+                        "label": "异常信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "taskMsg",
+                        "label": "任务信息",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdNo",
+                        "label": "当前指令号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sectionNo",
+                        "label": "当前路段号",
+                        "type": "text"
+                      },
+                      {
+                        "name": "returnFlagDesc",
+                        "label": "回传标记",
+                        "searchable": {
+                          "type": "select",
+                          "source": {
+                            "method": "get",
+                            "url": "/api/WCSMS/options/getReturnFlagOption",
+                            "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                            "headers": {
+                              "Accept-Language": "zh-Hans"
+                            }
+                          },
+                          "name": "returnFlag",
+                          "label": "回传标记"
+                        },
+                        "type": "text"
+                      },
+                      {
+                        "name": "returnCount",
+                        "label": "回传次数",
+                        "type": "text"
+                      },
+                      {
+                        "name": "returnTime",
+                        "label": "回传时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "returnMsg",
+                        "label": "回传信息",
+                        "type": "text"
+                      },
+
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text",
+                        "searchable": {
+                          "type": "input-datetime",
+                          "name": "createTimeStart",
+                          "label": "开始创建时间",
+                          "format": "YYYY-MM-DD HH:mm:ss"
+                        }
+                      },
+                      {
+                        "name": "createTimeEnd",
+                        "label": "结束创建时间",
+                        "type": "text",
+                        "toggled": false,
+                        "searchable": {
+                          "type": "input-datetime",
+                          "name": "createTimeEnd",
+                          "label": "结束创建时间",
+                          "format": "YYYY-MM-DD HH:mm:ss"
+                        }
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          },
+          "hiddenOn": "${!auth.button.enableAndDisable}"
+        },
         {
           "type": "button",
           "level": "danger",
@@ -518,12 +1257,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsTask/delete",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -563,7 +1302,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.delete}"
         },
         {
           "label": "任务暂停",
@@ -579,12 +1319,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsTask/taskPause",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -624,7 +1364,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.taskPause}"
         },
         {
           "label": "任务恢复",
@@ -640,12 +1381,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsTask/taskRecover",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -685,7 +1426,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.taskRecover}"
         },
         {
           "label": "强制完成",
@@ -701,12 +1443,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsTask/taskForceFinish",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -746,7 +1488,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.taskForceFinish}"
         },
         {
           "label": "请求调度",
@@ -762,12 +1505,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsTask/requestDispatchByHand",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -807,7 +1550,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.requestDispatch}"
         },
         {
           "label": "手动回传",
@@ -823,12 +1567,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsTask/taskRuturnWms",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -868,7 +1612,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.returnWms}"
         }
       ],
       "features": ["filter", "update", "create", "bulkDelete"],
@@ -1016,7 +1761,8 @@
               }
             ],
             "type": "dialog"
-          }
+          },
+          "hiddenOn": "${!auth.button.create}"
         },
         {
           "label": "参数请求调度",
@@ -1074,7 +1820,8 @@
               }
             ],
             "type": "dialog"
-          }
+          },
+          "hiddenOn": "${!auth.button.requestDispatchByParam}"
         },
         {
           "type": "bulk-actions"

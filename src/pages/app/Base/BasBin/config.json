@@ -302,6 +302,7 @@
                 "body": [
                   {
                     "type": "form",
+                    "columnCount": 2,
                     "api": {
                       "method": "put",
                       "url": "/api/WCSMS/basBin/update",
@@ -808,7 +809,7 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认禁用",
             "size": "md",
             "body": [
               {
@@ -1026,15 +1027,15 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认删除",
             "size": "md",
             "body": [
               {
                 "type": "form",
                 "api": {
                   "method": "post",
-                  "url": "/api/WCSMS/basArea/delete",
-                  "requestAdaptor": "",
+                  "url": "/api/WCSMS/basBin/delete",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
@@ -1054,13 +1055,173 @@
                     "columns": [
                       {
                         "type": "text",
-                        "label": "区域编码",
-                        "name": "areaNo"
+                        "name": "binNo",
+                        "label": "库位编码"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binDesc",
+                        "label": "库位描述"
+                      },
+                      {
+                        "type": "text",
+                        "name": "extBinNo",
+                        "label": "外部库位编码"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binPlcNo",
+                        "label": "PLC下发编码"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binTypeDesc",
+                        "label": "库位类型"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binStatusDesc",
+                        "label": "库位状态"
+                      },
+                      {
+                        "type": "text",
+                        "name": "fireFlagDesc",
+                        "label": "火警标志"
+                      },
+                      {
+                        "type": "text",
+                        "name": "capacitySize",
+                        "label": "容量"
+                      },
+                      {
+                        "type": "text",
+                        "name": "extensionGroup",
+                        "label": "伸位组"
+                      },
+                      {
+                        "type": "text",
+                        "name": "extensionIdxDesc",
+                        "label": "伸位组序号"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binGroupNo",
+                        "label": "工位组"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binGroupIdx",
+                        "label": "工位组序号"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binRow",
+                        "label": "排"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binCol",
+                        "label": "列"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binLayer",
+                        "label": "层"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binLength",
+                        "label": "长度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binWidth",
+                        "label": "宽度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binHeight",
+                        "label": "高度（mm）"
+                      },
+                      {
+                        "type": "text",
+                        "name": "bearWeight",
+                        "label": "最大承重"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binPriority",
+                        "label": "库位优先级"
                       },
                       {
                         "type": "text",
                         "name": "areaName",
-                        "label": "区域名称"
+                        "label": "所在区域名"
+                      },
+                      {
+                        "type": "text",
+                        "name": "roadwayName",
+                        "label": "所在巷道名"
+                      },
+                      {
+                        "type": "text",
+                        "name": "rackName",
+                        "label": "所在货架名"
+                      },
+                      {
+                        "type": "text",
+                        "name": "trayDirectDesc",
+                        "label": "托盘方向"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binErrFlagDesc",
+                        "label": "库位异常类型"
+                      },
+                      {
+                        "type": "text",
+                        "name": "binErrMsg",
+                        "label": "库位异常说明"
+                      },
+                      {
+                        "type": "text",
+                        "name": "palletBarcode",
+                        "label": "托盘号"
+                      },
+                      {
+                        "type": "text",
+                        "name": "inTime",
+                        "label": "入库时间"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
                       }
                     ],
                     "name": "table"
@@ -1085,8 +1246,8 @@
       ],
       "filterColumnCount": 3,
       "autoGenerateFilter": {
-        "columnsNum": 2,
-        "showBtnToolbar": false
+        "columnsNum": 4,
+        "showBtnToolbar": true
       },
       "footable": {
         "expand": "first",
@@ -1111,6 +1272,7 @@
             "title": "新增",
             "body": {
               "type": "form",
+              "columnCount": 2,
               "api": {
                 "method": "post",
                 "url": "/api/WCSMS/basBin/create",
@@ -1385,6 +1547,16 @@
                 }
               ]
             }
+          }
+        },
+        {
+          "label": "库存同步",
+          "type": "action",
+          "hiddenOn": "${!auth.button.stockSync}",
+          "actionType": "ajax",
+          "api": {
+            "method": "post",
+            "url": "/api/WCSMS/basBin/stockSync"
           }
         },
         "bulkActions"

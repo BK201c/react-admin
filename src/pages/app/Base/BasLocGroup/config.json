@@ -127,10 +127,11 @@
               "actionType": "dialog",
               "level": "link",
               "dialog": {
-                "title": "编辑",
+                 "title": "编辑",
                 "body": [
                   {
                     "type": "form",
+                    "columnCount": 2,
                     "api": {
                       "method": "put",
                       "url": "/api/WCSMS/basLocGroup/update",
@@ -312,7 +313,7 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认禁用",
             "size": "md",
             "body": [
               {
@@ -410,15 +411,15 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认删除",
             "size": "md",
             "body": [
               {
                 "type": "form",
                 "api": {
                   "method": "post",
-                  "url": "/api/WCSMS/basArea/delete",
-                  "requestAdaptor": "",
+                  "url": "/api/WCSMS/basLocGroup/delete",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
@@ -437,14 +438,54 @@
                     "type": "table",
                     "columns": [
                       {
-                        "type": "text",
-                        "label": "区域编码",
-                        "name": "areaNo"
+                        "name": "locGroupNo",
+                        "label": "站台组编码",
+                        "type": "text"
                       },
                       {
-                        "type": "text",
-                        "name": "areaName",
-                        "label": "区域名称"
+                        "name": "locGroupName",
+                        "label": "站台组名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "locGroupTypeName",
+                        "label": "站台组类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "locGroupDesc",
+                        "label": "站台组描述",
+                        "type": "text"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
                       }
                     ],
                     "name": "table"
@@ -469,8 +510,8 @@
       ],
       "filterColumnCount": 3,
       "autoGenerateFilter": {
-        "columnsNum": 2,
-        "showBtnToolbar": false
+        "columnsNum": 4,
+        "showBtnToolbar": true
       },
       "footable": {
         "expand": "first",
@@ -495,6 +536,7 @@
             "title": "新增",
             "body": {
               "type": "form",
+              "columnCount": 2,
               "api": {
                 "method": "post",
                 "url": "/api/WCSMS/basLocGroup/create",

@@ -155,15 +155,15 @@
             {
               "label": "编辑",
               "type": "button",
-              "hiddenOn": "${!auth.button.enableAndDisable}",
               "hiddenOn": "${!auth.button.edit}",
               "actionType": "dialog",
               "level": "link",
               "dialog": {
-                "title": "编辑",
+                 "title": "编辑",
                 "body": [
                   {
                     "type": "form",
+                    "columnCount": 2,
                     "api": {
                       "method": "put",
                       "url": "/api/WCSMS/cfgWcs/update",
@@ -384,7 +384,7 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认禁用",
             "size": "md",
             "body": [
               {
@@ -497,15 +497,15 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认删除",
             "size": "md",
             "body": [
               {
                 "type": "form",
                 "api": {
                   "method": "post",
-                  "url": "/api/WCSMS/basArea/delete",
-                  "requestAdaptor": "",
+                  "url": "/api/WCSMS/cfgWcs/delete",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
@@ -525,13 +525,68 @@
                     "columns": [
                       {
                         "type": "text",
-                        "label": "区域编码",
-                        "name": "areaNo"
+                        "name": "wcsNo",
+                        "label": "客户端编码"
                       },
                       {
                         "type": "text",
-                        "name": "areaName",
-                        "label": "区域名称"
+                        "name": "wcsName",
+                        "label": "客户端名称"
+                      },
+                      {
+                        "type": "text",
+                        "name": "wcsDesc",
+                        "label": "客户端描述"
+                      },
+                      {
+                        "type": "text",
+                        "name": "ipAddress",
+                        "label": "IP地址"
+                      },
+                      {
+                        "type": "text",
+                        "name": "ipPort",
+                        "label": "端口号"
+                      },
+                      {
+                        "type": "text",
+                        "name": "runModeDesc",
+                        "label": "运行模式"
+                      },
+                      {
+                        "type": "text",
+                        "name": "runStatusDesc",
+                        "label": "运行状态"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
                       }
                     ],
                     "name": "table"
@@ -556,8 +611,8 @@
       ],
       "filterColumnCount": 3,
       "autoGenerateFilter": {
-        "columnsNum": 2,
-        "showBtnToolbar": false
+        "columnsNum": 4,
+        "showBtnToolbar": true
       },
       "footable": {
         "expand": "first",
@@ -582,6 +637,7 @@
             "title": "新增",
             "body": {
               "type": "form",
+              "columnCount": 2,
               "api": {
                 "method": "post",
                 "url": "/api/WCSMS/cfgWcs/create",

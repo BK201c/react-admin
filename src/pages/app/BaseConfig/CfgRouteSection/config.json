@@ -250,10 +250,11 @@
               "actionType": "dialog",
               "level": "link",
               "dialog": {
-                "title": "编辑",
+                 "title": "编辑",
                 "body": [
                   {
                     "type": "form",
+                    "columnCount": 2,
                     "api": {
                       "method": "put",
                       "url": "/api/WCSMS/cfgRouteSection/update",
@@ -591,7 +592,7 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认禁用",
             "size": "md",
             "body": [
               {
@@ -744,15 +745,15 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认删除",
             "size": "md",
             "body": [
               {
                 "type": "form",
                 "api": {
                   "method": "post",
-                  "url": "/api/WCSMS/basArea/delete",
-                  "requestAdaptor": "",
+                  "url": "/api/WCSMS/cfgRouteSection/delete",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
@@ -771,14 +772,109 @@
                     "type": "table",
                     "columns": [
                       {
-                        "type": "text",
-                        "label": "区域编码",
-                        "name": "areaNo"
+                        "name": "sectionNo",
+                        "label": "路段编号",
+                        "type": "text"
                       },
                       {
-                        "type": "text",
-                        "name": "areaName",
-                        "label": "区域名称"
+                        "name": "sectionDec",
+                        "label": "路段描述",
+                        "type": "text"
+                      },
+                      {
+                        "name": "slocName",
+                        "label": "起点站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocName",
+                        "label": "目标站台",
+                        "type": "text"
+                      },
+                      {
+                        "name": "endFlagDesc",
+                        "label": "终点标记",
+                        "type": "text"
+                      },
+                      {
+                        "name": "traceTypeDesc",
+                        "label": "跟踪反馈类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "elocScheckFlagDesc",
+                        "label": "终点校验标记",
+                        "type": "text"
+                      },
+                      {
+                        "name": "stepSize",
+                        "label": "步长",
+                        "type": "text"
+                      },
+                      {
+                        "name": "flowSize",
+                        "label": "容量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sectionPriority",
+                        "label": "优先级",
+                        "type": "text"
+                      },
+                      {
+                        "name": "specialFlag",
+                        "label": "特殊标记",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>不缠膜</span>",
+                          "1": "<span class='label label-success'>缠膜</span>",
+                          "*": "${specialFlag}"
+                        }
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devTypeName",
+                        "label": "设备类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "cmdTypeName",
+                        "label": "指令类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
                       }
                     ],
                     "name": "table"
@@ -803,8 +899,8 @@
       ],
       "filterColumnCount": 3,
       "autoGenerateFilter": {
-        "columnsNum": 2,
-        "showBtnToolbar": false
+        "columnsNum": 4,
+        "showBtnToolbar": true
       },
       "footable": {
         "expand": "first",
@@ -829,6 +925,7 @@
             "title": "新增",
             "body": {
               "type": "form",
+              "columnCount": 2,
               "api": {
                 "method": "post",
                 "url": "/api/WCSMS/cfgRouteSection/create",
@@ -999,6 +1096,16 @@
                 }
               ]
             }
+          }
+        },
+        {
+          "label": "路段测试",
+          "type": "action",
+          "hiddenOn": "${!auth.button.routeTest}",
+          "actionType": "ajax",
+          "api": {
+            "method": "post",
+            "url": "/api/WCSMS/cfgRouteSection/sectionTest"
           }
         },
         "bulkActions"

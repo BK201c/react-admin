@@ -137,6 +137,7 @@
                 "body": [
                   {
                     "type": "form",
+                    "columnCount": 2,
                     "api": {
                       "method": "put",
                       "url": "/api/WCSMS/cfgLocFunc/update",
@@ -147,7 +148,7 @@
                         "&": "$$",
                         "skipCount": 0,
                         "maxResultCount": 20,
-                        "id":"${id}",
+                        "id": "${id}",
                         "locFuncNo": "${locFuncNo}",
                         "locFuncName": "${locFuncName}",
                         "locFuncDesc": "${locFuncDesc}",
@@ -212,6 +213,362 @@
                   }
                 ],
                 "type": "dialog"
+              }
+            },
+            {
+              "label": "参数配置",
+              "type": "button",
+              "actionType": "dialog",
+              "level": "link",
+              "dialog": {
+                "type": "dialog",
+                "title": "参数配置",
+                "body": [
+                  {
+                    "type": "form",
+                    "api": {
+                      "method": "post",
+                      "url": "/api/WCSMS/cfgLocFunc/submit",
+                      "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": response.data.data,\r\n}",
+                      "messages": {},
+                      "replaceData": false,
+                      "data": {
+                        "&": "$$",
+                        "id": "${id}"
+                      },
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      },
+                      "requestAdaptor": "",
+                      "dataType": "json"
+                    },
+                    "body": [
+                      {
+                        "type": "input-text",
+                        "name": "locFuncTypeName",
+                        "label": "站台功能项描述名称",
+                        "required": true,
+                        "disabled": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "locFuncNo",
+                        "label": "站台功能项编码",
+                        "required": true,
+                        "disabled": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "locFuncName",
+                        "label": "站台功能项名称",
+                        "disabled": true
+                      },
+                      {
+                        "type": "crud",
+                        "syncLocation": false,
+                        "api": {
+                          "method": "get",
+                          "url": "/api/WCSMS/cfgLocFunc/getParamDtlsById",
+                          "messages": {},
+                          "requestAdaptor": "",
+                          "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": response.data.data.paramList,\r\n}",
+                          "data": {
+                            "&": "$$",
+                            "id": "${id}"
+                          }
+                        },
+                        "columns": [
+                          {
+                            "name": "locFuncParamNo",
+                            "label": "参数编码",
+                            "type": "text"
+                          },
+                          {
+                            "type": "text",
+                            "label": "参数名称",
+                            "name": "locFuncParamName"
+                          },
+                          {
+                            "type": "text",
+                            "label": "参数类型",
+                            "name": "locFuncParamValueTypeName"
+                          },
+                          {
+                            "type": "operation",
+                            "label": "操作",
+                            "buttons": [
+                              {
+                                "type": "button",
+                                "label": "删除",
+                                "actionType": "ajax",
+                                "level": "link",
+                                "className": "text-danger",
+                                "confirmText": "确定要删除？",
+                                "api": {
+                                  "method": "post",
+                                  "url": ""
+                                }
+                              },
+                              {
+                                "label": "编辑",
+                                "type": "button",
+                                "actionType": "dialog",
+                                "level": "link",
+                                "dialog": {
+                                  "title": "编辑",
+                                  "body": [
+                                    {
+                                      "type": "form",
+                                      "api": "xxx/update",
+                                      "body": [
+                                        {
+                                          "name": "locFuncParamNo",
+                                          "label": "参数编码",
+                                          "type": "input-text",
+                                          "disabled": true
+                                        },
+                                        {
+                                          "name": "locFuncParamName",
+                                          "label": "参数名称",
+                                          "type": "input-text",
+                                          "disabled": true
+                                        },
+                                        {
+                                          "type": "select",
+                                          "name": "locFuncParamValueTypeName",
+                                          "label": "参数类型",
+                                          "source": {
+                                            "method": "get",
+                                            "url": "/api/WCSMS/options/getLocFuncParamValueTypeOption",
+                                            "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                                            "headers": {
+                                              "Accept-Language": "zh-Hans"
+                                            }
+                                          },
+                                          "multiple": false
+                                        },
+                                        {
+                                          "type": "crud",
+                                          "syncLocation": false,
+                                          "api": {
+                                            "method": "get",
+                                            "url": ""
+                                          },
+                                          "columns": [
+                                            {
+                                              "name": "id",
+                                              "label": "ID",
+                                              "type": "text"
+                                            },
+                                            {
+                                              "name": "locFuncParamValueNo",
+                                              "label": "参数值编码",
+                                              "type": "text",
+                                              "placeholder": "-",
+                                              "quickEdit": {
+                                                "mode": "inline"
+                                              }
+                                            },
+                                            {
+                                              "type": "text",
+                                              "label": "参数值名称",
+                                              "name": "locFuncParamValueName",
+                                              "placeholder": "-",
+                                              "quickEdit": {
+                                                "mode": "inline"
+                                              }
+                                            }
+                                          ],
+                                          "bulkActions": [],
+                                          "itemActions": [],
+                                          "features": ["create"],
+                                          "headerToolbar": [
+                                            {
+                                              "label": "新增",
+                                              "type": "button",
+                                              "actionType": "dialog",
+                                              "level": "primary",
+                                              "dialog": {
+                                                "title": "新增",
+                                                "body": {
+                                                  "type": "form",
+                                                  "api": {
+                                                    "method": "post",
+                                                    "url": ""
+                                                  },
+                                                  "body": [
+                                                    {
+                                                      "type": "input-text",
+                                                      "name": "id",
+                                                      "label": "ID"
+                                                    },
+                                                    {
+                                                      "type": "input-text",
+                                                      "name": "locFuncParamValueNo",
+                                                      "label": "参数值编码"
+                                                    },
+                                                    {
+                                                      "type": "input-text",
+                                                      "name": "locFuncParamValueName",
+                                                      "label": "参数值名称"
+                                                    }
+                                                  ]
+                                                }
+                                              }
+                                            },
+                                            "bulkActions"
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ],
+                                  "type": "dialog"
+                                }
+                              }
+                            ]
+                          }
+                        ],
+                        "bulkActions": [],
+                        "itemActions": [],
+                        "features": ["create", "delete", "update"],
+                        "headerToolbar": [
+                          {
+                            "label": "新增",
+                            "type": "button",
+                            "actionType": "dialog",
+                            "level": "primary",
+                            "dialog": {
+                              "title": "新增",
+                              "body": [
+                                {
+                                  "type": "form",
+                                  "api": {
+                                    "method": "post",
+                                    "url": ""
+                                  },
+                                  "body": [
+                                    {
+                                      "type": "input-text",
+                                      "name": "locFuncParamNo",
+                                      "label": "参数编码"
+                                    },
+                                    {
+                                      "type": "input-text",
+                                      "name": "locFuncParamName",
+                                      "label": "参数名称"
+                                    },
+                                    {
+                                      "type": "select",
+                                      "name": "locFuncParamValueTypeName",
+                                      "label": "参数类型",
+                                      "source": {
+                                        "method": "get",
+                                        "url": "/api/WCSMS/options/getLocFuncParamValueTypeOption",
+                                        "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                                        "headers": {
+                                          "Accept-Language": "zh-Hans"
+                                        }
+                                      },
+                                      "multiple": false
+                                    },
+                                    {
+                                      "type": "crud",
+                                      "syncLocation": false,
+                                      "api": {
+                                        "method": "get",
+                                        "url": ""
+                                      },
+                                      "columns": [
+                                        {
+                                          "name": "id",
+                                          "label": "ID",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "name": "locFuncParamValueNo",
+                                          "label": "参数值编码",
+                                          "type": "text",
+                                          "placeholder": "-",
+                                          "quickEdit": {
+                                            "mode": "inline"
+                                          }
+                                        },
+                                        {
+                                          "type": "text",
+                                          "label": "参数值名称",
+                                          "name": "locFuncParamValueName",
+                                          "placeholder": "-",
+                                          "quickEdit": {
+                                            "mode": "inline"
+                                          }
+                                        }
+                                      ],
+                                      "bulkActions": [],
+                                      "itemActions": [],
+                                      "features": ["create"],
+                                      "headerToolbar": [
+                                        {
+                                          "label": "新增",
+                                          "type": "button",
+                                          "actionType": "dialog",
+                                          "level": "primary",
+                                          "dialog": {
+                                            "title": "新增",
+                                            "body": {
+                                              "type": "form",
+                                              "api": {
+                                                "method": "post",
+                                                "url": ""
+                                              },
+                                              "body": [
+                                                {
+                                                  "type": "input-text",
+                                                  "name": "id",
+                                                  "label": "ID"
+                                                },
+                                                {
+                                                  "type": "input-text",
+                                                  "name": "locFuncParamValueNo",
+                                                  "label": "参数值编码"
+                                                },
+                                                {
+                                                  "type": "input-text",
+                                                  "name": "locFuncParamValueName",
+                                                  "label": "参数值名称"
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        },
+                                        "bulkActions"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ],
+                              "type": "dialog"
+                            }
+                          },
+                          "bulkActions"
+                        ],
+                        "perPageAvailable": [10],
+                        "messages": {},
+                        "initFetch": true
+                      }
+                    ],
+                    "initApi": {
+                      "url": "/api/WCSMS/cfgLocFunc/getParamDtlsById",
+                      "method": "get",
+                      "requestAdaptor": "",
+                      "adaptor": "",
+                      "messages": {},
+                      "data": {
+                        "&": "$$",
+                        "id": "${id}"
+                      }
+                    }
+                  }
+                ]
               }
             }
           ]
@@ -328,7 +685,7 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认禁用",
             "size": "md",
             "body": [
               {
@@ -431,15 +788,15 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认删除",
             "size": "md",
             "body": [
               {
                 "type": "form",
                 "api": {
                   "method": "post",
-                  "url": "/api/WCSMS/basArea/delete",
-                  "requestAdaptor": "",
+                  "url": "/api/WCSMS/cfgLocFunc/delete",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
@@ -458,14 +815,59 @@
                     "type": "table",
                     "columns": [
                       {
-                        "type": "text",
-                        "label": "区域编码",
-                        "name": "areaNo"
+                        "name": "locFuncNo",
+                        "label": "站台功能项编码",
+                        "type": "text"
                       },
                       {
-                        "type": "text",
-                        "name": "areaName",
-                        "label": "区域名称"
+                        "name": "locFuncName",
+                        "label": "站台功能项名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "locFuncTypeNo",
+                        "label": "站台功能项类型编码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "locFuncTypeName",
+                        "label": "站台功能项描述名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "locFuncDesc",
+                        "label": "站台功能项描述",
+                        "type": "text"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
                       }
                     ],
                     "name": "table"
@@ -482,24 +884,17 @@
           }
         }
       ],
-      "features": [
-        "filter",
-        "update",
-        "create",
-        "bulkDelete"
-      ],
+      "features": ["filter", "update", "create", "bulkDelete"],
       "filterColumnCount": 3,
       "autoGenerateFilter": {
-        "columnsNum": 2,
-        "showBtnToolbar": false
+        "columnsNum": 4,
+        "showBtnToolbar": true
       },
       "footable": {
         "expand": "first",
         "accordion": true
       },
-      "perPageAvailable": [
-        10
-      ],
+      "perPageAvailable": [10],
       "messages": {
         "fetchSuccess": "查询成功",
         "fetchFailed": ""
@@ -516,6 +911,7 @@
             "title": "新增",
             "body": {
               "type": "form",
+              "columnCount": 2,
               "api": {
                 "method": "post",
                 "url": "/api/WCSMS/cfgLocFunc/create",
@@ -598,9 +994,6 @@
   "pullRefresh": {
     "disabled": true
   },
-  "regions": [
-    "body",
-    "header"
-  ],
+  "regions": ["body", "header"],
   "aside": []
 }

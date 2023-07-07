@@ -334,12 +334,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsCovTask/delete",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -552,7 +552,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.delete}"
         },
         {
           "label": "指令重发",
@@ -568,12 +569,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsCovTask/cmdReload",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -786,7 +787,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.reload}"
         },
         {
           "label": "正常完成",
@@ -802,12 +804,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsCovTask/cmdNormalFinish",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -1020,12 +1022,12 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.taskNormalFinish}"
         },
         {
           "label": "强制完成",
           "type": "button",
-
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
@@ -1037,12 +1039,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/WcsCovTask/cmdForceFinish",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -1255,7 +1257,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.cmdForceFinish}"
         }
       ],
       "features": ["filter", "update", "create", "bulkDelete"],
@@ -1412,7 +1415,8 @@
               }
             ],
             "type": "dialog"
-          }
+          },
+          "hiddenOn": "${!auth.button.create}"
         },
         {
           "type": "bulk-actions"

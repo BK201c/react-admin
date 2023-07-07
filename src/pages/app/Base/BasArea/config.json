@@ -138,6 +138,7 @@
                 "body": [
                   {
                     "type": "form",
+                    "columnCount": 2,
                     "api": {
                       "method": "put",
                       "url": "/api/WCSMS/basArea/update",
@@ -328,7 +329,7 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认禁用",
             "size": "md",
             "body": [
               {
@@ -426,7 +427,7 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认删除",
             "size": "md",
             "body": [
               {
@@ -434,7 +435,7 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/basArea/delete",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
@@ -453,14 +454,54 @@
                     "type": "table",
                     "columns": [
                       {
-                        "type": "text",
+                        "name": "areaNo",
                         "label": "区域编码",
-                        "name": "areaNo"
+                        "type": "text"
                       },
                       {
-                        "type": "text",
                         "name": "areaName",
-                        "label": "区域名称"
+                        "label": "区域名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "binSplitFlagDesc",
+                        "label": "库位拆分类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "sdTypeDesc",
+                        "label": "伸工位类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
                       }
                     ],
                     "name": "table"
@@ -485,8 +526,8 @@
       ],
       "filterColumnCount": 3,
       "autoGenerateFilter": {
-        "columnsNum": 2,
-        "showBtnToolbar": false
+        "columnsNum": 4,
+        "showBtnToolbar": true
       },
       "footable": {
         "expand": "first",
@@ -511,6 +552,7 @@
             "title": "新增",
             "body": {
               "type": "form",
+              "columnCount": 2,
               "api": {
                 "method": "post",
                 "url": "/api/WCSMS/basArea/create",
@@ -588,6 +630,19 @@
                   "required": true
                 }
               ]
+            }
+          }
+        },
+        {
+          "label": "模板下载",
+          "type": "action",
+          "hiddenOn": "${!auth.button.excelTempDownLoad}",
+          "actionType": "download",
+          "api": {
+            "method": "get",
+            "url": "/api/WCSMS/basArea/generateTemplate",
+            "headers": {
+              "Content-Disposition": "attachment; filename='download.xlsx'"
             }
           }
         },

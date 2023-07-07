@@ -119,10 +119,11 @@
               "actionType": "dialog",
               "level": "link",
               "dialog": {
-                "title": "编辑",
+                 "title": "编辑",
                 "body": [
                   {
                     "type": "form",
+                    "columnCount": 2,
                     "api": {
                       "method": "put",
                       "url": "/api/WCSMS/cfgLocModel/update",
@@ -197,8 +198,8 @@
       ],
       "filterColumnCount": 3,
       "autoGenerateFilter": {
-        "columnsNum": 2,
-        "showBtnToolbar": false
+        "columnsNum": 4,
+        "showBtnToolbar": true
       },
       "footable": {
         "expand": "first",

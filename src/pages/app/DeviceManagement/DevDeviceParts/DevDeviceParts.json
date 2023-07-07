@@ -254,7 +254,8 @@
                     ]
                   }
                 ]
-              }
+              },
+              "hiddenOn": "${!auth.button.edit}"
             },
             {
               "label": "偏移量配置",
@@ -332,7 +333,8 @@
                     ]
                   }
                 ]
-              }
+              },
+              "hiddenOn": "${!auth.button.dbSetting}"
             }
           ],
           "placeholder": "-",
@@ -398,7 +400,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.enableAndDisable}"
         },
         {
           "type": "button",
@@ -455,7 +458,8 @@
             "showLoading": true,
             "withDefaultData": false,
             "dataMapSwitch": false
-          }
+          },
+          "hiddenOn": "${!auth.button.enableAndDisable}"
         },
         {
           "type": "button",
@@ -472,12 +476,12 @@
                 "api": {
                   "method": "post",
                   "url": "/api/WCSMS/devDeviceParts/delete",
-                  "requestAdaptor": "",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
                     "&": "$$",
-                    "ids": "${ids|split}"
+                    "Ids": "${ids|split}"
                   },
                   "replaceData": true
                 },
@@ -518,7 +522,7 @@
       "features": ["filter", "update", "create", "bulkDelete"],
       "filterColumnCount": 3,
       "autoGenerateFilter": {
-        "columnsNum": 2,
+        "columnsNum": 4,
         "showBtnToolbar": true
       },
       "footable": {

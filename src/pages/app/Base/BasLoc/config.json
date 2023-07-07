@@ -182,7 +182,6 @@
         {
           "type": "operation",
           "label": "操作",
-          "hiddenOn": "${!auth.button.operationBtn}",
           "buttons": [
             {
               "label": "编辑",
@@ -195,6 +194,7 @@
                 "body": [
                   {
                     "type": "form",
+                    "columnCount": 2,
                     "api": {
                       "method": "put",
                       "url": "/api/WCSMS/basLoc/update",
@@ -303,6 +303,88 @@
                           }
                         ],
                         "required": true
+                      }
+                    ]
+                  }
+                ],
+                "type": "dialog"
+              }
+            },
+            {
+              "label": "功能项配置",
+              "type": "button",
+              "actionType": "dialog",
+              "level": "link",
+              "dialog": {
+                "title": "功能项配置",
+                "body": [
+                  {
+                    "type": "form",
+                    "columnCount": 2,
+                    "body": [
+                      {
+                        "type": "input-text",
+                        "name": "locNo",
+                        "label": "站台编码",
+                        "readOnly": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "locName",
+                        "label": "站台名称",
+                        "readOnly": true
+                      }
+                    ]
+                  },
+                  {
+                    "type": "grid",
+                    "columns": [
+                      {
+                        "body": [
+                          {
+                            "type": "crud",
+                            "api": {
+                              "method": "get",
+                              "url": "/api/WCSMS/basLoc/getFuncInfoById",
+                              "requestAdaptor": "",
+                              "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                              "messages": {},
+                              "data": {
+                                "Id": "${id}"
+                              },
+                              "replaceData": true
+                            },
+                            "body": [{
+                              "type": "table",
+                              "columns": [
+                                {
+                                  "name": "locFuncTypeName",
+                                  "label": "站台功能项类型名称",
+                                  "type": "text"
+                                },
+                                {
+                                  "name": "locFuncNo",
+                                  "label": "站台功能项类型编码",
+                                  "type": "text"
+                                },
+                                {
+                                  "name": "locFuncName",
+                                  "label": "站台功能项名称",
+                                  "type": "text"
+                                },
+                                {
+                                  "name": "locFuncIdx",
+                                  "label": "执行顺序",
+                                  "type": "input-text"
+                                }
+                              ],
+                              "name": "table"
+                            }]
+                          }
+                        ]
+                      },
+                      {
+                        "body": []
                       }
                     ]
                   }
@@ -444,7 +526,7 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认禁用",
             "size": "md",
             "body": [
               {
@@ -567,15 +649,15 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认删除",
             "size": "md",
             "body": [
               {
                 "type": "form",
                 "api": {
                   "method": "post",
-                  "url": "/api/WCSMS/basArea/delete",
-                  "requestAdaptor": "",
+                  "url": "/api/WCSMS/basLoc/delete",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
@@ -595,13 +677,78 @@
                     "columns": [
                       {
                         "type": "text",
-                        "label": "区域编码",
-                        "name": "areaNo"
+                        "name": "locNo",
+                        "label": "站台编码"
+                      },
+                      {
+                        "type": "text",
+                        "name": "locName",
+                        "label": "站台名称"
+                      },
+                      {
+                        "type": "text",
+                        "name": "extLocNo",
+                        "label": "外部站台编码"
+                      },
+                      {
+                        "type": "text",
+                        "name": "locDesc",
+                        "label": "站台描述"
+                      },
+                      {
+                        "type": "text",
+                        "name": "checkPalletFlagDesc",
+                        "label": "托盘校验标记"
+                      },
+                      {
+                        "type": "text",
+                        "name": "virtualFlagDesc",
+                        "label": "虚拟站台标记"
+                      },
+                      {
+                        "type": "text",
+                        "name": "locInNgNo",
+                        "label": "入库异常口"
+                      },
+                      {
+                        "type": "text",
+                        "name": "locOutNgNo",
+                        "label": "出库异常口"
                       },
                       {
                         "type": "text",
                         "name": "areaName",
-                        "label": "区域名称"
+                        "label": "所在区域"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
                       }
                     ],
                     "name": "table"
@@ -626,8 +773,8 @@
       ],
       "filterColumnCount": 3,
       "autoGenerateFilter": {
-        "columnsNum": 2,
-        "showBtnToolbar": false
+        "columnsNum": 4,
+        "showBtnToolbar": true
       },
       "footable": {
         "expand": "first",
@@ -652,6 +799,7 @@
             "title": "新增",
             "body": {
               "type": "form",
+              "columnCount": 2,
               "api": {
                 "method": "post",
                 "url": "/api/WCSMS/basLoc/create",

@@ -132,10 +132,11 @@
               "actionType": "dialog",
               "level": "link",
               "dialog": {
-                "title": "编辑",
+                 "title": "编辑",
                 "body": [
                   {
                     "type": "form",
+                    "columnCount": 2,
                     "api": {
                       "method": "put",
                       "url": "/api/WCSMS/basRoadway/update",
@@ -236,6 +237,39 @@
                   }
                 ],
                 "type": "dialog"
+              }
+            },
+            {
+              "type": "button",
+              "label": "读码测试",
+              "hiddenOn": "${!auth.button.readBarcode}",
+              "level": "link",
+              "onEvent": {
+                "click": {
+                  "weight": 0,
+                  "actions": [
+                    {
+                      "outputVar": "responseResult",
+                      "actionType": "ajax",
+                      "args": {
+                        "options": {
+                        },
+                        "api": {
+                          "url": "/api/WCSMS/basRoadway/readBarcode",
+                          "method": "post",
+                          "requestAdaptor": "",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                          "messages": {
+                          },
+                          "data": {
+                            "&": "$$"
+                          },
+                          "replaceData": false
+                        }
+                      }
+                    }
+                  ]
+                }
               }
             }
           ]
@@ -357,7 +391,7 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认禁用",
             "size": "md",
             "body": [
               {
@@ -465,15 +499,15 @@
           "actionType": "dialog",
           "dialog": {
             "type": "dialog",
-            "title": "确认启用",
+            "title": "确认删除",
             "size": "md",
             "body": [
               {
                 "type": "form",
                 "api": {
                   "method": "post",
-                  "url": "/api/WCSMS/basArea/delete",
-                  "requestAdaptor": "",
+                  "url": "/api/WCSMS/basRoadway/delete",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
                   "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
                   "messages": {},
                   "data": {
@@ -492,14 +526,64 @@
                     "type": "table",
                     "columns": [
                       {
-                        "type": "text",
-                        "label": "区域编码",
-                        "name": "areaNo"
+                        "name": "roadwayNo",
+                        "label": "巷道编码",
+                        "type": "text"
                       },
                       {
-                        "type": "text",
+                        "name": "roadwayName",
+                        "label": "巷道名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "locName",
+                        "label": "站台名称",
+                        "type": "text"
+                      },
+                      {
                         "name": "areaName",
-                        "label": "区域名称"
+                        "label": "所在区域",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devNo",
+                        "label": "设备名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "strategyName",
+                        "label": "策略名称",
+                        "type": "text"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "type": "mapping",
+                        "map": {
+                          "0": "<span class='label label-danger'>禁用</span>",
+                          "1": "<span class='label label-success'>启用</span>",
+                          "*": "${usedFlag}"
+                        }
+                      },
+                      {
+                        "name": "createBy",
+                        "label": "创建人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "createTime",
+                        "label": "创建时间",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateBy",
+                        "label": "更新人",
+                        "type": "text"
+                      },
+                      {
+                        "name": "updateTime",
+                        "label": "更新时间",
+                        "type": "text"
                       }
                     ],
                     "name": "table"
@@ -524,8 +608,8 @@
       ],
       "filterColumnCount": 3,
       "autoGenerateFilter": {
-        "columnsNum": 2,
-        "showBtnToolbar": false
+        "columnsNum": 4,
+        "showBtnToolbar": true
       },
       "footable": {
         "expand": "first",
@@ -550,6 +634,7 @@
             "title": "新增",
             "body": {
               "type": "form",
+              "columnCount": 2,
               "api": {
                 "method": "post",
                 "url": "/api/WCSMS/basRoadway/create",
@@ -649,6 +734,16 @@
                 }
               ]
             }
+          }
+        },
+        {
+          "label": "巷道状态同步",
+          "type": "action",
+          "hiddenOn": "${!auth.button.srmStatusSync}",
+          "actionType": "ajax",
+          "api": {
+            "method": "post",
+            "url": "/api/WCSMS/basRoadway/srmStatusSync"
           }
         },
         "bulkActions"

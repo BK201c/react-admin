@@ -112,10 +112,11 @@
               "actionType": "dialog",
               "level": "link",
               "dialog": {
-                "title": "编辑",
+                 "title": "编辑",
                 "body": [
                   {
                     "type": "form",
+                    "columnCount": 2,
                     "api": {
                       "method": "put",
                       "url": "/api/WCSMS/motLayoutRecord/update",
@@ -326,7 +327,7 @@
               "actionType":"dialog",
               "dialog":{
               "type":"dialog",
-              "title":"确认启用",
+              "title":"确认删除",
               "size":"md",
               "body":[
               {
@@ -334,7 +335,7 @@
               "api":{
               "method":"post",
               "url":"/api/WCSMS/motLayoutRecord/delete",
-              "requestAdaptor":"",
+              "requestAdaptor":"api.data = api.body.Ids\r\nreturn api",
               "adaptor":"return{\r\nstatus:response.data.status,\r\nmsg:response.data.msg,\r\ndata:response.data.data\r\n}",
               "messages":{
               },
@@ -397,8 +398,8 @@
       ],
       "filterColumnCount": 3,
       "autoGenerateFilter": {
-        "columnsNum": 2,
-        "showBtnToolbar": false
+        "columnsNum": 4,
+        "showBtnToolbar": true
       },
       "footable": {
         "expand": "first",
@@ -423,6 +424,7 @@
             "title": "新增",
             "body": {
               "type": "form",
+              "columnCount": 2,
               "api": {
                 "method": "post",
                 "url": "/api/WCSMS/motLayoutRecord/create",

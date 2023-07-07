@@ -1,3 +1,9 @@
+## 项目环境
+
+- react^16.14.0
+
+- node^18.12.0
+
 ## 使用方法
 
 ```
@@ -8,7 +14,7 @@ npm start
 ### 1、首先在 pages 下新增一个 Hello.tsx 页面
 
 ```tsx
-import schemaRender from "@/utils/schemaRender";
+import schemaRender from "@/core/components/SchemaRender";
 
 const schema = {
   type: "page",
@@ -29,7 +35,7 @@ export default schemaRender(schema);
 
 ### 2、增加路由配置
 
-在`path2Compoment`文件导入 Hello 组件
+在`path2Comp`文件导入 Hello 组件
 
 ```tsx
 import Hello from "@/pages/Hello";
