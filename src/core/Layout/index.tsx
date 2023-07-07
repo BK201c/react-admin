@@ -178,7 +178,7 @@ export default class Admin extends React.Component<AdminProps, any> {
               trigger={["click", "hover"]}
             >
               <Space>
-                <Avatar icon={<RIcon name={"user"}></RIcon>} />
+                <Avatar icon={<RIcon name={"icon-user"}></RIcon>} />
                 {appStore.userStore.getName()}
               </Space>
             </Dropdown>
