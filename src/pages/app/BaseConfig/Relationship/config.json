@@ -1,0 +1,211 @@
+{
+  "type": "page",
+  "id": "u:ac3039033137",
+  "title": "对应关系配置",
+  "body": [
+    {
+      "type": "form",
+      "title": "表单",
+      "body": [
+        {
+          "label": "对应关系",
+          "type": "select",
+          "name": "relationshipTypeNo",
+          "id": "u:8b899cd00826",
+          "source": {
+            "method": "get",
+            "url": "/api/WCSMS/cfgRelationshipType/getRelationshipTypes",
+            "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data\r\n  }\r\n}",
+            "headers": {
+              "Accept-Language": "zh-Hans"
+            },
+            "requestAdaptor": "",
+            "messages": {}
+          },
+          "multiple": false,
+          "labelField": "relationshipTypeName",
+          "valueField": "relationshipTypeNo",
+          "size": "lg"
+        },
+        {
+          "type": "submit",
+          "label": "查询",
+          "level": "primary",
+          "id": "u:12840ae66380",
+          "onEvent": {
+            "click": {
+              "weight": 0,
+              "actions": [
+                {
+                  "componentId": "u:ecd0f7b3a453",
+                  "actionType": "reload",
+                  "args": {
+                    "resetPage": true
+                  },
+                  "dataMergeMode": "override"
+                },
+                {
+                  "componentId": "u:0978b50ae3bb",
+                  "actionType": "reload",
+                  "args": {
+                    "resetPage": true
+                  },
+                  "dataMergeMode": "override"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "flex",
+          "className": "p-1",
+          "items": [
+            {
+              "type": "container",
+              "body": [
+                {
+                  "type": "crud",
+                  "syncLocation": false,
+                  "api": {
+                    "method": "get",
+                    "url": "/api/WCSMS/cfgRelationshipType/getRelationshipMsgByTypeNo?relationshipTypeNo",
+                    "requestAdaptor": "",
+                    "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": {\r\n    \"items\": response.data.data.leftTables\r\n  }\r\n}",
+                    "messages": {},
+                    "dataType": "json",
+                    "data": {
+                      "&": "$$",
+                      "relationshipTypeNo": "${relationshipTypeNo}"
+                    }
+                  },
+                  "columns": [
+                    {
+                      "name": "id",
+                      "label": "序号",
+                      "type": "text",
+                      "id": "u:9f1bd95b1265"
+                    },
+                    {
+                      "name": "leftCode",
+                      "label": "站台号",
+                      "type": "text",
+                      "id": "u:1fe2a5bfe245"
+                    },
+                    {
+                      "type": "text",
+                      "label": "站台名称",
+                      "name": "leftName",
+                      "id": "u:4ed9ac8f9e78"
+                    },
+                    {
+                      "type": "text",
+                      "label": "是否存在对应关系",
+                      "name": "isExist",
+                      "id": "u:db034c8eade3"
+                    }
+                  ],
+                  "bulkActions": [],
+                  "itemActions": [],
+                  "id": "u:ecd0f7b3a453",
+                  "perPageAvailable": [10],
+                  "messages": {},
+                  "initFetch": false
+                }
+              ],
+              "size": "xs",
+              "style": {
+                "position": "static",
+                "display": "block",
+                "flex": "1 1 auto",
+                "flexGrow": 1,
+                "flexBasis": "auto",
+                "overflowY": "auto"
+              },
+              "wrapperBody": false,
+              "isFixedHeight": false,
+              "isFixedWidth": false,
+              "id": "u:ea27007a6883"
+            },
+            {
+              "type": "container",
+              "body": [
+                {
+                  "type": "crud",
+                  "syncLocation": false,
+                  "api": {
+                    "method": "get",
+                    "url": "/api/WCSMS/cfgRelationshipType/getRelationshipMsgByTypeNo?relationshipTypeNo",
+                    "requestAdaptor": "",
+                    "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": {\r\n    \"items\": response.data.data.rightTables\r\n  }\r\n}",
+                    "messages": {},
+                    "dataType": "json",
+                    "data": {
+                      "&": "$$",
+                      "relationshipTypeNo": "${relationshipTypeNo}"
+                    }
+                  },
+                  "columns": [
+                    {
+                      "name": "id",
+                      "label": "序号",
+                      "type": "text",
+                      "id": "u:e1a5d0756c66"
+                    },
+                    {
+                      "name": "rightCode",
+                      "label": "巷道号",
+                      "type": "text",
+                      "id": "u:45c6ee4ed9ad"
+                    },
+                    {
+                      "type": "text",
+                      "label": "巷道名称",
+                      "name": "rightName",
+                      "id": "u:8a8970a32907"
+                    },
+                    {
+                      "type": "text",
+                      "label": "优先级",
+                      "name": "priority",
+                      "id": "u:c5dd1cc14853"
+                    }
+                  ],
+                  "bulkActions": [],
+                  "itemActions": [],
+                  "id": "u:0978b50ae3bb",
+                  "perPageAvailable": [10],
+                  "messages": {},
+                  "initFetch": false
+                }
+              ],
+              "size": "xs",
+              "style": {
+                "position": "static",
+                "display": "block",
+                "flex": "1 1 auto",
+                "flexGrow": 1,
+                "flexBasis": "auto"
+              },
+              "wrapperBody": false,
+              "isFixedHeight": false,
+              "isFixedWidth": false,
+              "id": "u:c102265dd484"
+            }
+          ],
+          "style": {
+            "position": "relative"
+          },
+          "id": "u:940a2f1b58d5"
+        }
+      ],
+      "mode": "inline",
+      "id": "u:3d3dbcc8b212",
+      "actions": []
+    }
+  ],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "regions": ["body", "header"]
+}

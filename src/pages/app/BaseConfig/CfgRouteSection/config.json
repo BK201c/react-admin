@@ -241,6 +241,7 @@
         {
           "type": "operation",
           "label": "操作",
+          "fixed": "right",
           "hiddenOn": "${!auth.button.operationBtn}",
           "buttons": [
             {
@@ -250,7 +251,8 @@
               "actionType": "dialog",
               "level": "link",
               "dialog": {
-                 "title": "编辑",
+                "title": "编辑",
+                "size": "lg",
                 "body": [
                   {
                     "type": "form",
@@ -923,6 +925,7 @@
           "level": "primary",
           "dialog": {
             "title": "新增",
+            "size": "lg",
             "body": {
               "type": "form",
               "columnCount": 2,

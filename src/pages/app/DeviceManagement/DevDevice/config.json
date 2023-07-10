@@ -1,0 +1,1101 @@
+{
+  "type": "page",
+  "title": "设备管理",
+  "body": [
+    {
+      "type": "crud",
+      "draggable": true,
+      "api": {
+        "method": "get",
+        "url": "/api/WCSMS/devDevice/getList",
+        "requestAdaptor": "",
+        "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.totalCount\r\n  }\r\n}",
+        "messages": {},
+        "replaceData": false,
+        "data": {
+          "&": "$$",
+          "skipCount": "${(page - 1) * perPage}",
+          "maxResultCount": "${perPage}",
+          "devNo": "${devNo}",
+          "devName": "${devName}",
+          "devTypeNo": "${devTypeNo}",
+          "wcsNo": "${wcsNo}",
+          "usedFlag": "${usedFlag}"
+        },
+        "dataType": "json",
+        "headers": {
+          "Accept-Language": "zh-Hans"
+        }
+      },
+      "columns": [
+        {
+          "name": "id",
+          "label": "序号",
+          "type": "text"
+        },
+        {
+          "name": "devNo",
+          "label": "设备编码",
+          "searchable": {
+            "type": "input-text",
+            "name": "devNo",
+            "label": "设备编码"
+          },
+          "type": "text"
+        },
+        {
+          "name": "devName",
+          "label": "设备名称",
+          "searchable": {
+            "type": "input-text",
+            "name": "devName",
+            "label": "设备名称"
+          },
+          "type": "text"
+        },
+        {
+          "name": "devDesc",
+          "label": "设备描述",
+          "type": "text"
+        },
+        {
+          "name": "devTypeName",
+          "label": "设备类型",
+          "searchable": {
+            "type": "select",
+            "source": {
+              "method": "get",
+              "url": "/api/WCSMS/options/getDevTypeOption",
+              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+              "headers": {
+                "Accept-Language": "zh-Hans"
+              }
+            },
+            "name": "devTypeNo",
+            "label": "设备类型"
+          },
+          "type": "text"
+        },
+        {
+          "name": "isConnectDesc",
+          "label": "连接标志",
+          "type": "text"
+        },
+        {
+          "name": "ipAddress",
+          "label": "IP地址",
+          "type": "text"
+        },
+        {
+          "name": "ipPort",
+          "label": "端口号",
+          "type": "text"
+        },
+        {
+          "name": "connectTypeDesc",
+          "label": "连接类型",
+          "type": "text"
+        },
+        {
+          "name": "plcTypeDesc",
+          "label": "PLC类型",
+          "type": "text"
+        },
+        {
+          "name": "sdTypeDesc",
+          "label": "伸工位类型",
+          "type": "text"
+        },
+        {
+          "name": "areaName",
+          "label": "区域",
+          "type": "text"
+        },
+        {
+          "name": "wcsNo",
+          "label": "WCS编号",
+          "searchable": {
+            "type": "input-text",
+            "name": "wcsNo",
+            "label": "WCS编号"
+          },
+          "type": "text"
+        },
+        {
+          "name": "usedFlag",
+          "label": "启用标志",
+          "type": "mapping",
+          "map": {
+            "0": "<span class='label label-danger'>禁用</span>",
+            "1": "<span class='label label-success'>启用</span>",
+            "*": "${usedFlag}"
+          },
+          "searchable": {
+            "type": "select",
+            "name": "usedFlag",
+            "label": "启用标志",
+            "options": [
+              {
+                "label": "禁用",
+                "value": "0"
+              },
+              {
+                "label": "启用",
+                "value": "1"
+              }
+            ]
+          }
+        },
+        {
+          "name": "createBy",
+          "label": "创建人",
+          "type": "text"
+        },
+        {
+          "name": "createTime",
+          "label": "创建时间",
+          "type": "text"
+        },
+        {
+          "name": "updateBy",
+          "label": "更新人",
+          "type": "text"
+        },
+        {
+          "name": "updateTime",
+          "label": "更新时间",
+          "type": "text"
+        },
+        {
+          "type": "operation",
+          "label": "操作",
+          "hiddenOn": "${!auth.button.operationBtn}",
+          "buttons": [
+            {
+              "label": "编辑",
+              "type": "button",
+              "actionType": "dialog",
+              "level": "link",
+              "dialog": {
+                "type": "dialog",
+                "title": "编辑",
+                "body": [
+                  {
+                    "type": "form",
+                    "api": {
+                      "method": "put",
+                      "url": "/api/WCSMS/devDevice/update",
+                      "requestAdaptor": "",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                      "messages": {},
+                      "replaceData": false,
+                      "data": {
+                        "&": "$$",
+                        "id": "${id}",
+                        "connectType": "${connectType}",
+                        "devName": "${devName}",
+                        "devDesc": "${devDesc}",
+                        "devNo": "${devNo}",
+                        "devTypeNo": "${devTypeNo}",
+                        "ipAddress": "${ipAddress}",
+                        "ipPort": "${ipPort}",
+                        "plcType": "${plcType}",
+                        "sdType": "${sdType}",
+                        "usedFlag": "${usedFlag}",
+                        "wcsNo": "${wcsNo}",
+                        "areaNo": "${areaNo}"
+                      },
+                      "dataType": "json",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "columnCount": 2,
+                    "body": [
+                      {
+                        "name": "devNo",
+                        "label": "设备编码",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "devDesc",
+                        "label": "设备描述",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "devTypeNo",
+                        "label": "设备类型",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getDevTypeOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "type": "select",
+                        "required": true
+                      },
+                      {
+                        "name": "areaNo",
+                        "label": "区域",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getAreaOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "type": "select",
+                        "required": true
+                      },
+                      {
+                        "name": "wcsNo",
+                        "label": "WCS编号",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "ipAddress",
+                        "label": "IP地址",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "ipPort",
+                        "label": "端口号",
+                        "type": "input-text",
+                        "required": true
+                      },
+                      {
+                        "name": "connectType",
+                        "label": "连接类型",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getConnectTypeOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "type": "select",
+                        "required": true
+                      },
+                      {
+                        "name": "plcType",
+                        "label": "PLC类型",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getPlcTypeOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "type": "select",
+                        "required": true
+                      },
+                      {
+                        "name": "sdType",
+                        "label": "伸工位类型",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getSdTypeOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "type": "select"
+                      },
+                      {
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getUsedFlagOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "type": "select"
+                      }
+                    ]
+                  }
+                ],
+                "size": "lg"
+              },
+              "hiddenOn": "${!auth.button.edit}"
+            },
+            {
+              "label": "PLC配置",
+              "type": "button",
+              "actionType": "dialog",
+              "level": "link",
+              "dialog": {
+                "type": "dialog",
+                "title": "PLC配置",
+                "body": [
+                  {
+                    "type": "form",
+                    "columnCount": 2,
+                    "body": [
+                      {
+                        "name": "devNo",
+                        "label": "设备编码",
+                        "type": "input-text",
+                        "autoFill": {
+                          "devNo": "{devNo}"
+                        },
+                        "disabled": true
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "input-text",
+                        "autoFill": {
+                          "devName": "{devName}"
+                        },
+                        "disabled": true
+                      },
+                      {
+                        "name": "devDesc",
+                        "label": "设备描述",
+                        "type": "input-text",
+                        "autoFill": {
+                          "devDesc": "{devDesc}"
+                        },
+                        "disabled": true
+                      }
+                    ],
+                    "title": "表单"
+                  },
+                  {
+                    "type": "crud",
+                    "syncLocation": false,
+                    "api": {
+                      "method": "get",
+                      "url": "/api/WCSMS/devDeviceDb/getList",
+                      "requestAdaptor": "",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                      "messages": {},
+                      "replaceData": false,
+                      "data": {
+                        "&": "$$",
+                        "devNo": "${devNo}",
+                        "devName": "${devName}",
+                        "devDesc": "${devDesc}",
+                        "devTypeName": "${devTypeName}",
+                        "devTypeNo": "${devTypeNo}",
+                        "areaNo": "${areaNo}",
+                        "areaName": "${areaName}",
+                        "wcsNo": "${wcsNo}",
+                        "wcsName": "${wcsName}",
+                        "ipAddress": "${ipAddress}",
+                        "ipPort": "${ipPort}",
+                        "connectTypeDesc": "${connectTypeDesc}",
+                        "sdType": "${sdType}"
+                      },
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+
+                    "columns": [
+                      {
+                        "type": "text",
+                        "name": "id",
+                        "label": "序号"
+                      },
+                      {
+                        "name": "dbNo",
+                        "label": "DB块",
+                        "type": "text"
+                      },
+                      {
+                        "name": "dbTypeName",
+                        "label": "DB类型",
+                        "type": "text"
+                      },
+                      {
+                        "name": "dbOffset",
+                        "label": "偏移量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "dbBlock",
+                        "label": "数量",
+                        "type": "text"
+                      },
+                      {
+                        "name": "locLength",
+                        "label": "单个读取长度",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devLength",
+                        "label": "总长度",
+                        "type": "text"
+                      },
+                      {
+                        "type": "operation",
+                        "label": "操作",
+                        "buttons": [
+                          {
+                            "label": "编辑",
+                            "type": "button",
+                            "actionType": "dialog",
+                            "level": "link",
+                            "dialog": {
+                              "title": "编辑",
+                              "body": [
+                                {
+                                  "type": "form",
+                                  "api": {
+                                    "method": "put",
+                                    "url": "/api/WCSMS/devDeviceDb/update",
+                                    "requestAdaptor": "",
+                                    "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                                    "messages": {},
+                                    "replaceData": false,
+                                    "data": {
+                                      "&": "$$",
+                                      "id": "${id}",
+                                      "dbBlock": "${dbBlock}",
+                                      "dbNo": "${dbNo}",
+                                      "dbOffset": "${dbOffset}",
+                                      "dbType": "${dbType}",
+                                      "dbTypeName": "${dbTypeName}",
+                                      "devLength": "${devLength}",
+                                      "devName": "${devName}",
+                                      "devNo": "${devNo}",
+                                      "ipAddress": "${ipAddress}",
+                                      "locLength": "${locLength}"
+                                    },
+                                    "dataType": "json",
+                                    "headers": {
+                                      "Accept-Language": "zh-Hans"
+                                    }
+                                  },
+                                  "body": [
+                                    {
+                                      "name": "dbNo",
+                                      "label": "DB块",
+                                      "type": "input-text",
+                                      "required": true
+                                    },
+                                    {
+                                      "name": "dbType",
+                                      "label": "DB类型",
+                                      "source": {
+                                        "method": "get",
+                                        "url": "/api/WCSMS/options/getDbTypeOption",
+                                        "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                                        "headers": {
+                                          "Accept-Language": "zh-Hans"
+                                        }
+                                      },
+                                      "type": "select",
+                                      "required": true
+                                    },
+                                    {
+                                      "name": "dbOffset",
+                                      "label": "偏移量",
+                                      "type": "input-text",
+                                      "required": true
+                                    },
+                                    {
+                                      "name": "dbBlock",
+                                      "label": "数量",
+                                      "type": "input-text",
+                                      "required": true
+                                    },
+                                    {
+                                      "name": "locLength",
+                                      "label": "单个读取长度",
+                                      "type": "input-text",
+                                      "required": true
+                                    },
+                                    {
+                                      "name": "devLength",
+                                      "label": "总长度",
+                                      "type": "input-text",
+                                      "required": true
+                                    }
+                                  ]
+                                }
+                              ],
+                              "type": "dialog"
+                            }
+                          },
+                          {
+                            "type": "button",
+                            "label": "删除",
+                            "level": "link",
+                            "actionType": "dialog",
+                            "dialog": {
+                              "type": "dialog",
+                              "title": "确认删除",
+                              "size": "md",
+                              "body": [
+                                {
+                                  "type": "form",
+                                  "api": {
+                                    "method": "post",
+                                    "url": "/api/WCSMS/devDeviceDb/delete",
+                                    "requestAdaptor": "api.data = api.body.id\r\nreturn api",
+                                    "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                                    "messages": {},
+                                    "data": {
+                                      "&": "$$",
+                                      "id": "${id|asArray}"
+                                    },
+                                    "replaceData": true
+                                  },
+                                  "body": [
+                                    {
+                                      "label": "id",
+                                      "type": "hidden",
+                                      "name": "id"
+                                    },
+                                    {
+                                      "type": "table",
+                                      "columns": [
+                                        {
+                                          "name": "dbNo",
+                                          "label": "DB块",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "name": "dbTypeName",
+                                          "label": "DB类型",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "name": "dbOffset",
+                                          "label": "偏移量",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "name": "dbBlock",
+                                          "label": "数量",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "name": "locLength",
+                                          "label": "单个读取长度",
+                                          "type": "text"
+                                        },
+                                        {
+                                          "name": "devLength",
+                                          "label": "总长度",
+                                          "type": "text"
+                                        }
+                                      ],
+                                      "name": "table"
+                                    }
+                                  ]
+                                }
+                              ],
+                              "showCloseButton": true,
+                              "closeOnEsc": false,
+                              "showErrorMsg": true,
+                              "showLoading": true,
+                              "withDefaultData": false,
+                              "dataMapSwitch": false
+                            }
+                          }
+                        ]
+                      }
+                    ],
+                    "bulkActions": [],
+                    "itemActions": [],
+                    "features": ["create"],
+                    "headerToolbar": [
+                      {
+                        "label": "新增",
+                        "type": "button",
+                        "actionType": "dialog",
+                        "level": "primary",
+                        "dialog": {
+                          "title": "新增",
+                          "body": {
+                            "type": "form",
+                            "api": {
+                              "method": "post",
+                              "url": "/api/WCSMS/devDeviceDb/create",
+                              "requestAdaptor": "",
+                              "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                              "messages": {},
+                              "replaceData": false,
+                              "data": {
+                                "&": "$$",
+                                "dbBlock": "${dbBlock}",
+                                "dbNo": "${dbNo}",
+                                "dbOffset": "${dbOffset}",
+                                "dbType": "${dbType}",
+                                "devLength": "${devLength}",
+                                "devName": "${devName}",
+                                "devNo": "${devNo}",
+                                "id": "${id}",
+                                "itfAddress": "${itfAddress}",
+                                "locLength": "${locLength}"
+                              },
+                              "headers": {
+                                "Accept-Language": "zh-Hans"
+                              }
+                            },
+                            "body": [
+                              {
+                                "type": "input-text",
+                                "name": "dbNo",
+                                "label": "DB块"
+                              },
+                              {
+                                "source": {
+                                  "method": "get",
+                                  "url": "/api/WCSMS/options/getDbTypeOption",
+                                  "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                                  "headers": {
+                                    "Accept-Language": "zh-Hans"
+                                  }
+                                },
+                                "type": "select",
+                                "name": "dbType",
+                                "label": "DB类型"
+                              },
+                              {
+                                "type": "input-text",
+                                "name": "dbOffset",
+                                "label": "偏移量"
+                              },
+                              {
+                                "type": "input-text",
+                                "name": "dbBlock",
+                                "label": "数量"
+                              },
+                              {
+                                "type": "input-text",
+                                "name": "locLength",
+                                "label": "单个读取长度"
+                              },
+                              {
+                                "type": "input-text",
+                                "name": "devLength",
+                                "label": "总长度"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "bulkActions"
+                    ]
+                  }
+                ],
+                "size": "lg",
+                "actions": []
+              },
+              "hiddenOn": "${!auth.button.plcSetting}"
+            }
+          ],
+          "placeholder": "-",
+          "className": "",
+          "fixed": "",
+          "popOver": false,
+          "quickEdit": false
+        }
+      ],
+      "bulkActions": [
+        {
+          "type": "button",
+          "label": "启用",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认启用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/devDevice/setUsedFlag",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}",
+                    "usedFlag": 1
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "devNo",
+                        "label": "设备编码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          },
+          "hiddenOn": "${!auth.button.enableAndDisable}"
+        },
+        {
+          "type": "button",
+          "label": "禁用",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认禁用",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/devDevice/setUsedFlag",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "ids": "${ids|split}",
+                    "usedFlag": 0
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "devNo",
+                        "label": "设备编码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          },
+          "hiddenOn": "${!auth.button.enableAndDisable}"
+        },
+        {
+          "type": "button",
+          "level": "danger",
+          "label": "删除",
+          "actionType": "dialog",
+          "dialog": {
+            "type": "dialog",
+            "title": "确认删除",
+            "size": "md",
+            "body": [
+              {
+                "type": "form",
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/devDevice/delete",
+                  "requestAdaptor": "api.data = api.body.Ids\r\nreturn api",
+                  "adaptor": "return {\r\n  status: response.data.status,\r\n  msg: response.data.msg,\r\n  data: response.data.data\r\n}",
+                  "messages": {},
+                  "data": {
+                    "&": "$$",
+                    "Ids": "${ids|split}"
+                  },
+                  "replaceData": true
+                },
+                "body": [
+                  {
+                    "label": "id",
+                    "type": "hidden",
+                    "name": "id"
+                  },
+                  {
+                    "type": "table",
+                    "columns": [
+                      {
+                        "name": "devNo",
+                        "label": "设备编码",
+                        "type": "text"
+                      },
+                      {
+                        "name": "devName",
+                        "label": "设备名称",
+                        "type": "text"
+                      }
+                    ],
+                    "name": "table"
+                  }
+                ]
+              }
+            ],
+            "showCloseButton": true,
+            "closeOnEsc": false,
+            "showErrorMsg": true,
+            "showLoading": true,
+            "withDefaultData": false,
+            "dataMapSwitch": false
+          }
+        }
+      ],
+      "features": ["filter", "update", "create", "bulkDelete"],
+      "filterColumnCount": 3,
+      "autoGenerateFilter": {
+        "columnsNum": 4,
+        "showBtnToolbar": true
+      },
+      "footable": {
+        "expand": "first",
+        "accordion": true
+      },
+      "perPageAvailable": [10],
+      "messages": {
+        "fetchSuccess": "查询成功",
+        "fetchFailed": ""
+      },
+      "hidden": false,
+      "headerToolbar": [
+        {
+          "label": "新增",
+          "type": "button",
+          "actionType": "dialog",
+          "level": "primary",
+          "dialog": {
+            "title": "新增",
+            "body": [
+              {
+                "type": "form",
+                "columnCount": 2,
+                "api": {
+                  "method": "post",
+                  "url": "/api/WCSMS/devDevice/create",
+                  "requestAdaptor": "",
+                  "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items,\r\n    \"total\": response.data.data.total\r\n  }\r\n}",
+                  "messages": {},
+                  "replaceData": false,
+                  "data": {
+                    "&": "$$",
+                    "connectType": "${connectType}",
+                    "devName": "${devName}",
+                    "devDesc": "${devDesc}",
+                    "devNo": "${devNo}",
+                    "devTypeNo": "${devTypeNo}",
+                    "ipAddress": "${ipAddress}",
+                    "ipPort": "${ipPort}",
+                    "plcType": "${plcType}",
+                    "sdType": "${sdType}",
+                    "usedFlag": "${usedFlag}",
+                    "wcsNo": "${wcsNo}",
+                    "areaNo": "${areaNo}"
+                  },
+                  "dataType": "json",
+                  "headers": {
+                    "Accept-Language": "zh-Hans"
+                  }
+                },
+                "body": [
+                  {
+                    "name": "devNo",
+                    "label": "设备编码",
+                    "searchable": {
+                      "type": "input-text",
+                      "name": "devNo",
+                      "label": "设备编码"
+                    },
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "devName",
+                    "label": "设备名称",
+                    "searchable": {
+                      "type": "input-text",
+                      "name": "devName",
+                      "label": "设备名称"
+                    },
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "devDesc",
+                    "label": "设备描述",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "devTypeNo",
+                    "label": "设备类型",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getDevTypeOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "type": "select",
+                    "required": true
+                  },
+                  {
+                    "name": "areaNo",
+                    "label": "区域",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getAreaOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "type": "select",
+                    "required": true
+                  },
+                  {
+                    "name": "wcsNo",
+                    "label": "WCS编号",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "ipAddress",
+                    "label": "IP地址",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "ipPort",
+                    "label": "端口号",
+                    "type": "input-text",
+                    "required": true
+                  },
+                  {
+                    "name": "connectType",
+                    "label": "连接类型",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getConnectTypeOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "type": "select",
+                    "required": true
+                  },
+                  {
+                    "name": "plcTypeDesc",
+                    "label": "PLC类型",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getPlcTypeOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "type": "select",
+                    "required": true
+                  },
+                  {
+                    "name": "sdType",
+                    "label": "伸工位类型",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getSdTypeOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "type": "select"
+                  },
+                  {
+                    "name": "usedFlag",
+                    "label": "启用标志",
+                    "source": {
+                      "method": "get",
+                      "url": "/api/WCSMS/options/getUsedFlagOption",
+                      "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "type": "select"
+                  }
+                ]
+              }
+            ],
+            "type": "dialog",
+            "size": "lg"
+          },
+          "hiddenOn": "${!auth.button.create}"
+        },
+        "bulkActions"
+      ],
+      "keepItemSelectionOnPageChange": false,
+      "perPage": 10,
+      "alwaysShowPagination": true,
+      "maxKeepItemSelectionLength": 100,
+      "pageField": "page",
+      "syncResponse2Query": false
+    }
+  ],
+  "regions": ["body", "header"],
+  "asideResizor": false,
+  "pullRefresh": {
+    "disabled": true
+  },
+  "aside": []
+}

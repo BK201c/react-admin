@@ -182,6 +182,8 @@
         {
           "type": "operation",
           "label": "操作",
+          "fixed": "right",
+          "hiddenOn": "${!auth.button.operationBtn}",
           "buttons": [
             {
               "label": "编辑",
@@ -190,7 +192,8 @@
               "actionType": "dialog",
               "level": "link",
               "dialog": {
-                "title": "编辑",
+               "title": "编辑",
+                "size": "lg",
                 "body": [
                   {
                     "type": "form",
@@ -354,32 +357,34 @@
                               },
                               "replaceData": true
                             },
-                            "body": [{
-                              "type": "table",
-                              "columns": [
-                                {
-                                  "name": "locFuncTypeName",
-                                  "label": "站台功能项类型名称",
-                                  "type": "text"
-                                },
-                                {
-                                  "name": "locFuncNo",
-                                  "label": "站台功能项类型编码",
-                                  "type": "text"
-                                },
-                                {
-                                  "name": "locFuncName",
-                                  "label": "站台功能项名称",
-                                  "type": "text"
-                                },
-                                {
-                                  "name": "locFuncIdx",
-                                  "label": "执行顺序",
-                                  "type": "input-text"
-                                }
-                              ],
-                              "name": "table"
-                            }]
+                            "body": [
+                              {
+                                "type": "table",
+                                "columns": [
+                                  {
+                                    "name": "locFuncTypeName",
+                                    "label": "站台功能项类型名称",
+                                    "type": "text"
+                                  },
+                                  {
+                                    "name": "locFuncNo",
+                                    "label": "站台功能项类型编码",
+                                    "type": "text"
+                                  },
+                                  {
+                                    "name": "locFuncName",
+                                    "label": "站台功能项名称",
+                                    "type": "text"
+                                  },
+                                  {
+                                    "name": "locFuncIdx",
+                                    "label": "执行顺序",
+                                    "type": "input-text"
+                                  }
+                                ],
+                                "name": "table"
+                              }
+                            ]
                           }
                         ]
                       },
@@ -797,6 +802,7 @@
           "level": "primary",
           "dialog": {
             "title": "新增",
+            "size": "lg",
             "body": {
               "type": "form",
               "columnCount": 2,
