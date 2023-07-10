@@ -1,18 +1,13 @@
-import schemaRender from "@/core/components/SchemaRender";
+import React from "react";
+import SeatLayoutComp from "./components/SeatLayoutComp";
+import getBinSet from "./getBinSet.json";
 
-const schema = {
-  type: "page",
-  title: "2",
-  body: [
-    {
-      type: "tpl",
-      tpl: "这是你刚刚新增的页面。",
-      wrapperComponent: "",
-      inline: false,
-      id: "u:1857c90fc6fa",
-    },
-  ],
-  id: "u:e150d9773365",
-};
+class App extends React.Component {
+  seatData = getBinSet.data;
 
-export default schemaRender(schema);
+  render() {
+    return <SeatLayoutComp seatData={this.seatData} />;
+  }
+}
+
+export default App;

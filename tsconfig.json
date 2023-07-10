@@ -5,6 +5,7 @@
     "target": "es6",
     "lib": ["esnext", "dom"],
     "sourceMap": true,
+    "esModuleInterop": true,
     "jsx": "react",
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -17,7 +18,6 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      // 根据别名配置相关路径
       "@/*": ["./src/*"]
     }
   }
