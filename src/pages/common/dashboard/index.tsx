@@ -1,12 +1,8 @@
-import React from "react";
-import SeatLayoutComp from "./components/SeatLayoutComp";
-import getBinSet from "./getBinSet.json";
+import * as React from "react";
 
 class App extends React.Component {
-  seatData = getBinSet.data;
-
   render() {
-    return <SeatLayoutComp seatData={this.seatData} />;
+    return <div>hello</div>;
   }
 }
 

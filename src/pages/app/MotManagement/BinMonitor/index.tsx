@@ -1,7 +1,13 @@
 import * as React from "react";
+import SeatLayoutComp from "./components/SeatLayoutComp";
+import getBinLayout from "./getBinLayout.json";
 
-export default class Detail extends React.Component<RendererProps, any> {
+class App extends React.Component {
+  seatData = getBinLayout.data;
+
   render() {
-    return <div></div>;
+    return <SeatLayoutComp source={this.seatData} />;
   }
 }
+
+export default App;

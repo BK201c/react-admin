@@ -1,8 +1,12 @@
 import axios from "axios";
 import { toast } from "amis";
 import appStore from "@/core/stores/appStore";
+import APP_SETTING from "@/config/application.json";
 
-const baseURL = "http://192.168.33.108:20001";
+const baseURL =
+  process.env.NODE_ENV === "production"
+    ? APP_SETTING.baseUrl
+    : APP_SETTING.baseUrl;
 
 const HttpService = axios.create({
   baseURL: baseURL,

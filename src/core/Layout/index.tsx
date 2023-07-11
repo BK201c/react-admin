@@ -101,52 +101,35 @@ export default class Admin extends React.Component<AdminProps, any> {
       !this.state.hasLoadMenu &&
       appStore.userStore.isAuthenticated
     ) {
-      const menuList = {
-        label: "导航",
-        permissionCode: "WCS",
-        children: [
-          {
-            label: "首页",
-            path: "/dashboard",
-            icon: "icon-home",
-            component: Dashboard,
-          },
-        ],
-      };
-      const menu = traverseTree(menuList);
-      this.setState({
-        navigations: [menu],
-        hasLoadMenu: true,
+      HttpService({
+        method: "post",
+        url: "/api/BaseService/permission/queryGrantedTreeList",
+        data: {
+          serviceIdentification: "WCS",
+          whouseNo: "",
+          isMobileDevicePermission: false,
+        },
+      }).then((res: any) => {
+        const menuList = {
+          label: "导航",
+          permissionCode: "WCS",
+          children: [
+            {
+              label: "首页",
+              path: "/dashboard",
+              icon: "icon-home",
+              component: Dashboard,
+            },
+            ...res.data,
+          ],
+        };
+        const menu = traverseTree(menuList);
+        setAuthNav(res.data);
+        this.setState({
+          navigations: [menu],
+          hasLoadMenu: true,
+        });
       });
-      // HttpService({
-      //   method: "post",
-      //   url: "/api/BaseService/permission/queryGrantedTreeList",
-      //   data: {
-      //     serviceIdentification: "WCS",
-      //     whouseNo: "",
-      //     isMobileDevicePermission: false,
-      //   },
-      // }).then((res: any) => {
-      //   const menuList = {
-      //     label: "导航",
-      //     permissionCode: "WCS",
-      //     children: [
-      //       {
-      //         label: "首页",
-      //         path: "/dashboard",
-      //         icon: "icon-home",
-      //         component: Dashboard,
-      //       },
-      //       ...res.data,
-      //     ],
-      //   };
-      //   const menu = traverseTree(menuList);
-      //   setAuthNav(res.data);
-      //   this.setState({
-      //     navigations: [menu],
-      //     hasLoadMenu: true,
-      //   });
-      // });
     }
   };
 

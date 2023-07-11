@@ -1,6 +1,6 @@
 import React from "react";
 
-function EmbeddedPage() {
+function MyComponent() {
   return (
     <div>
       <iframe src="https://www.example.com" title="Embedded Page" />
@@ -8,4 +8,4 @@ function EmbeddedPage() {
   );
 }
 
-export default EmbeddedPage;
+export default MyComponent;

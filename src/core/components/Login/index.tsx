@@ -1,5 +1,4 @@
 import * as React from "react";
-import axios from "axios";
 import { toast } from "amis";
 import { RouteComponentProps } from "react-router-dom";
 import { IMainStore } from "@/core/stores";
@@ -8,6 +7,7 @@ import { withRouter } from "react-router";
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 import { Input, Button, Card } from "antd";
 import appStore from "@/core/stores/appStore";
+import HttpService from "../../services/HttpService";
 interface LoginProps extends RouteComponentProps<any> {
   store: IMainStore;
 }
@@ -28,17 +28,16 @@ export default class LoginRoute extends React.Component<LoginProps, any> {
   handleFormSaved = (value: any) => {
     const history = this.props.history;
     const store = this.props.store;
-    console.log("username:", this.state.username);
-    axios({
+    HttpService({
       method: "post",
-      url: "http://192.168.33.108:20001/api/BaseService/identityServer/login",
+      url: "/api/BaseService/identityServer/login",
       data: {
         ...this.state,
       },
     }).then((res) => {
       console.log("login res", res);
-      if (res.data != null && res.data.code === 200) {
-        const data = res.data.data;
+      if (res.data != null && res.code === 200) {
+        const data = res.data;
         appStore.userStore.login({
           name: data.name,
           token: `${data.tokenType} ${data.accessToken}`,
