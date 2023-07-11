@@ -6,7 +6,11 @@ class App extends React.Component {
   seatData = getBinLayout.data;
 
   render() {
-    return <SeatLayoutComp source={this.seatData} />;
+    return (
+      <div>
+        <SeatLayoutComp source={this.seatData} />
+      </div>
+    );
   }
 }
 
