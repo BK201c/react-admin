@@ -3,9 +3,6 @@ import { toast } from "amis";
 import appStore from "@/core/stores/appStore";
 import APP_SETTING from "@/config/application.json";
 
-const baseURL =
-  process.env.NODE_ENV === "production" ? APP_SETTING.baseUrl : "/dev-api";
-
 const HttpService = axios.create({
   baseURL: APP_SETTING.baseUrl,
   timeout: 60000,

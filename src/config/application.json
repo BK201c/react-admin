@@ -1,4 +1,15 @@
 {
   "title": "WMS管理系统",
-  "baseUrl": "http://192.168.33.108:20001"
+  "baseUrl": "http://192.168.33.108:20001",
+  "dev": {
+    "Proprietorcode": "594000000000000",
+    "Whouseno": "594"
+  },
+  "service": {
+    "type": "WCS",
+    "gateway": "",
+    "wms": "",
+    "wcs": "",
+    "itf": ""
+  }
 }

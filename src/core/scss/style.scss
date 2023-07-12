@@ -28,6 +28,16 @@
   overflow: hidden;
 }
 
+.canvas-form {
+  position: absolute;
+  z-index: 20;
+  min-width: 200px;
+  &-select {
+    right: 20px;
+    top: 20px;
+  }
+}
+
 .login-page-container {
   position: absolute;
   width: 100vw;

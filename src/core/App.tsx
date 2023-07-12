@@ -14,7 +14,7 @@ import "moment/dist/locale/zh-cn";
 import "amis/sdk/iconfont.css";
 import "amis-ui/lib/themes/cxd.css";
 import "amis/lib/helper.css";
-
+import APPSETTING from "@/config/application.json";
 export default function (): JSX.Element {
   const store = ((window as any).store = MainStore.create(
     {},
@@ -32,7 +32,7 @@ export default function (): JSX.Element {
       }) => {
         config = config || {};
         config.headers = config.headers || {};
-        config.withCredentials = true;
+        config.withCredentials = false;
 
         if (config.cancelExecutor) {
           config.cancelToken = new axios.CancelToken(config.cancelExecutor);
@@ -41,6 +41,8 @@ export default function (): JSX.Element {
         config.headers = {
           Authorization: localStorage.getItem("token") || "",
           "Accept-language": "zh-hans",
+          Proprietorcode: APPSETTING.dev.Proprietorcode,
+          Whouseno: APPSETTING.dev.Whouseno,
         };
         config.method = method;
 

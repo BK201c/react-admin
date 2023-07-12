@@ -1,85 +1,89 @@
 import * as React from "react";
+import { useState } from "react";
 import { fabric } from "fabric";
 import { isEmpty, remove } from "lodash";
-import { Button, Form, Input, Modal, Radio } from "antd";
-
+import { Button, Card, Form, Input, Radio, Tabs } from "antd";
+import type { RadioChangeEvent } from "antd";
+const { TabPane } = Tabs;
 type SelectedMode = "PUT" | "OUT";
 
-interface Values {
-  title: string;
-  description: string;
-  modifier: string;
-}
-
-interface CollectionCreateFormProps {
-  open: boolean;
-  onCreate: (values: Values) => void;
-  onCancel: () => void;
-}
-
-const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
-  open,
-  onCreate,
-  onCancel,
-}) => {
-  const [form] = Form.useForm();
-  return (
-    <Modal
-      open={open}
-      title="Create a new collection"
-      okText="Create"
-      cancelText="Cancel"
-      onCancel={onCancel}
-      onOk={() => {
-        form
-          .validateFields()
-          .then((values) => {
-            form.resetFields();
-            onCreate(values);
-          })
-          .catch((info) => {
-            console.log("Validate Failed:", info);
-          });
-      }}
-    >
-      <Form
-        form={form}
-        layout="vertical"
-        name="form_in_modal"
-        initialValues={{ modifier: "PUT" }}
-      >
-        <Form.Item name="title" label="库位号">
-          <Input />
-        </Form.Item>
-        <Form.Item name="description" label="托盘号">
-          <Input type="textarea" />
-        </Form.Item>
-        <Form.Item
-          name="modifier"
-          className="collection-create-form_last-form-item"
-        >
-          <Radio.Group>
-            <Radio value="PUT">正选</Radio>
-            <Radio value="OUT">反选</Radio>
-          </Radio.Group>
-        </Form.Item>
-      </Form>
-    </Modal>
-  );
-};
 class SeatLayoutComponent extends React.Component<Props, any> {
   private isSelecting = false;
   private selectionRectangle: any;
   private downPoint: any;
-  private selectedMode: SelectedMode = "PUT";
-  selectedGroup: any[];
+  private selectedGroup: any[] = [];
+
+  private canvasRef: React.RefObject<any> = React.createRef();
+
   constructor(props: any) {
     super(props);
-    this.canvasRef = React.createRef();
+    this.state = {
+      selectedMode: "PUT",
+      activeTab: "1",
+    };
   }
 
-  setIsSelecting(status) {
+  onFinish(values: any) {
+    console.log("Received values of form: ", values);
+  }
+
+  onRadioChange(e: RadioChangeEvent) {
+    console.log("radio checked", e.target.value);
+    this.setState({ selectedMode: e.target.value });
+  }
+
+  handleTabChange(key: string) {
+    this.setState({ activeTab: key });
+    this.isSelecting = false;
+  }
+
+  setIsSelecting(status: boolean) {
     this.isSelecting = status;
+  }
+
+  render() {
+    const { selectedMode, activeTab } = this.state;
+    return (
+      <div>
+        <canvas ref={this.canvasRef} />
+        <Button onClick={() => this.setIsSelecting(!this.isSelecting)}>
+          库位选择
+        </Button>
+        <div className="canvas-form canvas-form-select">
+          <Card style={{ width: 300 }}>
+            <Tabs
+              activeKey={activeTab}
+              onChange={(key) => this.handleTabChange(key)}
+            >
+              <TabPane tab="鼠标框选" key="1">
+                <Radio.Group
+                  onChange={(e) => this.onRadioChange(e)}
+                  value={selectedMode}
+                >
+                  <Radio value="PUT">正选</Radio>
+                  <Radio value="OUT">反选</Radio>
+                </Radio.Group>
+              </TabPane>
+              <TabPane tab="条件筛选" key="2">
+                <Form
+                  layout="vertical"
+                  name="form_in_modal"
+                  onFinish={this.onFinish}
+                  initialValues={{ modifier: "PUT" }}
+                >
+                  <Form.Item name="description" label="托盘号">
+                    <Input type="textarea" />
+                  </Form.Item>
+                  <Form.Item name="title" label="库位号">
+                    <Input />
+                  </Form.Item>
+                </Form>
+              </TabPane>
+            </Tabs>
+          </Card>
+        </div>
+      </div>
+    );
   }
 
   componentDidMount() {
@@ -153,10 +157,6 @@ class SeatLayoutComponent extends React.Component<Props, any> {
     this.canvas.clear();
   }
 
-  render() {
-    return <canvas ref={this.canvasRef} />;
-  }
-
   setSelectedGroup() {
     const group = this.canvas.getActiveObject();
     group.set({
@@ -187,10 +187,7 @@ class SeatLayoutComponent extends React.Component<Props, any> {
       // 检查是否点击到图形上
       const target = this.canvas.findTarget(event.e);
 
-      if (target) {
-        // 点击到图形上，开始框选
-        this.isSelecting = true;
-
+      if (target && this.isSelecting) {
         // 创建框选矩形
         this.selectionRectangle = new fabric.Rect({
           left: x,
@@ -231,9 +228,6 @@ class SeatLayoutComponent extends React.Component<Props, any> {
     // 监听鼠标释放事件
     this.canvas.on("mouse:up", (event) => {
       if (this.isSelecting) {
-        // 框选结束
-        this.isSelecting = false;
-
         // 移除框选矩形
         this.canvas.remove(this.selectionRectangle);
 
@@ -251,7 +245,7 @@ class SeatLayoutComponent extends React.Component<Props, any> {
     const intersectingRectangles: any[] = [];
     this.canvas.forEachObject((obj: any) => {
       if (obj !== rectangleA && this.isPointInsideRectangle(obj, rectangleA)) {
-        if (this.selectedMode === "PUT") {
+        if (this.state.selectedMode === "PUT") {
           intersectingRectangles.push(obj);
           obj.set("fill", "blue");
         } else {
@@ -280,14 +274,6 @@ class SeatLayoutComponent extends React.Component<Props, any> {
 
   //设置图片
   setRectangleImage(obj) {
-    // const imageUrl =
-    //   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAU1JREFUWEftVtu1wjAMszaBSYBJgEm4TAJMApvAJuKY49yTmpBHoeWD5jeNrUiyUsiXF77cXyYAv8UAyZl6DsAteG8UBkgeRGRjTfcA/kYDQFIbKwBdFwCrePIGZcAov1rDG4C5H/vBALjm2ncF4DImgLOILFO6Dy4BSTXZzhodAWxfJe7HJSCpt9bb60rqPhgD3nSm+//Mp1joMGAjs4h0yx6OC1pzvfkjbF6ZLmtCV0Sbq3OrQJCsMl1xCpyBqkC4M09hk3vykyZ0BTvR6Yu1mq7IQPiApCZY0DMJojZsmhnQAwlTzb0fnO7JpMs1171sDthUaKAoEx0/9DVdtQSRFJ1UE5G9Pa0h6ZpM1wzA5PAgwtteTLq3JHBBE5sybPXSvVcUJ0y5BXAs3bC03/QYWT6sReQU/1aVmvQaw3eKtpxtYqClcO23E4CJgTt5kJIhmts/5AAAAABJRU5ErkJggg==";
-    // const img = new Image();
-    // img.src = imageUrl;
-    // const icon = new fabric.Pattern({
-    //   source: img,
-    //   repeat: "no-repeat",
-    // });
     obj.set("fill", "blue");
     obj.set("stroke", null);
     obj.setCoords();

@@ -20,7 +20,7 @@ import Dashboard from "@/pages/common/dashboard";
 import logo from "../assets/logo/logo.png";
 import RIcon from "../components/RIcon";
 import { uuidv4 } from "amis";
-
+import APPSETTING from "@/config/application.json";
 type NavItem = {
   label: string;
   children?: Array<NavItem>;
@@ -105,14 +105,14 @@ export default class Admin extends React.Component<AdminProps, any> {
         method: "post",
         url: "/api/BaseService/permission/queryGrantedTreeList",
         data: {
-          serviceIdentification: "WCS",
+          serviceIdentification: APPSETTING.service.type,
           whouseNo: "",
           isMobileDevicePermission: false,
         },
       }).then((res: any) => {
         const menuList = {
           label: "导航",
-          permissionCode: "WCS",
+          permissionCode: APPSETTING.service.type,
           children: [
             {
               label: "首页",
