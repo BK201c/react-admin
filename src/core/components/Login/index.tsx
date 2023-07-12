@@ -36,7 +36,7 @@ export default class LoginRoute extends React.Component<LoginProps, any> {
       },
     }).then((res) => {
       console.log("login res", res);
-      if (res.data != null && res.code === 200) {
+      if (res.data !== null && res.code === 200) {
         const data = res.data;
         appStore.userStore.login({
           name: data.name,

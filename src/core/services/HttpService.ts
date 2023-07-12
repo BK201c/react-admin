@@ -4,13 +4,11 @@ import appStore from "@/core/stores/appStore";
 import APP_SETTING from "@/config/application.json";
 
 const baseURL =
-  process.env.NODE_ENV === "production"
-    ? APP_SETTING.baseUrl
-    : APP_SETTING.baseUrl;
+  process.env.NODE_ENV === "production" ? APP_SETTING.baseUrl : "/dev-api";
 
 const HttpService = axios.create({
-  baseURL: baseURL,
-  timeout: 6000,
+  baseURL: APP_SETTING.baseUrl,
+  timeout: 60000,
 });
 
 // request interceptor

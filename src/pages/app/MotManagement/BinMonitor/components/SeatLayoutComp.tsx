@@ -1,10 +1,77 @@
 import * as React from "react";
 import { fabric } from "fabric";
-import { isEmpty } from "lodash";
+import { isEmpty, remove } from "lodash";
+import { Button, Form, Input, Modal, Radio } from "antd";
+
+type SelectedMode = "PUT" | "OUT";
+
+interface Values {
+  title: string;
+  description: string;
+  modifier: string;
+}
+
+interface CollectionCreateFormProps {
+  open: boolean;
+  onCreate: (values: Values) => void;
+  onCancel: () => void;
+}
+
+const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
+  open,
+  onCreate,
+  onCancel,
+}) => {
+  const [form] = Form.useForm();
+  return (
+    <Modal
+      open={open}
+      title="Create a new collection"
+      okText="Create"
+      cancelText="Cancel"
+      onCancel={onCancel}
+      onOk={() => {
+        form
+          .validateFields()
+          .then((values) => {
+            form.resetFields();
+            onCreate(values);
+          })
+          .catch((info) => {
+            console.log("Validate Failed:", info);
+          });
+      }}
+    >
+      <Form
+        form={form}
+        layout="vertical"
+        name="form_in_modal"
+        initialValues={{ modifier: "PUT" }}
+      >
+        <Form.Item name="title" label="库位号">
+          <Input />
+        </Form.Item>
+        <Form.Item name="description" label="托盘号">
+          <Input type="textarea" />
+        </Form.Item>
+        <Form.Item
+          name="modifier"
+          className="collection-create-form_last-form-item"
+        >
+          <Radio.Group>
+            <Radio value="PUT">正选</Radio>
+            <Radio value="OUT">反选</Radio>
+          </Radio.Group>
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+};
 class SeatLayoutComponent extends React.Component<Props, any> {
   private isSelecting = false;
   private selectionRectangle: any;
   private downPoint: any;
+  private selectedMode: SelectedMode = "PUT";
   selectedGroup: any[];
   constructor(props: any) {
     super(props);
@@ -184,8 +251,16 @@ class SeatLayoutComponent extends React.Component<Props, any> {
     const intersectingRectangles: any[] = [];
     this.canvas.forEachObject((obj: any) => {
       if (obj !== rectangleA && this.isPointInsideRectangle(obj, rectangleA)) {
-        intersectingRectangles.push(obj);
-        this.setRectangleImage(obj);
+        if (this.selectedMode === "PUT") {
+          intersectingRectangles.push(obj);
+          obj.set("fill", "blue");
+        } else {
+          remove(
+            intersectingRectangles,
+            (item) => item._seatId === obj._seatId
+          );
+          obj.set("fill", "#fff");
+        }
       }
     });
     this.selectedGroup = intersectingRectangles;
@@ -205,15 +280,15 @@ class SeatLayoutComponent extends React.Component<Props, any> {
 
   //设置图片
   setRectangleImage(obj) {
-    const imageUrl =
-      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAU1JREFUWEftVtu1wjAMszaBSYBJgEm4TAJMApvAJuKY49yTmpBHoeWD5jeNrUiyUsiXF77cXyYAv8UAyZl6DsAteG8UBkgeRGRjTfcA/kYDQFIbKwBdFwCrePIGZcAov1rDG4C5H/vBALjm2ncF4DImgLOILFO6Dy4BSTXZzhodAWxfJe7HJSCpt9bb60rqPhgD3nSm+//Mp1joMGAjs4h0yx6OC1pzvfkjbF6ZLmtCV0Sbq3OrQJCsMl1xCpyBqkC4M09hk3vykyZ0BTvR6Yu1mq7IQPiApCZY0DMJojZsmhnQAwlTzb0fnO7JpMs1171sDthUaKAoEx0/9DVdtQSRFJ1UE5G9Pa0h6ZpM1wzA5PAgwtteTLq3JHBBE5sybPXSvVcUJ0y5BXAs3bC03/QYWT6sReQU/1aVmvQaw3eKtpxtYqClcO23E4CJgTt5kJIhmts/5AAAAABJRU5ErkJggg==";
-    const img = new Image();
-    img.src = imageUrl;
-    const icon = new fabric.Pattern({
-      source: img,
-      repeat: "no-repeat",
-    });
-    obj.set("fill", icon);
+    // const imageUrl =
+    //   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAU1JREFUWEftVtu1wjAMszaBSYBJgEm4TAJMApvAJuKY49yTmpBHoeWD5jeNrUiyUsiXF77cXyYAv8UAyZl6DsAteG8UBkgeRGRjTfcA/kYDQFIbKwBdFwCrePIGZcAov1rDG4C5H/vBALjm2ncF4DImgLOILFO6Dy4BSTXZzhodAWxfJe7HJSCpt9bb60rqPhgD3nSm+//Mp1joMGAjs4h0yx6OC1pzvfkjbF6ZLmtCV0Sbq3OrQJCsMl1xCpyBqkC4M09hk3vykyZ0BTvR6Yu1mq7IQPiApCZY0DMJojZsmhnQAwlTzb0fnO7JpMs1171sDthUaKAoEx0/9DVdtQSRFJ1UE5G9Pa0h6ZpM1wzA5PAgwtteTLq3JHBBE5sybPXSvVcUJ0y5BXAs3bC03/QYWT6sReQU/1aVmvQaw3eKtpxtYqClcO23E4CJgTt5kJIhmts/5AAAAABJRU5ErkJggg==";
+    // const img = new Image();
+    // img.src = imageUrl;
+    // const icon = new fabric.Pattern({
+    //   source: img,
+    //   repeat: "no-repeat",
+    // });
+    obj.set("fill", "blue");
     obj.set("stroke", null);
     obj.setCoords();
     obj.canvas.renderAll();

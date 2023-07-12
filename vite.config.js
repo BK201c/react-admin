@@ -27,7 +27,7 @@ export default defineConfig({
       },
     }),
   ],
-  base: "/",
+  base: "./",
   resolve: {
     extensions: [".js", ".ts", ".tsx", ".json", "*.svg"],
     alias: [{ find: "@", replacement: "/src/" }],
@@ -39,7 +39,7 @@ export default defineConfig({
     include: [],
   },
   server: {
-    port: 4000,
+    port: 3301,
     host: "localhost",
     open: "/",
     hmr: true,
@@ -47,6 +47,9 @@ export default defineConfig({
       "/api": {
         target: "http://192.168.33.108:20001",
         changeOrigin: true,
+        pathRewrite: {
+          "^/api": "",
+        },
       },
     },
   },

@@ -1,12 +1,18 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { toast } from "amis";
+import APP_SETTING from "@/config/application.json";
 
+const baseURL =
+  process.env.NODE_ENV === "production" ? APP_SETTING.baseUrl : "";
 /**
  * 全局请求拦截，方便对错误进行统一处理
  * @param config
  */
 export function request(config: AxiosRequestConfig) {
-  let instance = axios.create();
+  let instance = axios.create({
+    baseURL: baseURL,
+    timeout: 60000,
+  });
   return new Promise((resolve, reject) => {
     let onSuccess = (res: any) => {
       // console.log("onSuccess", res);
