@@ -39,18 +39,20 @@ class SeatLayoutComponent extends React.Component<Props, any> {
     this.setState({ selectSeatListData: ids });
   }
 
+  // 删除选中
   deleteSeletedById(id: string) {
-    debugger;
     const selectSeatListData = this.state.selectSeatListData.filter(
       (e) => e !== id
     );
     this.setState({ selectSeatListData: selectSeatListData });
-    this.setReactById(id, "init");
+    this.setReactColorById(id, "init");
   }
+
+  //悬浮选中
+  handleMouseEnter(id: string) {}
 
   onFinish(values: any) {
     console.log("Received values of form: ", values);
-    // this.setSelectGroupById()
   }
 
   onRadioChange(e: RadioChangeEvent) {
@@ -116,6 +118,12 @@ class SeatLayoutComponent extends React.Component<Props, any> {
               renderItem={(item) => (
                 <List.Item
                   key={item}
+                  onMouseEnter={() =>
+                    this.setReactColorById(item as string, "hover")
+                  }
+                  onMouseLeave={() =>
+                    this.setReactColorById(item as string, "selected")
+                  }
                   actions={[
                     <Button
                       type="danger"
@@ -332,7 +340,7 @@ class SeatLayoutComponent extends React.Component<Props, any> {
   }
 
   //设置图形颜色
-  setReactById(id: string, status: ReactStatus) {
+  setReactColorById(id: string, status: ReactStatus) {
     this.canvas.forEachObject((obj) => {
       if (obj.__id === id) {
         obj.set("fill", ReactStatusColor[status]);
