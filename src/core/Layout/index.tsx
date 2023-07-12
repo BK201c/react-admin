@@ -144,7 +144,7 @@ export default class Admin extends React.Component<AdminProps, any> {
     ];
 
     return (
-      <div>
+      <div className="layout-main">
         <div className={`cxd-Layout-brandBar`}>
           <button
             onClick={store.toggleOffScreen}

@@ -1,52 +1,72 @@
 import * as React from "react";
-import { useState } from "react";
 import { fabric } from "fabric";
-import { isEmpty, remove } from "lodash";
-import { Button, Card, Form, Input, Radio, Tabs } from "antd";
+import { Button, Card, Form, Input, List, Radio, Tabs } from "antd";
 import type { RadioChangeEvent } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 const { TabPane } = Tabs;
+
 type SelectedMode = "PUT" | "OUT";
 
+type ReactStatus = "init" | "selected" | "hover";
+
+enum ReactStatusColor {
+  init = "#fff",
+  selected = "green",
+  hover = "yellow",
+}
+
 class SeatLayoutComponent extends React.Component<Props, any> {
-  private isSelecting = false;
   private selectionRectangle: any;
   private downPoint: any;
   private selectedGroup: any[] = [];
-
-  private canvasRef: React.RefObject<any> = React.createRef();
+  private canvasRef: any = React.createRef();
+  private canvas: any;
 
   constructor(props: any) {
     super(props);
     this.state = {
       selectedMode: "PUT",
       activeTab: "1",
+      selectFromShow: false,
+      isSelectingOn: false,
+      selectSeatListData: [],
     };
+  }
+
+  //设置选中
+  setListData(f: any[]) {
+    const ids = [...f.map((e) => e.get("__id"))];
+    this.setState({ selectSeatListData: ids });
+  }
+
+  deleteSeletedById(id: string) {
+    debugger;
+    const selectSeatListData = this.state.selectSeatListData.filter(
+      (e) => e !== id
+    );
+    this.setState({ selectSeatListData: selectSeatListData });
+    this.setReactById(id, "init");
   }
 
   onFinish(values: any) {
     console.log("Received values of form: ", values);
+    // this.setSelectGroupById()
   }
 
   onRadioChange(e: RadioChangeEvent) {
-    console.log("radio checked", e.target.value);
     this.setState({ selectedMode: e.target.value });
   }
 
   handleTabChange(key: string) {
-    this.setState({ activeTab: key });
-    this.isSelecting = false;
-  }
-
-  setIsSelecting(status: boolean) {
-    this.isSelecting = status;
+    this.setState({ activeTab: key, isSelectingOn: false });
   }
 
   render() {
-    const { selectedMode, activeTab } = this.state;
+    const { selectedMode, activeTab, selectSeatListData } = this.state;
     return (
-      <div>
+      <div className="page-main" style={{ background: "#d5d5d5" }}>
         <canvas ref={this.canvasRef} />
-        <Button onClick={() => this.setIsSelecting(!this.isSelecting)}>
+        <Button onClick={() => this.setState({ selectFromShow: true })}>
           库位选择
         </Button>
         <div className="canvas-form canvas-form-select">
@@ -63,6 +83,9 @@ class SeatLayoutComponent extends React.Component<Props, any> {
                   <Radio value="PUT">正选</Radio>
                   <Radio value="OUT">反选</Radio>
                 </Radio.Group>
+                <Button onClick={() => this.setState({ isSelectingOn: true })}>
+                  开始框选
+                </Button>
               </TabPane>
               <TabPane tab="条件筛选" key="2">
                 <Form
@@ -71,15 +94,40 @@ class SeatLayoutComponent extends React.Component<Props, any> {
                   onFinish={this.onFinish}
                   initialValues={{ modifier: "PUT" }}
                 >
-                  <Form.Item name="description" label="托盘号">
-                    <Input type="textarea" />
-                  </Form.Item>
-                  <Form.Item name="title" label="库位号">
+                  <Form.Item name="TrayBarCode" label="托盘号">
                     <Input />
+                  </Form.Item>
+                  <Form.Item name="BinNo" label="库位号">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button htmlType="submit">查询</Button>
                   </Form.Item>
                 </Form>
               </TabPane>
             </Tabs>
+          </Card>
+        </div>
+        <div className="canvas-form canvas-form-list">
+          <Card title="已选择库位列表" style={{ width: 300 }}>
+            <List
+              style={{ height: 300, overflow: "auto" }}
+              dataSource={selectSeatListData}
+              renderItem={(item) => (
+                <List.Item
+                  key={item}
+                  actions={[
+                    <Button
+                      type="danger"
+                      onClick={() => this.deleteSeletedById(item as string)}
+                      icon={<DeleteOutlined />}
+                    ></Button>,
+                  ]}
+                >
+                  <List.Item.Meta title={<div>{item}</div>} />
+                </List.Item>
+              )}
+            />
           </Card>
         </div>
       </div>
@@ -117,7 +165,8 @@ class SeatLayoutComponent extends React.Component<Props, any> {
         }
 
         const seat: fabric.Rect = new fabric.Rect({
-          _seatId: binNo,
+          __id: binNo,
+          _seatType: "shelf",
           width: seatWidth,
           height: seatHeight,
           fill: "#fff",
@@ -172,7 +221,7 @@ class SeatLayoutComponent extends React.Component<Props, any> {
     this.canvas.on("selection:created", (e: any) => {
       console.log("selection:created", e);
       const active = e.selected;
-      if (!isEmpty(active)) {
+      if (!_.isEmpty(active)) {
         this.setSelectedGroup();
       }
     });
@@ -187,7 +236,7 @@ class SeatLayoutComponent extends React.Component<Props, any> {
       // 检查是否点击到图形上
       const target = this.canvas.findTarget(event.e);
 
-      if (target && this.isSelecting) {
+      if (target && this.state.isSelectingOn) {
         // 创建框选矩形
         this.selectionRectangle = new fabric.Rect({
           left: x,
@@ -205,7 +254,7 @@ class SeatLayoutComponent extends React.Component<Props, any> {
 
     // 监听鼠标移动事件
     this.canvas.on("mouse:move", (event) => {
-      if (this.isSelecting) {
+      if (this.state.isSelectingOn && this.selectionRectangle) {
         const pointer = this.canvas.getPointer(event.e);
         const { x, y } = pointer;
         const left = Math.min(x, this.selectionRectangle.left);
@@ -227,7 +276,7 @@ class SeatLayoutComponent extends React.Component<Props, any> {
 
     // 监听鼠标释放事件
     this.canvas.on("mouse:up", (event) => {
-      if (this.isSelecting) {
+      if (this.state.isSelectingOn) {
         // 移除框选矩形
         this.canvas.remove(this.selectionRectangle);
 
@@ -235,7 +284,22 @@ class SeatLayoutComponent extends React.Component<Props, any> {
         const selectedObjects = this.getIntersectingRectangles(
           this.selectionRectangle
         );
-        console.log("选中的图形对象:", selectedObjects);
+
+        if (this.state.selectedMode === "PUT") {
+          this.selectedGroup = _.unionBy(
+            this.selectedGroup,
+            selectedObjects,
+            "__id"
+          );
+        } else {
+          this.selectedGroup = _.differenceBy(
+            this.selectedGroup,
+            selectedObjects,
+            "__id"
+          );
+        }
+        this.setListData(this.selectedGroup);
+        console.log("选中的图形对象:", selectedObjects, this.selectedGroup);
       }
     });
   }
@@ -245,19 +309,14 @@ class SeatLayoutComponent extends React.Component<Props, any> {
     const intersectingRectangles: any[] = [];
     this.canvas.forEachObject((obj: any) => {
       if (obj !== rectangleA && this.isPointInsideRectangle(obj, rectangleA)) {
+        intersectingRectangles.push(obj);
         if (this.state.selectedMode === "PUT") {
-          intersectingRectangles.push(obj);
-          obj.set("fill", "blue");
+          obj.set("fill", ReactStatusColor.selected);
         } else {
-          remove(
-            intersectingRectangles,
-            (item) => item._seatId === obj._seatId
-          );
-          obj.set("fill", "#fff");
+          obj.set("fill", ReactStatusColor.init);
         }
       }
     });
-    this.selectedGroup = intersectingRectangles;
     return intersectingRectangles;
   }
 
@@ -272,12 +331,23 @@ class SeatLayoutComponent extends React.Component<Props, any> {
     );
   }
 
-  //设置图片
-  setRectangleImage(obj) {
-    obj.set("fill", "blue");
-    obj.set("stroke", null);
-    obj.setCoords();
-    obj.canvas.renderAll();
+  //设置图形颜色
+  setReactById(id: string, status: ReactStatus) {
+    this.canvas.forEachObject((obj) => {
+      if (obj.__id === id) {
+        obj.set("fill", ReactStatusColor[status]);
+        obj.canvas.renderAll();
+      }
+    });
+  }
+
+  //设置选中
+  setSelectGroupById(...ids: string[]) {
+    this.canvas.forEachObject((obj: any) => {
+      if (obj._seatType === "shelf" && ids.includes(obj.__id)) {
+        obj.set("fill", "blue");
+      }
+    });
   }
 }
 
