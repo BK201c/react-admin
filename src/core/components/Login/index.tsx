@@ -8,6 +8,7 @@ import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 import { Input, Button, Card } from "antd";
 import appStore from "@/core/stores/appStore";
 import HttpService from "../../services/HttpService";
+import APPSETTING from "@/config/application.json";
 interface LoginProps extends RouteComponentProps<any> {
   store: IMainStore;
 }
@@ -75,8 +76,10 @@ export default class LoginRoute extends React.Component<LoginProps, any> {
     return (
       <div className="login-page-container bg-gray-50">
         <div className="container mt-5">
-          <span className="block m-b-xl text-center text-2x">React-Admin</span>
-          <span className="block m-b-xl text-center">Welcome</span>
+          <span className="block m-b-xl text-center text-2x">
+            {APPSETTING.title}
+          </span>
+          <span className="block m-b-xl text-center">欢迎</span>
 
           <div className="flex flex-row justify-center ">
             <div className="m-24">

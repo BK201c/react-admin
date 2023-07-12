@@ -7,8 +7,8 @@
 ## 使用方法
 
 ```
-npm i
-npm start
+yarn
+yarn start
 ```
 
 ### 1、首先在 pages 下新增一个 Hello.tsx 页面

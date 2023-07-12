@@ -3,7 +3,8 @@ import react from "@vitejs/plugin-react";
 import viteEasyMock from "vite-easy-mock";
 import visualizer from "rollup-plugin-visualizer";
 import svgr from "vite-plugin-svgr";
-
+import APPSETTING from "./src/config/application.json";
+import { createHtmlPlugin } from "vite-plugin-html";
 export default defineConfig({
   plugins: [
     react({
@@ -26,6 +27,13 @@ export default defineConfig({
         dimensions: false,
       },
     }),
+    createHtmlPlugin({
+      inject: {
+        data: {
+          title: APPSETTING.title,
+        },
+      },
+    }),
   ],
   base: "./",
   resolve: {
@@ -45,7 +53,7 @@ export default defineConfig({
     hmr: true,
     proxy: {
       "/api": {
-        target: "http://192.168.33.108:20001",
+        target: APPSETTING.baseUrl,
         changeOrigin: true,
         pathRewrite: {
           "^/api": "",
