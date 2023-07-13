@@ -37,8 +37,25 @@ class SeatLayoutComp extends React.Component {
       selectSeatListData: [],
       layoutNames: [],
       roadWayNo: "",
+      layoutNameShow: false,
     };
     this.getLayoutNames();
+  }
+
+  componentDidMount() {
+    const canvas: fabric.Canvas = new fabric.Canvas(this.canvasRef.current, {
+      hoverCursor: "pointer",
+      backgroundColor: "#d5d5d5",
+      allowTouchScrolling: true,
+      width: 1800,
+      height: 960,
+      selection: false,
+    });
+    this.canvas = canvas;
+    this.draw();
+    this.addSelectionEvent();
+    this.addZoomEvent();
+    this.addDargeEvent();
   }
 
   //设置选中
@@ -103,7 +120,7 @@ class SeatLayoutComp extends React.Component {
     }).then((res) => {
       if (res.code === 0) {
         this.layoutData = res.data;
-        this.drawLayout();
+        this.draw();
       }
     });
   }
@@ -122,125 +139,192 @@ class SeatLayoutComp extends React.Component {
       itemEnabled,
       roadWayNo,
       layoutNames,
+      selectFromShow,
+      layoutNameShow,
     } = this.state;
     return (
       <div className="page-main" style={{ background: "#d5d5d5" }}>
         <canvas ref={this.canvasRef} />
-        <Button onClick={() => this.setState({ selectFromShow: true })}>
-          库位选择
-        </Button>
-        <div className="canvas-form canvas-form-list-xd">
-          <Card title="巷道列表" style={{ width: 300 }}>
-            <Radio.Group
-              onChange={(e) => this.onLayoutChange(e)}
-              value={roadWayNo}
-            >
-              <Space direction="vertical">
-                {layoutNames.map((item) => (
-                  <Radio key={item.roadWayNo} value={item.roadWayNo}>
-                    {item.roadWayName}
-                  </Radio>
-                ))}
-              </Space>
-            </Radio.Group>
-          </Card>
+        <div>
+          <Button
+            onClick={() => this.setState({ layoutNameShow: !layoutNameShow })}
+          >
+            巷道列表
+          </Button>
+          <Button
+            onClick={() => this.setState({ selectFromShow: !selectFromShow })}
+          >
+            库位框选
+          </Button>
         </div>
-        <div className="canvas-form canvas-form-select">
-          <Card style={{ width: 300 }}>
-            <Tabs
-              activeKey={activeTab}
-              onChange={(key) => this.handleTabChange(key)}
-              items={[
-                {
-                  label: "鼠标框选",
-                  key: "1",
-                  children: (
-                    <div>
-                      <Radio.Group
-                        onChange={(e) => this.onRadioChange(e, "selectedMode")}
-                        value={selectedMode}
-                      >
-                        <Radio value="PUT">正选</Radio>
-                        <Radio value="OUT">反选</Radio>
-                      </Radio.Group>
-                      <Button
-                        type={isSelectingOn ? "primary" : "dashed"}
-                        onClick={() => this.setState({ isSelectingOn: true })}
-                      >
-                        开始框选
-                      </Button>
-                    </div>
-                  ),
-                },
-                {
-                  label: "条件筛选",
-                  key: "2",
-                  children: (
-                    <Form
-                      layout="vertical"
-                      name="form_in_modal"
-                      onFinish={this.onFinish}
-                      initialValues={{ modifier: "PUT" }}
-                    >
-                      <Form.Item name="TrayBarCode" label="托盘号">
-                        <Input />
-                      </Form.Item>
-                      <Form.Item name="BinNo" label="库位号">
-                        <Input />
-                      </Form.Item>
-                      <Form.Item>
-                        <Button htmlType="submit">查询</Button>
-                      </Form.Item>
-                    </Form>
-                  ),
-                },
-              ]}
-            ></Tabs>
-          </Card>
-        </div>
-        <div className="canvas-form canvas-form-list">
-          <Card title="已选择库位列表" style={{ width: 300 }}>
-            <List
-              style={{ height: 300, overflow: "auto" }}
-              dataSource={selectSeatListData}
-              renderItem={(item) => (
-                <List.Item
-                  key={item}
-                  onMouseEnter={() =>
-                    this.setReactColorById(item as string, "hover")
-                  }
-                  onMouseLeave={() =>
-                    this.setReactColorById(item as string, "selected")
-                  }
-                  actions={[
-                    <Button
-                      type="danger"
-                      onClick={() => this.deleteSeletedById(item as string)}
-                      icon={<DeleteOutlined />}
-                    ></Button>,
+        {layoutNameShow ? (
+          <div className="canvas-form canvas-form-list-xd">
+            <Card title="巷道列表" style={{ width: 300 }}>
+              <Radio.Group
+                onChange={(e) => this.onLayoutChange(e)}
+                value={roadWayNo}
+              >
+                <Space direction="vertical">
+                  {layoutNames.map((item) => (
+                    <Radio key={item.roadWayNo} value={item.roadWayNo}>
+                      {item.roadWayName}
+                    </Radio>
+                  ))}
+                </Space>
+              </Radio.Group>
+            </Card>
+          </div>
+        ) : null}
+        {selectFromShow ? (
+          <div>
+            <div className="canvas-form canvas-form-select">
+              <Card style={{ width: 300 }}>
+                <Tabs
+                  activeKey={activeTab}
+                  onChange={(key) => this.handleTabChange(key)}
+                  items={[
+                    {
+                      label: "鼠标框选",
+                      key: "1",
+                      children: (
+                        <div>
+                          <Radio.Group
+                            onChange={(e) =>
+                              this.onRadioChange(e, "selectedMode")
+                            }
+                            value={selectedMode}
+                          >
+                            <Radio value="PUT">正选</Radio>
+                            <Radio value="OUT">反选</Radio>
+                          </Radio.Group>
+                          <Button
+                            type={isSelectingOn ? "primary" : "dashed"}
+                            onClick={() =>
+                              this.setState({ isSelectingOn: true })
+                            }
+                          >
+                            开始框选
+                          </Button>
+                        </div>
+                      ),
+                    },
+                    {
+                      label: "条件筛选",
+                      key: "2",
+                      children: (
+                        <Form
+                          layout="vertical"
+                          name="form_in_modal"
+                          onFinish={this.onFinish}
+                          initialValues={{ modifier: "PUT" }}
+                        >
+                          <Form.Item name="TrayBarCode" label="托盘号">
+                            <Input />
+                          </Form.Item>
+                          <Form.Item name="BinNo" label="库位号">
+                            <Input />
+                          </Form.Item>
+                          <Form.Item>
+                            <Button htmlType="submit">查询</Button>
+                          </Form.Item>
+                        </Form>
+                      ),
+                    },
                   ]}
+                ></Tabs>
+              </Card>
+            </div>
+            <div className="canvas-form canvas-form-list">
+              <Card title="已选择库位列表" style={{ width: 300 }}>
+                <List
+                  style={{ height: 300, overflow: "auto" }}
+                  dataSource={selectSeatListData}
+                  renderItem={(item) => (
+                    <List.Item
+                      key={item}
+                      onMouseEnter={() =>
+                        this.setReactColorById(item as string, "hover")
+                      }
+                      onMouseLeave={() =>
+                        this.setReactColorById(item as string, "selected")
+                      }
+                      actions={[
+                        <Button
+                          type="danger"
+                          onClick={() => this.deleteSeletedById(item as string)}
+                          icon={<DeleteOutlined />}
+                        ></Button>,
+                      ]}
+                    >
+                      <List.Item.Meta title={<div>{item}</div>} />
+                    </List.Item>
+                  )}
+                />
+                <Radio.Group
+                  onChange={(e) => this.onRadioChange(e, "itemEnabled")}
+                  value={itemEnabled}
                 >
-                  <List.Item.Meta title={<div>{item}</div>} />
-                </List.Item>
-              )}
-            />
-            <Radio.Group
-              onChange={(e) => this.onRadioChange(e, "itemEnabled")}
-              value={itemEnabled}
-            >
-              <Radio value="1">启用</Radio>
-              <Radio value="0">禁用</Radio>
-            </Radio.Group>
-            <Button onClick={() => this.setState({ isSelectingOn: true })}>
-              确认
-            </Button>
-          </Card>
-        </div>
+                  <Radio value="1">启用</Radio>
+                  <Radio value="0">禁用</Radio>
+                </Radio.Group>
+                <Button onClick={() => this.setState({ isSelectingOn: true })}>
+                  确认
+                </Button>
+              </Card>
+            </div>
+          </div>
+        ) : null}
       </div>
     );
   }
 
-  drawLayout() {
+  addZoomEvent() {
+    this.canvas.on("mouse:wheel", (opt: any) => {
+      const delta = opt.e.deltaY;
+      let zoom = this.canvas.getZoom();
+      zoom *= 0.999 ** delta;
+      if (zoom > 20) zoom = 20;
+      if (zoom < 0.01) zoom = 0.01;
+
+      this.canvas.zoomToPoint(
+        {
+          x: opt.e.offsetX,
+          y: opt.e.offsetY,
+        },
+        zoom
+      );
+    });
+  }
+
+  addDargeEvent() {
+    this.canvas.on("mouse:down", (opt: any) => {
+      var evt = opt.e;
+      if (evt.altKey === true) {
+        this.canvas.isDragging = true;
+        this.canvas.lastPosX = evt.clientX;
+        this.canvas.lastPosY = evt.clientY;
+      }
+    });
+
+    this.canvas.on("mouse:move", (opt: any) => {
+      if (this.canvas.isDragging) {
+        var e = opt.e;
+        var vpt = this.canvas.viewportTransform;
+        vpt[4] += e.clientX - this.canvas.lastPosX;
+        vpt[5] += e.clientY - this.canvas.lastPosY;
+        this.canvas.requestRenderAll();
+        this.canvas.lastPosX = e.clientX;
+        this.canvas.lastPosY = e.clientY;
+      }
+    });
+
+    this.canvas.on("mouse:up", (opt: any) => {
+      this.canvas.setViewportTransform(this.canvas.viewportTransform);
+      this.canvas.isDragging = false;
+    });
+  }
+
+  draw() {
     this.canvas.clear();
     const seatSize = [30, 30];
     const seatDist = 8;
@@ -392,25 +476,11 @@ class SeatLayoutComp extends React.Component {
     this.canvas.renderAll();
   }
 
-  componentDidMount() {
-    const canvas: fabric.Canvas = new fabric.Canvas(this.canvasRef.current, {
-      hoverCursor: "pointer",
-      backgroundColor: "#d5d5d5",
-      allowTouchScrolling: true,
-      width: 1800,
-      height: 960,
-      selection: false,
-    });
-    this.canvas = canvas;
-    this.drawLayout();
-    this.addCanvasEvent();
-  }
-
   componentWillUnmount() {
     this.canvas?.clear();
   }
 
-  addCanvasEvent() {
+  addSelectionEvent() {
     // 监听鼠标按下事件
     this.canvas.on("mouse:down", (event) => {
       const pointer = this.canvas.getPointer(event.e);
