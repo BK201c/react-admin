@@ -90,7 +90,7 @@ class SeatLayoutComp extends React.Component {
           layoutNames: res.data,
           roadWayNo: res.data[0].roadWayNo,
         });
-        // this.getLayoutData(res.data[0].roadWayNo);
+        this.getLayoutData(res.data[0].roadWayNo);
       }
     });
   }
