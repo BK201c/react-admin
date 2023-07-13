@@ -4,13 +4,9 @@ import { Button, Card, Form, Input, List, Radio, Space, Tabs } from "antd";
 import type { RadioChangeEvent } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import HttpService from "@/core/services/HttpService";
-import { divide } from "lodash";
-const { TabPane } = Tabs;
 
 type SelectedMode = "PUT" | "OUT";
-
 type RectStatus = "init" | "selected" | "hover";
-
 enum RectStatusColor {
   init = "#fff",
   selected = "#95de64",
@@ -23,7 +19,6 @@ class SeatLayoutComp extends React.Component {
   private selectedGroup: any[] = [];
   private canvasRef: any = React.createRef();
   private canvas: any = null;
-  private layoutNo: string;
   layoutData: any;
 
   constructor(props: any) {
@@ -75,16 +70,28 @@ class SeatLayoutComp extends React.Component {
   }
 
   onFinish(values: any) {
-    console.log("Received values of form: ", values);
+    const { roadWayNo } = this.state;
     HttpService({
       url: "/api/WCSMS/binMot/getBinNoListByFilter",
       method: "GET",
       params: {
-        RoadwayNo: this.layoutNo,
+        RoadwayNo: roadWayNo,
         ...values,
       },
     }).then((res) => {
-      console.log(res.data);
+      if (res.status === 0) {
+        console.log(res.data);
+        res.data.forEach((e: string) =>
+          this.setReactColorById(
+            e
+              .split("_")
+              .map((e) => e.padStart(2, "0"))
+              .join("_"),
+            "selected"
+          )
+        );
+        this.canvas.renderAll();
+      }
     });
   }
 
@@ -215,7 +222,7 @@ class SeatLayoutComp extends React.Component {
                         <Form
                           layout="vertical"
                           name="form_in_modal"
-                          onFinish={this.onFinish}
+                          onFinish={(values) => this.onFinish(values)}
                           initialValues={{ modifier: "PUT" }}
                         >
                           <Form.Item name="TrayBarCode" label="托盘号">
@@ -362,17 +369,17 @@ class SeatLayoutComp extends React.Component {
     for (const item of seatData) {
       const seatItem = item;
       if (seatItem) {
-        const { binCol, binLayer, binRow, binNo } = seatItem;
+        const { binCol, binLayer, binRow, binNo, shelfNo } = seatItem;
 
         const preLayoutH =
           binRow > 1 && seatLayoutGroup[binRow - 1]?.layoutHeight + layoutDist;
 
         const seat: fabric.Rect = new fabric.Rect({
-          __id: binNo,
+          __id: `${shelfNo}_${binNo}`,
           __featureType: "shelf",
           width: seatSize[0],
           height: seatSize[1],
-          fill: "#fff",
+          fill: RectStatusColor.init,
           stroke: "#262626",
           strokeWidth: 2,
           left: binCol * (seatSize[0] + seatDist) + originPoint[0],
@@ -396,7 +403,7 @@ class SeatLayoutComp extends React.Component {
           __featureType: "indicator",
           width: seatSize[0],
           height: seatSize[1],
-          fill: "#fff",
+          fill: RectStatusColor.init,
           stroke: "#69b1ff",
           strokeWidth: 2,
           left: col * (seatSize[0] + seatDist) + originPoint[0],
@@ -424,7 +431,7 @@ class SeatLayoutComp extends React.Component {
           __featureType: "indicator",
           width: seatSize[0],
           height: seatSize[1],
-          fill: "#fff",
+          fill: RectStatusColor.init,
           stroke: "#69b1ff",
           strokeWidth: 2,
           left:
