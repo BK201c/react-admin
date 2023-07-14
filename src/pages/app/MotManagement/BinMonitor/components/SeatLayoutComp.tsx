@@ -197,7 +197,7 @@ class SeatLayoutComp extends React.Component {
     return (
       <div className="page-main" style={{ background: "#d5d5d5" }}>
         <canvas ref={this.canvasRef} />
-        <div>
+        <div className="canvas-form canvas-form-btns">
           <Button
             onClick={() => this.setState({ layoutNameShow: !layoutNameShow })}
           >

@@ -34,7 +34,7 @@
   min-width: 200px;
   &-select {
     right: 20px;
-    top: 20px;
+    top: 60px;
   }
   &-list {
     right: 20px;
@@ -47,6 +47,11 @@
   &-tips {
     position: absolute;
     z-index: 88;
+  }
+  &-btns {
+    position: absolute;
+    right: 10px;
+    top: 10px;
   }
 }
 
