@@ -1,12 +1,23 @@
 import * as React from "react";
 import { fabric } from "fabric";
-import { Button, Card, Form, Input, List, Radio, Space, Tabs } from "antd";
+import {
+  Button,
+  Card,
+  Form,
+  Input,
+  List,
+  Radio,
+  Space,
+  Tabs,
+  message,
+} from "antd";
 import type { RadioChangeEvent } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import HttpService from "@/core/services/HttpService";
 
 type SelectedMode = "PUT" | "OUT";
 type RectStatus = "init" | "selected" | "hover";
+type FeatureType = "shelf" | "indicator" | "text";
 enum RectStatusColor {
   init = "#fff",
   selected = "#95de64",
@@ -16,10 +27,11 @@ enum RectStatusColor {
 class SeatLayoutComp extends React.Component {
   private selectionRectangle: any;
   private downPoint: any;
-  private selectedGroup: any[] = [];
+  private selectFeats: any[] = [];
   private canvasRef: any = React.createRef();
   private canvas: any = null;
   layoutData: any;
+  layoutDataMapping: any;
 
   constructor(props: any) {
     super(props);
@@ -29,17 +41,20 @@ class SeatLayoutComp extends React.Component {
       selectFromShow: false,
       isSelectingOn: false,
       itemEnabled: "1",
-      selectSeatListData: [],
+      selectIds: [],
       layoutNames: [],
       roadWayNo: "",
       layoutNameShow: false,
+      tipsShow: false,
+      tipsContent: "测试信息",
+      pageCoords: [0, 0],
     };
     this.getLayoutNames();
   }
 
   componentDidMount() {
     const canvas: fabric.Canvas = new fabric.Canvas(this.canvasRef.current, {
-      hoverCursor: "pointer",
+      hoverCursor: "default",
       backgroundColor: "#d5d5d5",
       allowTouchScrolling: true,
       width: 1800,
@@ -51,25 +66,25 @@ class SeatLayoutComp extends React.Component {
     this.addSelectionEvent();
     this.addZoomEvent();
     this.addDargeEvent();
+    this.addHoverEvent();
   }
 
   //设置选中
   setListData(f: any[]) {
     const ids = [...f.map((e) => e.get("__id"))];
-    this.setState({ selectSeatListData: ids });
+    this.setState({ selectIds: ids });
   }
 
   // 删除选中
   deleteSeletedById(id: string) {
-    const selectSeatListData = this.state.selectSeatListData.filter(
-      (e) => e !== id
-    );
-    this.selectedGroup = _.remove(this.selectedGroup, (obj) => obj.__id === id);
-    this.setState({ selectSeatListData: selectSeatListData });
+    const selectIds = this.state.selectIds.filter((e) => e !== id);
+    this.selectFeats = _.remove(this.selectFeats, (obj) => obj.__id === id);
+    this.setState({ selectIds: selectIds });
     this.setReactColorById(id, "init");
   }
 
-  onFinish(values: any) {
+  //搜索
+  onSearch(values: any) {
     const { roadWayNo } = this.state;
     HttpService({
       url: "/api/WCSMS/binMot/getBinNoListByFilter",
@@ -80,17 +95,31 @@ class SeatLayoutComp extends React.Component {
       },
     }).then((res) => {
       if (res.status === 0) {
-        console.log(res.data);
-        res.data.forEach((e: string) =>
-          this.setReactColorById(
-            e
-              .split("_")
-              .map((e) => e.padStart(2, "0"))
-              .join("_"),
-            "selected"
-          )
-        );
+        const selectIds: string[] = [];
+        res.data.forEach((e: string) => {
+          this.setReactColorById(this.layoutDataMapping[e], "selected");
+          selectIds.push(this.layoutDataMapping[e]);
+        });
+        this.setState({ selectIds: selectIds });
         this.canvas.renderAll();
+      }
+    });
+  }
+
+  //设置
+  setUsedFlag() {
+    const { itemEnabled, selectIds } = this.state;
+    HttpService({
+      url: "/api/WCSMS/binMot/batchSetBinStatus",
+      method: "POST",
+      data: {
+        lockMsg: "",
+        items: selectIds,
+        value: itemEnabled,
+      },
+    }).then((res) => {
+      if (res.status === 0) {
+        message.success("设置成功");
       }
     });
   }
@@ -115,6 +144,7 @@ class SeatLayoutComp extends React.Component {
           roadWayNo: res.data[0].roadWayNo,
         });
         this.getLayoutData(res.data[0].roadWayNo);
+        this.getLayoutDataMapping(res.data[0].roadWayNo);
       }
     });
   }
@@ -132,6 +162,18 @@ class SeatLayoutComp extends React.Component {
     });
   }
 
+  getLayoutDataMapping(roadwayNo: string) {
+    HttpService({
+      url: "/api/WCSMS/binMot/getBinSet",
+      method: "GET",
+      params: { roadwayNo },
+    }).then((res) => {
+      if (res.code === 0) {
+        this.layoutDataMapping = res.data;
+      }
+    });
+  }
+
   onLayoutChange(e: RadioChangeEvent) {
     this.getLayoutData(e.target.value);
     this.setState({ roadWayNo: e.target.value });
@@ -141,13 +183,16 @@ class SeatLayoutComp extends React.Component {
     const {
       selectedMode,
       activeTab,
-      selectSeatListData,
+      selectIds,
       isSelectingOn,
       itemEnabled,
       roadWayNo,
       layoutNames,
       selectFromShow,
       layoutNameShow,
+      tipsShow,
+      tipsContent,
+      pageCoords,
     } = this.state;
     return (
       <div className="page-main" style={{ background: "#d5d5d5" }}>
@@ -164,6 +209,18 @@ class SeatLayoutComp extends React.Component {
             库位框选
           </Button>
         </div>
+        {tipsShow ? (
+          <Card
+            className="canvas-form canvas-form-tips"
+            style={{
+              width: 300,
+              left: pageCoords[0] + "px",
+              top: pageCoords[1] + "px",
+            }}
+          >
+            <p>{tipsContent}</p>
+          </Card>
+        ) : null}
         {layoutNameShow ? (
           <div className="canvas-form canvas-form-list-xd">
             <Card title="巷道列表" style={{ width: 300 }}>
@@ -222,7 +279,7 @@ class SeatLayoutComp extends React.Component {
                         <Form
                           layout="vertical"
                           name="form_in_modal"
-                          onFinish={(values) => this.onFinish(values)}
+                          onFinish={(values) => this.onSearch(values)}
                           initialValues={{ modifier: "PUT" }}
                         >
                           <Form.Item name="TrayBarCode" label="托盘号">
@@ -245,7 +302,7 @@ class SeatLayoutComp extends React.Component {
               <Card title="已选择库位列表" style={{ width: 300 }}>
                 <List
                   style={{ height: 300, overflow: "auto" }}
-                  dataSource={selectSeatListData}
+                  dataSource={selectIds}
                   renderItem={(item) => (
                     <List.Item
                       key={item}
@@ -274,9 +331,7 @@ class SeatLayoutComp extends React.Component {
                   <Radio value="1">启用</Radio>
                   <Radio value="0">禁用</Radio>
                 </Radio.Group>
-                <Button onClick={() => this.setState({ isSelectingOn: true })}>
-                  确认
-                </Button>
+                <Button onClick={() => this.setUsedFlag()}>确认</Button>
               </Card>
             </div>
           </div>
@@ -287,25 +342,27 @@ class SeatLayoutComp extends React.Component {
 
   addZoomEvent() {
     this.canvas.on("mouse:wheel", (opt: any) => {
-      const delta = opt.e.deltaY;
-      let zoom = this.canvas.getZoom();
-      zoom *= 0.999 ** delta;
-      if (zoom > 20) zoom = 20;
-      if (zoom < 0.01) zoom = 0.01;
+      if (opt.e.altKey === true) {
+        const delta = opt.e.deltaY;
+        let zoom = this.canvas.getZoom();
+        zoom *= 0.999 ** delta;
+        if (zoom > 20) zoom = 20;
+        if (zoom < 0.01) zoom = 0.01;
 
-      this.canvas.zoomToPoint(
-        {
-          x: opt.e.offsetX,
-          y: opt.e.offsetY,
-        },
-        zoom
-      );
+        this.canvas.zoomToPoint(
+          {
+            x: opt.e.offsetX,
+            y: opt.e.offsetY,
+          },
+          zoom
+        );
+      }
     });
   }
 
   addDargeEvent() {
     this.canvas.on("mouse:down", (opt: any) => {
-      var evt = opt.e;
+      let evt = opt.e;
       if (evt.altKey === true) {
         this.canvas.isDragging = true;
         this.canvas.lastPosX = evt.clientX;
@@ -315,12 +372,13 @@ class SeatLayoutComp extends React.Component {
 
     this.canvas.on("mouse:move", (opt: any) => {
       if (this.canvas.isDragging) {
-        var e = opt.e;
-        var vpt = this.canvas.viewportTransform;
+        let e = opt.e;
+        let vpt = this.canvas.viewportTransform;
         vpt[4] += e.clientX - this.canvas.lastPosX;
         vpt[5] += e.clientY - this.canvas.lastPosY;
         this.canvas.requestRenderAll();
         this.canvas.lastPosX = e.clientX;
+        this.canvas.defaultCursor = "grabbing";
         this.canvas.lastPosY = e.clientY;
       }
     });
@@ -328,18 +386,35 @@ class SeatLayoutComp extends React.Component {
     this.canvas.on("mouse:up", (opt: any) => {
       this.canvas.setViewportTransform(this.canvas.viewportTransform);
       this.canvas.isDragging = false;
+      this.canvas.defaultCursor = "default";
+    });
+  }
+
+  addHoverEvent() {
+    this.canvas.on("mouse:down", (opt: any) => {
+      const obj = opt.target;
+      const pageCoords = [opt.e.pageX, opt.e.pageY];
+      if (obj?.__featureType === "shelf") {
+        this.setState({
+          tipsShow: true,
+          tipsContent: obj.__id,
+          pageCoords,
+        });
+      } else {
+        this.setState({
+          tipsShow: false,
+        });
+      }
     });
   }
 
   draw() {
     this.canvas.clear();
-    const seatSize = [30, 30];
-    const seatDist = 8;
-    const layoutDist = 100;
-    const originPoint = [50, 50];
+    const seatSize = [25, 25];
+    const seatDist = 5;
+    const layoutDist = 200;
+    const originPoint = [100, 50];
     const featureGroup: any[] = [];
-
-    console.log("获取布局数据", this.layoutData);
 
     if (_.isEmpty(this.layoutData)) return;
 
@@ -347,7 +422,7 @@ class SeatLayoutComp extends React.Component {
     const seatInfoList = this.layoutData.rowList as Array<any>;
     const seatLayoutGroup = seatInfoList.reduce((pre, curr) => {
       const index = Number(curr.rowGroup);
-      const title = curr.shelfNo;
+      const title = curr.shelfName;
       const columnRange = Array.from(
         { length: curr.endColumnNo - curr.startColumnNo + 1 },
         (_, index) => curr.startColumnNo + index
@@ -369,13 +444,13 @@ class SeatLayoutComp extends React.Component {
     for (const item of seatData) {
       const seatItem = item;
       if (seatItem) {
-        const { binCol, binLayer, binRow, binNo, shelfNo } = seatItem;
+        const { binCol, binLayer, binRow, binNo } = seatItem;
 
         const preLayoutH =
           binRow > 1 && seatLayoutGroup[binRow - 1]?.layoutHeight + layoutDist;
 
         const seat: fabric.Rect = new fabric.Rect({
-          __id: `${shelfNo}_${binNo}`,
+          __id: binNo,
           __featureType: "shelf",
           width: seatSize[0],
           height: seatSize[1],
@@ -407,7 +482,7 @@ class SeatLayoutComp extends React.Component {
           stroke: "#69b1ff",
           strokeWidth: 2,
           left: col * (seatSize[0] + seatDist) + originPoint[0],
-          top: 1 * seatSize[1] + preLayoutH + originPoint[1] - seatSize[0],
+          top: 1 * seatSize[1] + preLayoutH + originPoint[1] - seatSize[1],
           hasControls: false,
           lockMovementX: true,
           lockMovementY: true,
@@ -416,7 +491,7 @@ class SeatLayoutComp extends React.Component {
         });
         const textX = new fabric.Text(`${col}`, {
           __featureType: "text",
-          fontSize: 16,
+          fontSize: 14,
           fill: "#262626",
           left: col * (seatSize[0] + seatDist) + originPoint[0] + 9,
           top: 1 * seatSize[1] + preLayoutH + originPoint[1] - 25,
@@ -439,7 +514,7 @@ class SeatLayoutComp extends React.Component {
             originPoint[0] -
             seatSize[0] -
             seatDist,
-          top: layer * (seatSize[0] + seatDist) + preLayoutH + originPoint[0],
+          top: layer * (seatSize[1] + seatDist) + preLayoutH + originPoint[1],
           hasControls: false,
           lockMovementX: true,
           lockMovementY: true,
@@ -448,11 +523,11 @@ class SeatLayoutComp extends React.Component {
         });
         const textY = new fabric.Text(`${layer}`, {
           __featureType: "text",
-          fontSize: 16,
+          fontSize: 14,
           fill: "#262626",
           left: 1 * (seatSize[0] + seatDist) + originPoint[0] - seatSize[0],
           top:
-            layer * (seatSize[0] + seatDist) + preLayoutH + originPoint[0] + 10,
+            layer * (seatSize[1] + seatDist) + preLayoutH + originPoint[1] + 10,
           hasControls: false,
           lockMovementX: true,
           lockMovementY: true,
@@ -466,7 +541,7 @@ class SeatLayoutComp extends React.Component {
         fontSize: 16,
         fill: "#262626",
         left: 1 * (seatSize[0] + seatDist) + originPoint[0] - seatSize[0],
-        top: 1 * (seatSize[0] + seatDist) + preLayoutH + originPoint[0] - 70,
+        top: 1 * (seatSize[1] + seatDist) + preLayoutH + originPoint[1] - 70,
         hasControls: false,
         lockMovementX: true,
         lockMovementY: true,
@@ -550,20 +625,20 @@ class SeatLayoutComp extends React.Component {
         );
 
         if (this.state.selectedMode === "PUT") {
-          this.selectedGroup = _.unionBy(
-            this.selectedGroup,
+          this.selectFeats = _.unionBy(
+            this.selectFeats,
             selectedObjects,
             "__id"
           );
         } else {
-          this.selectedGroup = _.differenceBy(
-            this.selectedGroup,
+          this.selectFeats = _.differenceBy(
+            this.selectFeats,
             selectedObjects,
             "__id"
           );
         }
         this.downPoint = null;
-        this.setListData(this.selectedGroup);
+        this.setListData(this.selectFeats);
         this.canvas.renderAll();
       }
     });

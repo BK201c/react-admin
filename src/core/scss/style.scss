@@ -44,6 +44,10 @@
       left: 20px;
     }
   }
+  &-tips {
+    position: absolute;
+    z-index: 88;
+  }
 }
 
 .login-page-container {
