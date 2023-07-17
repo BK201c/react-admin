@@ -14,10 +14,11 @@ import {
 import type { RadioChangeEvent } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import HttpService from "@/core/services/HttpService";
+import stacker_1 from "@/core/assets/icons/stacker_1.png";
 
 type SelectedMode = "PUT" | "OUT";
 type RectStatus = "init" | "selected" | "hover";
-type FeatureType = "shelf" | "indicator" | "text";
+type FeatureType = "shelf" | "indicator" | "text" | "srm" | "srm_lane";
 enum RectStatusColor {
   init = "#fff",
   selected = "#95de64",
@@ -66,7 +67,7 @@ class SeatLayoutComp extends React.Component {
     this.addSelectionEvent();
     this.addZoomEvent();
     this.addDargeEvent();
-    this.addHoverEvent();
+    this.addClickEvent();
   }
 
   //设置选中
@@ -390,14 +391,20 @@ class SeatLayoutComp extends React.Component {
     });
   }
 
-  addHoverEvent() {
+  addClickEvent() {
     this.canvas.on("mouse:down", (opt: any) => {
       const obj = opt.target;
       const pageCoords = [opt.e.pageX, opt.e.pageY];
       if (obj?.__featureType === "shelf") {
         this.setState({
           tipsShow: true,
-          tipsContent: obj.__id,
+          tipsContent: `库位号：${obj.__id}`,
+          pageCoords,
+        });
+      } else if (obj?.__featureType.startsWith("srm")) {
+        this.setState({
+          tipsShow: true,
+          tipsContent: `堆垛机编号：${obj.__id}`,
           pageCoords,
         });
       } else {
@@ -440,6 +447,68 @@ class SeatLayoutComp extends React.Component {
         [index]: { columnRange, layerRange, layoutHeight, title },
       };
     }, {});
+
+    seatInfoList.forEach((e) => {
+      if (e.itemType === "Crane") {
+        const alarmIconImg = document.createElement("img");
+        alarmIconImg.src = stacker_1;
+        const crane: fabric.Image = new fabric.Image(alarmIconImg, {
+          __id: e.shelfNo + "srm",
+          __featureType: "srm",
+          width: 35,
+          height: 35,
+          left: originPoint[0],
+          top:
+            originPoint[1] +
+            seatLayoutGroup[e.rowNo].layoutHeight +
+            layoutDist / 2,
+          hasControls: false,
+          lockMovementX: true,
+          lockMovementY: true,
+          hasBorders: false,
+        });
+
+        const crane_lane: fabric.Rect = new fabric.Rect({
+          __id: e.shelfNo + "srm_lane",
+          __featureType: "srm_lane",
+          width:
+            (e.endColumnNo - e.startColumnNo + 2) * (seatSize[0] + seatDist),
+          height: 10,
+          fill: "#69b1ff",
+          stroke: "#fff",
+          strokeWidth: 2,
+          left: originPoint[0],
+          top:
+            originPoint[1] +
+            seatLayoutGroup[e.rowNo].layoutHeight +
+            layoutDist / 2 +
+            15,
+          hasControls: false,
+          lockMovementX: true,
+          lockMovementY: true,
+          hasBorders: false,
+        });
+
+        const crane_text: fabric.Text = new fabric.Text(e.shelfNo, {
+          __id: e.shelfNo + "srm_title",
+          __featureType: "srm_title",
+          fill: "#000",
+          fontSize: 16,
+          left: originPoint[0],
+          top:
+            originPoint[1] +
+            seatLayoutGroup[e.rowNo].layoutHeight +
+            layoutDist / 2 -
+            20,
+          hasControls: false,
+          lockMovementX: true,
+          lockMovementY: true,
+          hasBorders: false,
+        });
+
+        featureGroup.push(crane_text, crane_lane, crane);
+      }
+    });
 
     for (const item of seatData) {
       const seatItem = item;

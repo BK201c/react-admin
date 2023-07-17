@@ -36,7 +36,7 @@ export default class LoginRoute extends React.Component<LoginProps, any> {
         ...this.state,
       },
     }).then((res) => {
-      console.log("login res", res);
+      // console.log("login res", res);
       if (res.data !== null && res.code === 200) {
         const data = res.data;
         appStore.userStore.login({
@@ -44,7 +44,7 @@ export default class LoginRoute extends React.Component<LoginProps, any> {
           token: `${data.tokenType} ${data.accessToken}`,
         });
         toast.info("登陆成功", { timeout: "1400", position: "top-center" });
-        console.log("replace history to dashboard, value:", value);
+        // console.log("replace history to dashboard, value:", value);
         history.replace(`/dashboard`);
       } else {
         toast["error"]("登陆失败", "消息");
