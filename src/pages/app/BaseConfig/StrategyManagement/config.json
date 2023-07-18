@@ -134,203 +134,214 @@
                 "body": [
                   {
                     "type": "form",
-                    "columnCount": 2,
                     "api": {
                       "method": "put",
                       "url": "/api/WCSMS/cfgStrategy/update",
                       "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": response.data.data,\r\n}",
                       "messages": {},
-                      "replaceData": false,
+                      "replaceData": true,
                       "headers": {
                         "Accept-Language": "zh-Hans"
                       },
                       "data": {
                         "&": "$$",
-                        "itemList": "${itemList}"
+                        "id": "${id}"
                       },
-                      "requestAdaptor": "",
+                      "requestAdaptor": "api.data = {\r\n  itemList: api.body.itemList,\r\n  id: api.body.id,\r\n  strategyDesc: api.body.strategyDesc,\r\n  strategyName: api.body.strategyName,\r\n  strategyNo: api.body.strategyNo,\r\n  strategyTypeNo: api.body.strategyTypeNo,\r\n  usedFlag:1\r\n\r\n} \r\nreturn api",
                       "dataType": "json"
                     },
                     "body": [
                       {
-                        "type": "flex",
-                        "className": "p-1",
-                        "items": [
-                          {
-                            "type": "container",
-                            "body": [
+                        "type": "input-text",
+                        "id": "u:f0667c75d76e",
+                        "name": "strategyNo",
+                        "label": "策略编号",
+                        "required": true,
+                        "disabled": true
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "strategyName",
+                        "label": "策略名称",
+                        "required": true,
+                        "id": "u:bd063260280e"
+                      },
+                      {
+                        "type": "input-text",
+                        "name": "strategyDesc",
+                        "label": "策略描述",
+                        "required": true,
+                        "id": "u:dec63748889d"
+                      },
+                      {
+                        "type": "select",
+                        "name": "strategyTypeNo",
+                        "label": "策略类型",
+                        "required": true,
+                        "source": {
+                          "method": "get",
+                          "url": "/api/WCSMS/options/getStrategyTypeOption",
+                          "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
+                          "headers": {
+                            "Accept-Language": "zh-Hans"
+                          }
+                        },
+                        "id": "u:612c16c81baf",
+                        "multiple": false,
+                        "onEvent": {
+                          "change": {
+                            "weight": 0,
+                            "actions": [
                               {
-                                "type": "input-text",
-                                "name": "strategyNo",
-                                "label": "策略编号",
-                                "required": true,
-                                "disabled": true,
-                                "id": "u:f0667c75d76e"
-                              },
-                              {
-                                "type": "input-text",
-                                "name": "strategyName",
-                                "label": "策略名称",
-                                "required": true,
-                                "id": "u:bd063260280e"
-                              },
-                              {
-                                "type": "input-text",
-                                "name": "strategyDesc",
-                                "label": "策略描述",
-                                "required": true,
-                                "id": "u:dec63748889d"
-                              },
-                              {
-                                "type": "select",
-                                "name": "strategyTypeNo",
-                                "label": "策略类型",
-                                "required": true,
-                                "source": {
-                                  "method": "get",
-                                  "url": "/api/WCSMS/options/getStrategyTypeOption",
-                                  "adaptor": "return {\r\n  \"status\": 0,\r\n  \"msg\": \"\",\r\n  \"data\": {\r\n    \"items\": response.data.data.items\r\n  }\r\n}",
-                                  "headers": {
-                                    "Accept-Language": "zh-Hans"
+                                "actionType": "ajax",
+                                "outputVar": "responseResult",
+                                "args": {
+                                  "options": {},
+                                  "api": {
+                                    "url": "/api/WCSMS/cfgStrategy/getStrategyItemByStrategyType",
+                                    "method": "get",
+                                    "requestAdaptor": "console.log(api)\r\napi.data = {\r\n  strategyTypeNo: api.body.value\r\n}\r\nreturn api",
+                                    "adaptor": "return {\r\n  status: 0,\r\n  msg: \"\",\r\n  data:response.data.data\r\n}",
+                                    "messages": {},
+                                    "headers": {
+                                      "Accept-Language": "zh-Hans"
+                                    },
+                                    "data": {
+                                      "&": "$$"
+                                    },
+                                    "dataType": "json"
                                   }
-                                },
-                                "id": "u:612c16c81baf",
-                                "multiple": false
+                                }
                               },
                               {
-                                "type": "select",
-                                "name": "usedFlag",
-                                "label": "启用标志",
-                                "options": [
-                                  {
-                                    "label": "禁用",
-                                    "value": "0"
-                                  },
-                                  {
-                                    "label": "启用",
-                                    "value": "1"
+                                "componentId": "u:f33993f80dcd",
+                                "actionType": "setValue",
+                                "args": {
+                                  "value": {
+                                    "itemList": "${event.data.responseResult.responseData.itemList}"
                                   }
-                                ],
-                                "required": true,
-                                "id": "u:f64ef785e740"
+                                }
                               }
-                            ],
-                            "size": "",
-                            "style": {
-                              "position": "static",
-                              "display": "flex",
-                              "flex": "1 1 auto",
-                              "flexGrow": "1",
-                              "flexBasis": "auto",
-                              "flexWrap": "nowrap",
-                              "justifyContent": "center",
-                              "flexDirection": "column"
-                            },
-                            "wrapperBody": false,
-                            "isFixedHeight": false,
-                            "isFixedWidth": false,
-                            "id": "u:64f4360bf837"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "type": "select",
+                        "name": "usedFlag",
+                        "label": "启用标志",
+                        "options": [
+                          {
+                            "label": "禁用",
+                            "value": "0"
                           },
                           {
-                            "type": "container",
-                            "body": [
-                              {
-                                "type": "crud",
-                                "name": "table",
-                                "label": "table",
-                                "syncLocation": false,
-                                "api": {
-                                  "method": "get",
-                                  "url": "/api/WCSMS/cfgStrategy/getById",
-                                  "messages": {},
-                                  "requestAdaptor": "",
-                                  "adaptor": "return {\r\n  \"status\": response.data.status,\r\n  \"msg\": response.data.msg,\r\n  \"data\": {\r\n    \"items\": response.data.data.itemList,\r\n  }\r\n}",
-                                  "data": {
-                                    "&": "$$",
-                                    "id": "${id}"
-                                  }
-                                },
-                                "columns": [
-                                  {
-                                    "name": "strategyItemNo",
-                                    "label": "策略项编码",
-                                    "type": "text",
-                                    "id": "u:579eb6ee3fb8"
-                                  },
-                                  {
-                                    "name": "strategyItemName",
-                                    "label": "策略项名称",
-                                    "type": "text",
-                                    "id": "u:86386d689fc2"
-                                  },
-                                  {
-                                    "name": "strategyItemGroupNo",
-                                    "label": "策略项分组",
-                                    "type": "text",
-                                    "id": "u:0ca7145f5aad"
-                                  },
-                                  {
-                                    "name": "strategyItemValue",
-                                    "label": "策略项值",
-                                    "type": "text",
-                                    "placeholder": "-",
-                                    "quickEdit": {
-                                      "mode": "inline",
-                                      "id": "u:a7f08fa1a395"
-                                    },
-                                    "id": "u:880afd93922f"
-                                  },
-                                  {
-                                    "name": "strategyItemGroupIdx",
-                                    "label": "组内顺序",
-                                    "type": "text",
-                                    "placeholder": "-",
-                                    "quickEdit": {
-                                      "mode": "inline",
-                                      "id": "u:e3bafbd214e4"
-                                    },
-                                    "id": "u:532f7ba7bc3d"
-                                  }
-                                ],
-                                "bulkActions": [],
-                                "itemActions": [],
-                                "features": ["bulkUpdate"],
-                                "id": "u:8d17b82cf6a9"
-                              }
-                            ],
-                            "size": "xs",
-                            "style": {
-                              "position": "static",
-                              "display": "block",
-                              "flex": "1 1 auto",
-                              "flexGrow": 1,
-                              "flexBasis": "auto",
-                              "minWidth": "0px"
-                            },
-                            "wrapperBody": false,
-                            "isFixedHeight": false,
-                            "isFixedWidth": false,
-                            "id": "u:146fe45be376"
+                            "label": "启用",
+                            "value": "1"
                           }
                         ],
-                        "style": {
-                          "position": "relative",
-                          "inset": "auto",
-                          "flexWrap": "nowrap",
-                          "flexDirection": "column",
-                          "alignItems": "center"
-                        },
-                        "isFixedHeight": false,
-                        "isFixedWidth": false,
-                        "id": "u:464c7f804beb"
+                        "required": true,
+                        "id": "u:f64ef785e740"
+                      },
+                      {
+                        "type": "input-table",
+                        "id": "input_table_1",
+                        "name": "itemList",
+                        "syncLocation": false,
+                        "columns": [
+                          {
+                            "name": "isCheck",
+                            "label": "已选策略",
+                            "type": "radio",
+                            "id": "u:17f7ab1979d2",
+                            "hiddenOn": "${strategyTypeNo !== 'RgvAllot'}"
+                          },
+                          {
+                            "name": "strategyItemNo",
+                            "label": "策略项编码",
+                            "type": "text",
+                            "id": "u:579eb6ee3fb8",
+                            "quickEdit": false
+                          },
+                          {
+                            "name": "strategyItemName",
+                            "label": "策略项名称",
+                            "type": "text",
+                            "id": "u:86386d689fc2",
+                            "quickEdit": false
+                          },
+                          {
+                            "name": "strategyItemGroupNo",
+                            "label": "策略项分组",
+                            "type": "text",
+                            "quickEdit": false,
+                            "id": "u:0ca7145f5aad"
+                          },
+                          {
+                            "name": "strategyItemValue",
+                            "label": "策略项值",
+                            "type": "text",
+                            "placeholder": "-",
+                            "quickEdit": {
+                              "type": "input-text",
+                              "name": "strategyItemValue",
+                              "id": "u:142f3793b4d7"
+                            },
+                            "id": "u:880afd93922f"
+                          },
+                          {
+                            "name": "strategyItemGroupIdx",
+                            "label": "组内顺序",
+                            "type": "text",
+                            "placeholder": "-",
+                            "quickEdit": {
+                              "type": "input-text",
+                              "name": "strategyItemGroupIdx",
+                              "id": "u:aa177e0a0f0a"
+                            },
+                            "id": "u:532f7ba7bc3d"
+                          }
+                        ],
+                        "minLength": 0,
+                        "needConfirm": true,
+                        "clearValueOnHidden": false,
+                        "label": "",
+                        "showIndex": true,
+                        "selectable": true,
+                        "editable": false,
+                        "canAccessSuperData": true,
+                        "strictMode": false,
+                        "validateOnChange": false
                       }
-                    ]
+                    ],
+                    "id": "u:f33993f80dcd",
+                    "mode": "normal",
+                    "initApi": {
+                      "url": "/api/WCSMS/cfgStrategy/getById",
+                      "method": "get",
+                      "requestAdaptor": "",
+                      "adaptor": "return {\r\n  status: 0,\r\n  msg: \"\",\r\n  data:response.data.data\r\n}",
+                      "messages": {},
+                      "dataType": "json",
+                      "data": {
+                        "&": "$$",
+                        "id": "${id}"
+                      },
+                      "replaceData": false,
+                      "headers": {
+                        "Accept-Language": "zh-Hans"
+                      }
+                    },
+                    "debug": false
                   }
                 ],
                 "showCloseButton": true,
                 "closeOnEsc": false,
                 "showErrorMsg": true,
-                "showLoading": true
+                "showLoading": true,
+                "id": "u:034daf995914",
+                "withDefaultData": false,
+                "dataMapSwitch": false
               }
             }
           ]
